@@ -3,9 +3,9 @@ const TargetProcessor = require('../lib/processors/target');
 const FileUtils = require('./utils/file-utils');
 const _ = require('the-lodash');
 
-describe('target-compiler-tests', function() {
+describe('target-compiler-negative-tests', function() {
 
-  var files = FileUtils.readSamples('target');
+  var files = FileUtils.readSamples('invalid-target');
   var testCases = _.keys(files).map(x => ({ name: x, src: files[x]}));
 
   testCases.forEach(function(testCase) {
@@ -16,8 +16,8 @@ describe('target-compiler-tests', function() {
       return processor.prepare()
         .then(result => {
           (result).should.be.an.Object();
-          (result.success).should.be.true();
-          (result.messages).should.be.empty();
+          (result.success).should.be.false();
+          (result.messages).should.not.be.empty();
         })
 
     });
