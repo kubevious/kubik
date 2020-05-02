@@ -1,0 +1,3 @@
+select('Namespace')
+    .doSomething('hipster')
+    

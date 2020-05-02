@@ -18,7 +18,8 @@
   "homepage": "https://github.com/kubevious/kubik#readme",
   "devDependencies": {
     "mocha": "^7.1.2",
-    "should": "^13.2.3"
+    "should": "^13.2.3",
+    "kubevious-helpers": "git+https://github.com/kubevious/helpers.git"
   },
   "dependencies": {
     "the-lodash": "^1.1.1",

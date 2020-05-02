@@ -1,3 +1,0 @@
-select('Namespace')
-    .doSomething('hipster')
-    

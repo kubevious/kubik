@@ -1,0 +1,7 @@
+select('Namespace')
+    .name('hipster')
+    .name('book')
+.child('Application')
+.descendent('Port')
+.child('Service')
+.child('Ingress')
