@@ -18,11 +18,11 @@
   "homepage": "https://github.com/kubevious/kubik#readme",
   "devDependencies": {
     "mocha": "^7.1.2",
-    "should": "^13.2.3",
-    "kubevious-helpers": "git+https://github.com/kubevious/helpers.git"
+    "should": "^13.2.3"
   },
   "dependencies": {
     "the-lodash": "^1.1.1",
-    "the-promise": "^1.2.3"
+    "the-promise": "^1.2.3",
+    "kubevious-helpers": "git+https://github.com/kubevious/helpers.git"
   }
 }

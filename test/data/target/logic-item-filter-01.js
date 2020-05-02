@@ -1,5 +1,5 @@
 select('Namespace')
-    .name('hipster')
+    .name('gitlab')
     .name('book')
     .label('env', 'prod')
 .child('Application')
