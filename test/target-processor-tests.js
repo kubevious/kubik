@@ -7,7 +7,7 @@ const RegistryState = require('kubevious-helpers/lib/registry-state');
 
 describe('target-processor-tests', function() {
 
-  setupTest('process-logic-target-select-no-filter', 'logic-item-01', function(results) {
+  setupTest('process-logic-target-no-filter', 'logic-item-01', function(results) {
     for(var result of results)
     {
       (result).should.be.an.Object();
@@ -50,7 +50,7 @@ describe('target-processor-tests', function() {
   );
 
 
-  setupTest('process-logic-target-select-name-filter', 'logic-item-filter-01', 
+  setupTest('process-logic-target-name-filter', 'logic-item-filter-01', 
     function(results) {
       for(var result of results)
       {
@@ -63,6 +63,23 @@ describe('target-processor-tests', function() {
       }
 
       (results.length).should.be.equal(34);
+    }
+  );
+
+
+  setupTest('process-logic-target-custom-filter', 'logic-item-custom-filter-01', 
+    function(results) {
+      for(var result of results)
+      {
+        (result).should.be.an.Object();
+        (result.dn).should.be.a.String();
+        (result.node).should.be.an.Object();
+        (result.node.kind).should.be.equal('service');
+
+        DnUtils.endsWithAnyOf(result.dn, ['/service-[NodePort]']).should.be.equal(true, result.dn);
+      }
+
+      (results.length).should.be.equal(5);
     }, true
   );
 
@@ -80,6 +97,11 @@ describe('target-processor-tests', function() {
       var processor = new TargetProcessor(targetScript);
       return processor.prepare()
         .then(result => {
+          if (debugOutputObjects)
+          {
+            processor._scope.debugOutput();
+          }
+
           (result).should.be.an.Object();
           (result.success).should.be.true();
           (result.messages).should.be.empty();

@@ -4,11 +4,11 @@ select('Namespace')
     .label('env', 'prod')
 .child('Application')
 .descendant('Port')
-    .filter(item => {
+    .filter(({item}) => {
         return item.config.protocol == 'TCP';
     })
 .child('Service')
 .child('Ingress')
-    .filter(item => {
+    .filter(({item}) => {
         return item.parent.config.spec.type == 'NodePort';
     })

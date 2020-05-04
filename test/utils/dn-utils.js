@@ -10,3 +10,14 @@ module.exports.startsWithAnyOf = function(dn, options)
     }
     return false;
 }
+
+module.exports.endsWithAnyOf = function(dn, options)
+{
+    for(var x of options)
+    {
+        if (_.endsWith(dn, x)) {
+            return true;
+        }
+    }
+    return false;
+}
