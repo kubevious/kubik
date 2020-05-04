@@ -1,4 +1,4 @@
-const shoud = require('should');
+const should = require('should');
 const TargetProcessor = require('../lib/processors/target');
 const FileUtils = require('./utils/file-utils');
 const DnUtils = require('./utils/dn-utils');
@@ -7,8 +7,7 @@ const RegistryState = require('kubevious-helpers/lib/registry-state');
 
 describe('target-processor-tests', function() {
 
-
-  setupTest('process-logic-target-select', 'logic-item-01', function(results) {
+  setupTest('process-logic-target-select-no-filter', 'logic-item-01', function(results) {
     for(var result of results)
     {
       (result).should.be.an.Object();
@@ -19,6 +18,7 @@ describe('target-processor-tests', function() {
 
     (results.length).should.be.equal(116);
   });
+
 
   setupTest('process-logic-target-single-descendants', 'logic-item-descendants-01', 
     function(results) {
@@ -48,6 +48,7 @@ describe('target-processor-tests', function() {
       (results.length).should.be.equal(5);
     }
   );
+
 
   setupTest('process-logic-target-select-name-filter', 'logic-item-filter-01', 
     function(results) {

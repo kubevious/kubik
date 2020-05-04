@@ -1,4 +1,4 @@
-const shoud = require('should');
+const should = require('should');
 const TargetProcessor = require('../lib/processors/target');
 const FileUtils = require('./utils/file-utils');
 const _ = require('the-lodash');
