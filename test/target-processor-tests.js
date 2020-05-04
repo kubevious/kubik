@@ -1,79 +1,107 @@
 const shoud = require('should');
 const TargetProcessor = require('../lib/processors/target');
 const FileUtils = require('./utils/file-utils');
+const DnUtils = require('./utils/dn-utils');
 const _ = require('the-lodash');
 const RegistryState = require('kubevious-helpers/lib/registry-state');
 
 describe('target-processor-tests', function() {
 
-  it('process-logic-target-large', function() {
 
-    var snapshotInfo = FileUtils.readJsonData('snapshot-items.json');
-    var state = new RegistryState(null, snapshotInfo);
+  setupTest('process-logic-target-select', 'logic-item-01', function(results) {
+    for(var result of results)
+    {
+      (result).should.be.an.Object();
+      (result.dn).should.be.a.String();
+      (result.node).should.be.an.Object();
+      (result.node.kind).should.be.equal('image');
+    }
 
-    var targetScript = FileUtils.readFile('target/logic-item-filter-01.js');
-
-    var processor = new TargetProcessor(targetScript);
-    return processor.prepare()
-      .then(result => {
-        (result).should.be.an.Object();
-        (result.success).should.be.true();
-        (result.messages).should.be.empty();
-
-        return processor.execute(state);
-      })
-      .then(results => {
-        // console.log("END: ");
-        // console.log(results.length);
-        // console.log(results);
-
-        (results).should.be.an.Array;
-        (results.length).should.be.equal(5);
-        for(var result of results)
-        {
-          (result).should.be.an.Object();
-          (result.dn).should.be.a.String();
-          (result.node).should.be.an.Object();
-          (result.node.kind).should.be.equal('ingress');
-        }
-
-      })
-      ;
-
+    (results.length).should.be.equal(116);
   });
 
-  it('process-logic-target-small', function() {
-
-    var snapshotInfo = FileUtils.readJsonData('snapshot-items.json');
-    var state = new RegistryState(null, snapshotInfo);
-
-    var targetScript = FileUtils.readFile('target/logic-item-descendants-02.js');
-
-    var processor = new TargetProcessor(targetScript);
-    return processor.prepare()
-      .then(result => {
+  setupTest('process-logic-target-single-descendants', 'logic-item-descendants-01', 
+    function(results) {
+      for(var result of results)
+      {
         (result).should.be.an.Object();
-        (result.success).should.be.true();
-        (result.messages).should.be.empty();
+        (result.dn).should.be.a.String();
+        (result.node).should.be.an.Object();
+        (result.node.kind).should.be.equal('port');
+      }
 
-        return processor.execute(state);
-      })
-      .then(results => {
-        // console.log("END: ");
-        // console.log(results);
+      (results.length).should.be.equal(68);
+    }
+  );
 
-        (results).should.be.an.Array;
-        (results.length).should.be.equal(68);
-        for(var result of results)
-        {
+
+  setupTest('process-logic-target-descendants-and-children', 'logic-item-descendants-02', 
+    function(results) {
+      for(var result of results)
+      {
+        (result).should.be.an.Object();
+        (result.dn).should.be.a.String();
+        (result.node).should.be.an.Object();
+        (result.node.kind).should.be.equal('ingress');
+      }
+
+      (results.length).should.be.equal(5);
+    }
+  );
+
+  setupTest('process-logic-target-select-name-filter', 'logic-item-filter-01', 
+    function(results) {
+      for(var result of results)
+      {
+        (result).should.be.an.Object();
+        (result.dn).should.be.a.String();
+        (result.node).should.be.an.Object();
+        (result.node.kind).should.be.equal('app');
+
+        DnUtils.startsWithAnyOf(result.dn, ['root/ns-[gitlab]', 'root/ns-[sock-shop]']).should.be.equal(true, result.dn);
+      }
+
+      (results.length).should.be.equal(34);
+    }, true
+  );
+
+
+  /*****/
+  function setupTest(name, targetFileName, validateCb, debugOutputObjects)
+  {
+    it(name, function() {
+
+      var snapshotInfo = FileUtils.readJsonData('snapshot-items.json');
+      var state = new RegistryState(null, snapshotInfo);
+
+      var targetScript = FileUtils.readFile('target/' + targetFileName + '.js');
+
+      var processor = new TargetProcessor(targetScript);
+      return processor.prepare()
+        .then(result => {
           (result).should.be.an.Object();
-          (result.dn).should.be.a.String();
-          (result.node).should.be.an.Object();
-          (result.node.kind).should.be.equal('port');
-        }
-      })
-      ;
+          (result.success).should.be.true();
+          (result.messages).should.be.empty();
 
-  });
+          return processor.execute(state);
+        })
+        .then(results => {
+
+          (results).should.be.an.Array;
+
+          if (debugOutputObjects)
+          {
+            console.log('COUNT: ' + results.length);
+            for(var result of results)
+            {
+              console.log('* ' + result.dn);
+            }
+          }
+
+          validateCb(results)
+        })
+        ;
+    });
+  }
 
 });

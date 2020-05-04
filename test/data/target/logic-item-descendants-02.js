@@ -1,2 +1,4 @@
 select('Application')
-.descendent('Port')
+.descendant('Port')
+.child('Service')
+.child('Ingress')

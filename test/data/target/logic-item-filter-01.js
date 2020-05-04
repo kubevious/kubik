@@ -1,14 +1,4 @@
 select('Namespace')
     .name('gitlab')
-    .name('book')
-    .label('env', 'prod')
+    .name('sock-shop')
 .child('Application')
-.descendent('Port')
-    .filter(item => {
-        return item.config.protocol == 'TCP';
-    })
-.child('Service')
-.child('Ingress')
-    .filter(item => {
-        return item.parent.config.spec.type == 'NodePort';
-    })
