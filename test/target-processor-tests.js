@@ -80,7 +80,7 @@ describe('target-processor-tests', function() {
       }
 
       (results.length).should.be.equal(5);
-    }, true
+    }
   );
 
 
