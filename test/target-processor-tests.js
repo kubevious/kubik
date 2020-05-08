@@ -67,7 +67,7 @@ describe('target-processor-tests', function() {
   );
 
 
-  setupTest('process-logic-target-custom-filter', 'logic-item-custom-filter-01', 
+  setupTest('process-logic-target-custom-filter-simple', 'logic-item-custom-filter-01', 
     function(results) {
       for(var result of results)
       {
@@ -82,6 +82,23 @@ describe('target-processor-tests', function() {
       (results.length).should.be.equal(5);
     }
   );
+
+
+  setupTest('process-logic-target-custom-filter-parent', 'logic-item-custom-filter-parent-01', 
+  function(results) {
+    for(var result of results)
+    {
+      (result).should.be.an.Object();
+      (result.dn).should.be.a.String();
+      (result.node).should.be.an.Object();
+      (result.node.kind).should.be.equal('service');
+
+      DnUtils.endsWithAnyOf(result.dn, ['/service-[NodePort]']).should.be.equal(true, result.dn);
+    }
+
+    (results.length).should.be.equal(2);
+  }
+);
 
 
   /*****/
