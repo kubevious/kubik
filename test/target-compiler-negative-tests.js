@@ -1,5 +1,5 @@
 const should = require('should');
-const TargetProcessor = require('../lib/processors/target');
+const TargetProcessor = require('../lib/processors/target/processor');
 const FileUtils = require('./utils/file-utils');
 const _ = require('the-lodash');
 
