@@ -5,7 +5,7 @@ const _ = require('the-lodash');
 
 describe('target-compiler-tests', function() {
 
-  var files = FileUtils.readSamples('target');
+  var files = FileUtils.readFileContents('target');
   var testCases = _.keys(files).map(x => ({ name: x, src: files[x]}));
 
   testCases.forEach(function(testCase) {

@@ -1,8 +1,8 @@
 const should = require('should');
+const _ = require('the-lodash');
 const TargetProcessor = require('../lib/processors/target/processor');
 const FileUtils = require('./utils/file-utils');
 const DnUtils = require('./utils/dn-utils');
-const _ = require('the-lodash');
 const RegistryState = require('kubevious-helpers/lib/registry-state');
 
 describe('target-processor-tests', function() {
@@ -85,20 +85,20 @@ describe('target-processor-tests', function() {
 
 
   setupTest('process-logic-target-custom-filter-parent', 'logic-item-custom-filter-parent-01', 
-  function(results) {
-    for(var result of results)
-    {
-      (result).should.be.an.Object();
-      (result.dn).should.be.a.String();
-      (result.node).should.be.an.Object();
-      (result.node.kind).should.be.equal('service');
+    function(results) {
+      for(var result of results)
+      {
+        (result).should.be.an.Object();
+        (result.dn).should.be.a.String();
+        (result.node).should.be.an.Object();
+        (result.node.kind).should.be.equal('service');
 
-      DnUtils.endsWithAnyOf(result.dn, ['/service-[NodePort]']).should.be.equal(true, result.dn);
+        DnUtils.endsWithAnyOf(result.dn, ['/service-[NodePort]']).should.be.equal(true, result.dn);
+      }
+
+      (results.length).should.be.equal(2);
     }
-
-    (results.length).should.be.equal(2);
-  }
-);
+  );
 
 
   /*****/
