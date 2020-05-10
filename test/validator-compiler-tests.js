@@ -9,7 +9,8 @@ describe('validator-compiler-tests', function() {
 
   dirs.forEach(function(dirEntry) {
 
-    var dirContents = FileUtils.readFileContents('validator/' + dirEntry.name);
+    var dirPath = 'validator/' + dirEntry.name;
+    var dirContents = FileUtils.readFileContents(dirPath);
 
     var validatorScript = dirContents['validator.js'];
     if (validatorScript)
@@ -21,8 +22,19 @@ describe('validator-compiler-tests', function() {
       itemNames.forEach(function(itemName) {
 
         it('sample-' + dirEntry.name + '-' + itemName, function() {
-          var itemContents = dirContents[itemName];
-          var itemObj = JSON.parse(itemContents);
+          var itemObj = null;
+          if (_.endsWith(itemName, '.json'))
+          {
+            var itemContents = dirContents[itemName];
+            itemObj = JSON.parse(itemContents);
+          }
+          else if (_.endsWith(itemName, '.js'))
+          {
+            itemObj = FileUtils.readModule(dirPath, itemName);
+          }
+          else {
+            throw new Error("Unknown extension: " + itemName)
+          }
 
           var processor = new ValidatorProcessor(validatorScript);
           return processor.prepare()

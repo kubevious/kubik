@@ -5,22 +5,38 @@ const _ = require('the-lodash');
 
 describe('validator-processor-tests', function() {
 
-  setupTest('logic-image-01', 'item-01', function(result) {
-    (result.hasErrors).should.be.equal(true);
-  });
+  setupPositiveTest('logic-image-01', 'item-01');
+  setupNegativeTest('logic-image-01', 'item-02');
 
-  setupTest('logic-image-01', 'item-02', function(result) {
-    (result.hasErrors).should.be.equal(false);
-  });
-
+  setupPositiveTest('logic-ingress-parent-01', 'item-01');
+  setupNegativeTest('logic-ingress-parent-01', 'item-02');
+  
+  setupNegativeTest('logic-service-haschildren-01', 'item-01');
+  setupPositiveTest('logic-service-haschildren-01', 'item-02');
+  setupPositiveTest('logic-service-haschildren-01', 'item-03');
+  setupPositiveTest('logic-service-haschildren-01', 'item-04');
 
   /*****/
+  function setupPositiveTest(caseName, itemName, debugOutputObjects)
+  {
+    setupTest(caseName, itemName, function(result) {
+      (result.hasErrors).should.be.equal(false);
+    }, debugOutputObjects);
+  }
+
+  function setupNegativeTest(caseName, itemName, debugOutputObjects)
+  {
+    setupTest(caseName, itemName, function(result) {
+      (result.hasErrors).should.be.equal(true);
+    }, debugOutputObjects);
+  }
+
   function setupTest(caseName, itemName, validateCb, debugOutputObjects)
   {
     it(caseName + '_' + itemName, function() {
 
       var validatorScript = FileUtils.readFile('validator/' + caseName + '/validator.js');
-      var itemJson = FileUtils.readJsonData('validator/' + caseName + '/' + itemName + '.json');
+      var itemJson = FileUtils.readJsonOrJsData('validator/' + caseName + '/' + itemName);
 
       var processor = new ValidatorProcessor(validatorScript);
       return processor.prepare()

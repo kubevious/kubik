@@ -1,5 +1,28 @@
 const path = require('path');
 const fs = require('fs');
+const _ = require('the-lodash');
+
+
+module.exports.readJsonOrJsData = function(name)
+{
+    if (module.exports.fileExists(name + '.js'))
+    {
+        return module.exports.readModule(name);
+    }
+    else if (module.exports.fileExists(name + '.json'))
+    {
+        return module.exports.readJsonData(name + '.json');
+    }
+    throw new Error("File not found: " + name);
+}
+
+module.exports.readModule = function()
+{
+    var parts = ['..', 'data'];
+    parts = _.concat(parts, arguments);
+    var filePath = path.join.apply(null, parts);
+    return require(filePath);
+}
 
 module.exports.readFileContents = function(name)
 {
@@ -28,6 +51,12 @@ module.exports.listDirectories = function(name)
         });
     }
     return paths;
+}
+
+module.exports.fileExists = function(name)
+{
+    const filePath = path.resolve(__dirname, '..', 'data', name);
+    return fs.existsSync(filePath);
 }
 
 module.exports.readFile = function(name)

@@ -1,0 +1,11 @@
+{
+    "config": {
+    },
+    "parent": {
+        "config": {
+            "spec": {
+                "externalTrafficPolicy": "Local"
+            }
+        }
+    }
+}
