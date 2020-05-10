@@ -16,6 +16,9 @@ describe('validator-processor-tests', function() {
   setupPositiveTest('logic-service-haschildren-01', 'item-03');
   setupPositiveTest('logic-service-haschildren-01', 'item-04');
 
+  setupPositiveTest('logic-container-children-01', 'item-01');
+  setupNegativeTest('logic-container-children-01', 'item-02');
+
   /*****/
   function setupPositiveTest(caseName, itemName, debugOutputObjects)
   {
