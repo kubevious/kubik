@@ -3,13 +3,13 @@ const ValidatorProcessor = require('../lib/processors/validator/processor');
 const FileUtils = require('./utils/file-utils');
 const _ = require('the-lodash');
 
-describe('validator-compiler-tests', function() {
+describe('validator-compiler-negative-tests', function() {
 
-  var dirs = FileUtils.listDirectories('validator');
+  var dirs = FileUtils.listDirectories('invalid-validators');
 
   dirs.forEach(function(dirEntry) {
 
-    var dirPath = 'validator/' + dirEntry.name;
+    var dirPath = 'invalid-validators/' + dirEntry.name;
     var dirContents = FileUtils.readFileContents(dirPath);
 
     var validatorScript = dirContents['validator.js'];
@@ -46,8 +46,8 @@ describe('validator-compiler-tests', function() {
             .then(() => processor.execute(itemObj))
             .then(result => {
               (result).should.be.an.Object();
-              (result.success).should.be.true();
-              (result.messages).should.be.empty();
+              (result.success).should.be.false();
+              (result.messages).should.not.be.empty();
               (result.validation).should.be.an.Object();
               (result.validation.hasErrors).should.be.a.Boolean();
               (result.validation.hasWarnings).should.be.a.Boolean();

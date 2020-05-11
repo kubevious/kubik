@@ -23,14 +23,14 @@ describe('validator-processor-tests', function() {
   function setupPositiveTest(caseName, itemName, debugOutputObjects)
   {
     setupTest(caseName, itemName, function(result) {
-      (result.hasErrors).should.be.equal(false);
+      (result.validation.hasErrors).should.be.equal(false);
     }, debugOutputObjects);
   }
 
   function setupNegativeTest(caseName, itemName, debugOutputObjects)
   {
     setupTest(caseName, itemName, function(result) {
-      (result.hasErrors).should.be.equal(true);
+      (result.validation.hasErrors).should.be.equal(true);
     }, debugOutputObjects);
   }
 

@@ -12,8 +12,7 @@ describe('target-processor-tests', function() {
     {
       (result).should.be.an.Object();
       (result.dn).should.be.a.String();
-      (result.node).should.be.an.Object();
-      (result.node.kind).should.be.equal('image');
+      (DnUtils.kind(result.dn)).should.be.equal('image');
     }
 
     (results.length).should.be.equal(116);
@@ -26,8 +25,7 @@ describe('target-processor-tests', function() {
       {
         (result).should.be.an.Object();
         (result.dn).should.be.a.String();
-        (result.node).should.be.an.Object();
-        (result.node.kind).should.be.equal('port');
+        (DnUtils.kind(result.dn)).should.be.equal('port');
       }
 
       (results.length).should.be.equal(68);
@@ -40,9 +38,8 @@ describe('target-processor-tests', function() {
       for(var result of results)
       {
         (result).should.be.an.Object();
-        (result.dn).should.be.a.String();
-        (result.node).should.be.an.Object();
-        (result.node.kind).should.be.equal('ingress');
+        (result.dn).should.be.a.String(); 
+        (DnUtils.kind(result.dn)).should.be.equal('ingress');
       }
 
       (results.length).should.be.equal(5);
@@ -56,8 +53,7 @@ describe('target-processor-tests', function() {
       {
         (result).should.be.an.Object();
         (result.dn).should.be.a.String();
-        (result.node).should.be.an.Object();
-        (result.node.kind).should.be.equal('app');
+        (DnUtils.kind(result.dn)).should.be.equal('app');
 
         DnUtils.startsWithAnyOf(result.dn, ['root/ns-[gitlab]', 'root/ns-[sock-shop]']).should.be.equal(true, result.dn);
       }
@@ -73,8 +69,7 @@ describe('target-processor-tests', function() {
       {
         (result).should.be.an.Object();
         (result.dn).should.be.a.String();
-        (result.node).should.be.an.Object();
-        (result.node.kind).should.be.equal('service');
+        (DnUtils.kind(result.dn)).should.be.equal('service');
 
         DnUtils.endsWithAnyOf(result.dn, ['/service-[NodePort]']).should.be.equal(true, result.dn);
       }
@@ -90,8 +85,7 @@ describe('target-processor-tests', function() {
       {
         (result).should.be.an.Object();
         (result.dn).should.be.a.String();
-        (result.node).should.be.an.Object();
-        (result.node.kind).should.be.equal('service');
+        (DnUtils.kind(result.dn)).should.be.equal('service');
 
         DnUtils.endsWithAnyOf(result.dn, ['/service-[NodePort]']).should.be.equal(true, result.dn);
       }

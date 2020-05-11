@@ -1,4 +1,5 @@
 const _ = require('the-lodash')
+const DnUtils = require('kubevious-helpers').DnUtils;
 
 module.exports.startsWithAnyOf = function(dn, options)
 {
@@ -20,4 +21,14 @@ module.exports.endsWithAnyOf = function(dn, options)
         }
     }
     return false;
+}
+
+module.exports.kind = function(dn)
+{
+    var parts = DnUtils.parseDn(dn);
+    var lastPart = _.last(parts);
+    if (!lastPart) {
+        return null;
+    }
+    return lastPart.kind;
 }
