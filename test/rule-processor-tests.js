@@ -12,12 +12,12 @@ describe('rule-processor-tests', function() {
         (result) => {
 
             (result.ruleItems).should.be.an.Object();
-           (_.keys(result.ruleItems).length).should.be.equal(12);
+            (_.keys(result.ruleItems).length).should.be.equal(12);
 
-           for(var x of _.values(result.ruleItems))
-           {
-             (x.hasError).should.be.true();
-           }
+            for(var x of _.values(result.ruleItems))
+            {
+            (x.hasError).should.be.true();
+            }
 
         });
 
@@ -32,9 +32,9 @@ describe('rule-processor-tests', function() {
 
             for(var x of _.values(result.ruleItems))
             {
-                (x.hasError).should.be.true();
+            (x.hasError).should.be.true();
             }
-            
+        
         });
         
 
