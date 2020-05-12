@@ -6,19 +6,41 @@ const RegistryState = require('kubevious-helpers/lib/registry-state');
 
 describe('rule-processor-tests', function() {
 
-    setupTest('logic-item-01', 'logic-image-02', 
+    setupTest(
+        'logic-item-01',
+        'logic-image-02', 
         (result) => {
-            // console.log(result)
-        }, 
-        (result) => {
-            // console.log(result.success)
-            // console.log(result.ruleItems)
+
+            (result.ruleItems).should.be.an.Object();
+           (_.keys(result.ruleItems).length).should.be.equal(12);
+
+           for(var x of _.values(result.ruleItems))
+           {
+             (x.hasError).should.be.true();
+           }
 
         });
 
+
+    setupTest(
+        'logic-item-filter-03',
+        'logic-image-02', 
+        (result) => {
+
+            (result.ruleItems).should.be.an.Object();
+            (_.keys(result.ruleItems).length).should.be.equal(2);
+
+            for(var x of _.values(result.ruleItems))
+            {
+                (x.hasError).should.be.true();
+            }
+            
+        });
+        
+
   /*****/
 
-  function setupTest(targetName, validatorName, validatePrepareCb, validateExecuteCb, debugOutputObjects)
+  function setupTest(targetName, validatorName, validateCb, debugOutputObjects)
   {
 
     it(targetName + '_' + validatorName, function() {
@@ -34,25 +56,15 @@ describe('rule-processor-tests', function() {
             target: targetScript,
             script: validatorScript
         });
-        return processor.prepare()
+        return processor.process()
             .then(result => {
-                // console.log("POST PREPARE:");
-                // console.log(result);
 
-                if (validatePrepareCb) {
-                    validatePrepareCb(result);
-                }
-                // (result).should.be.an.Object();
-                // (result.success).should.be.true();
-                // (result.messages).should.be.empty();
-                return processor.execute();
-            })
-            .then(result => {
-                // console.log("POST EXECUTE:");
-                // console.log(result);
-
-                if (validateExecuteCb) {
-                    validateExecuteCb(result);
+                (result).should.be.an.Object();
+                (result.success).should.be.true();
+                (result.messages).should.be.empty();
+    
+                if (validateCb) {
+                    validateCb(result);
                 }
 
             });

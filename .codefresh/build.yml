@@ -1,0 +1,32 @@
+version: "1.0"
+
+stages:
+  - "clone"
+  - "build"
+  - "test"
+
+steps:
+  clone:
+    type: "git-clone"
+    title: "Cloning repository"
+    description: "Cloning main repository..."
+    repo: "kubevious/${{CF_REPO_NAME}}"
+    revision: "${{CF_BRANCH}}"
+    stage: "clone"
+
+  prepare:
+    title: Prepare Dependencies
+    stage: build
+    image: 'kubevious/node-builder:12'
+    working_directory: "${{clone}}"
+    commands:
+      - npm install
+      - npm install --only=dev
+
+  test:
+    title: Run Unit Tests
+    stage: test
+    image: 'kubevious/node-builder:12'
+    working_directory: "${{clone}}"
+    commands:
+      - npm test

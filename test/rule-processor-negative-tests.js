@@ -11,38 +11,24 @@ describe('rule-processor-negative-tests', function() {
         'invalid-validators/logic-image-01', 
         (result) => {
             (result).should.be.an.Object();
-            (result.success).should.be.true();
-            (result.messages).should.be.empty();
-        }, 
-        (result) => {
-            // console.log(result);
-            (result).should.be.an.Object();
             (result.success).should.be.false();
             (result.messages).should.not.be.empty();
-            (result.messages.length).should.be.equal(1);
+            (result.messages.length).should.be.equal(2);
         });
 
     setupTest(
         'invalid-target/error-01',
         'validator/logic-image-01', 
         (result) => {
-            // console.log(result);
             (result).should.be.an.Object();
             (result.success).should.be.false();
             (result.messages).should.not.be.empty();
             (result.messages.length).should.be.equal(2);
-        }, 
-        (result) => {
-            (result).should.be.an.Object();
-            (result.success).should.be.false();
-            (result.messages).should.not.be.empty();
-            console.log(result.messages);
-            (result.messages.length).should.be.equal(1);
         });        
 
   /*****/
 
-  function setupTest(targetName, validatorName, validatePrepareCb, validateExecuteCb, debugOutputObjects)
+  function setupTest(targetName, validatorName, validateCb, debugOutputObjects)
   {
 
     it(targetName + '_' + validatorName, function() {
@@ -58,27 +44,11 @@ describe('rule-processor-negative-tests', function() {
             target: targetScript,
             script: validatorScript
         });
-        return processor.prepare()
+        return processor.process()
             .then(result => {
-                // console.log("POST PREPARE:");
-                // console.log(result);
-
-                if (validatePrepareCb) {
-                    validatePrepareCb(result);
+                if (validateCb) {
+                    validateCb(result);
                 }
-                // (result).should.be.an.Object();
-                // (result.success).should.be.true();
-                // (result.messages).should.be.empty();
-                return processor.execute();
-            })
-            .then(result => {
-                // console.log("POST EXECUTE:");
-                // console.log(result);
-
-                if (validateExecuteCb) {
-                    validateExecuteCb(result);
-                }
-
             });
 
     });    
