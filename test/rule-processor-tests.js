@@ -1,7 +1,7 @@
 const should = require('should');
 const _ = require('the-lodash');
 const FileUtils = require('./utils/file-utils');
-const RuleProcessor = require('../lib/processors/rule/processor');
+const RuleProcessor = require('../').RuleProcessor;
 const RegistryState = require('kubevious-helpers').RegistryState;
 
 describe('rule-processor-tests', function() {
