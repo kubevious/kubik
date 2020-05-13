@@ -2,7 +2,7 @@ const should = require('should');
 const _ = require('the-lodash');
 const FileUtils = require('./utils/file-utils');
 const RuleProcessor = require('../lib/processors/rule/processor');
-const RegistryState = require('kubevious-helpers/lib/registry-state');
+const RegistryState = require('kubevious-helpers').RegistryState;
 
 describe('rule-processor-negative-tests', function() {
 
@@ -34,7 +34,7 @@ describe('rule-processor-negative-tests', function() {
     it(targetName + '_' + validatorName, function() {
 
         var snapshotInfo = FileUtils.readJsonData('snapshot-items.json');
-        var state = new RegistryState(null, snapshotInfo);
+        var state = new RegistryState(snapshotInfo);
   
         var targetScript = FileUtils.readFile(targetName + '.js');
 

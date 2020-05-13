@@ -3,7 +3,7 @@ const _ = require('the-lodash');
 const TargetProcessor = require('../lib/processors/target/processor');
 const FileUtils = require('./utils/file-utils');
 const DnUtils = require('./utils/dn-utils');
-const RegistryState = require('kubevious-helpers/lib/registry-state');
+const RegistryState = require('kubevious-helpers').RegistryState;
 
 describe('target-processor-tests', function() {
 
@@ -101,7 +101,7 @@ describe('target-processor-tests', function() {
     it(name, function() {
 
       var snapshotInfo = FileUtils.readJsonData('snapshot-items.json');
-      var state = new RegistryState(null, snapshotInfo);
+      var state = new RegistryState(snapshotInfo);
 
       var targetScript = FileUtils.readFile('target/' + targetFileName + '.js');
 
