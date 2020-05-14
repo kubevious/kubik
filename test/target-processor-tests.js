@@ -114,6 +114,9 @@ describe('target-processor-tests', function() {
           }
 
           (result).should.be.an.Object();
+          if (!result.success) {
+            console.log(result);
+          }
           (result.success).should.be.true();
           (result.messages).should.be.empty();
 

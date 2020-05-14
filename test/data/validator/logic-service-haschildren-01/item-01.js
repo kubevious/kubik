@@ -1,10 +1,2 @@
-module.exports = {
-    "config": {
-        "spec": {
-            "externalTrafficPolicy": "Cluster"
-        }
-    },
-    hasChildren: function(name) {
-        return true;
-    }   
-}
+module.exports = 
+    "root/ns-[gitlab]/app-[gitlab-unicorn]/cont-[unicorn]/port-[unicorn (TCP-8080)]/service-[ClusterIP]";

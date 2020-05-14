@@ -2,6 +2,7 @@ const should = require('should');
 const ValidatorProcessor = require('../lib/processors/validator/processor');
 const FileUtils = require('./utils/file-utils');
 const _ = require('the-lodash');
+const RegistryState = require('kubevious-helpers').RegistryState;
 
 describe('validator-compiler-negative-tests', function() {
 
@@ -22,28 +23,22 @@ describe('validator-compiler-negative-tests', function() {
       itemNames.forEach(function(itemName) {
 
         it('sample-' + dirEntry.name + '-' + itemName, function() {
-          var itemObj = null;
-          if (_.endsWith(itemName, '.json'))
-          {
-            var itemContents = dirContents[itemName];
-            itemObj = JSON.parse(itemContents);
-          }
-          else if (_.endsWith(itemName, '.js'))
-          {
-            itemObj = FileUtils.readModule(dirPath, itemName);
-          }
-          else {
-            throw new Error("Unknown extension: " + itemName)
-          }
+          var snapshotInfo = FileUtils.readJsonData('snapshot-items.json');
+          var state = new RegistryState(snapshotInfo);
+    
+          var itemDn = FileUtils.readModule(dirPath, itemName);
 
           var processor = new ValidatorProcessor(validatorScript);
           return processor.prepare()
             .then(result => {
               (result).should.be.an.Object();
               (result.success).should.be.true();
+              if (!result.success) {
+                console.log(result);
+              }
               (result.messages).should.be.empty();
             })
-            .then(() => processor.execute(itemObj))
+            .then(() => processor.execute(itemDn, state))
             .then(result => {
               (result).should.be.an.Object();
               (result.success).should.be.false();

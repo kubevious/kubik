@@ -8,7 +8,7 @@ describe('rule-processor-tests', function() {
 
     setupTest(
         'logic-item-01',
-        'logic-image-02', 
+        'logic-image-01', 
         (result) => {
 
             (result.ruleItems).should.be.an.Object();
@@ -24,7 +24,7 @@ describe('rule-processor-tests', function() {
 
     setupTest(
         'logic-item-filter-03',
-        'logic-image-02', 
+        'logic-image-01', 
         (result) => {
 
             (result.ruleItems).should.be.an.Object();
@@ -60,6 +60,9 @@ describe('rule-processor-tests', function() {
             .then(result => {
 
                 (result).should.be.an.Object();
+                if (!result.success) {
+                    console.log(result);
+                }
                 (result.success).should.be.true();
                 (result.messages).should.be.empty();
     

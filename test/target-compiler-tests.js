@@ -16,6 +16,9 @@ describe('target-compiler-tests', function() {
       return processor.prepare()
         .then(result => {
           (result).should.be.an.Object();
+          if (!result.success) {
+            console.log(result);
+          }
           (result.success).should.be.true();
           (result.messages).should.be.empty();
         })

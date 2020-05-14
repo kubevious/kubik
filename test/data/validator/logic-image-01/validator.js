@@ -1,3 +1,3 @@
-if (item.config.tag == 'latest') {
+if (item.props.tag == 'latest') {
     error();
 }

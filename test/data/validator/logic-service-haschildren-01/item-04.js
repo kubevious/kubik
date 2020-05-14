@@ -1,10 +1,2 @@
-module.exports = {
-    "config": {
-        "spec": {
-            "externalTrafficPolicy": "Local"
-        }
-    },
-    hasChildren: function(name) {
-        return false;
-    } 
-}
+module.exports = 
+    "root/ns-[gitlab]/app-[gitlab-nginx-ingress-controller]/service-[LoadBalancer]";
