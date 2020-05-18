@@ -10,10 +10,16 @@ describe('rule-processor-negative-tests', function() {
         'target/logic-item-01',
         'invalid-validators/logic-image-01', 
         (result) => {
+
             (result).should.be.an.Object();
             (result.success).should.be.false();
             (result.messages).should.not.be.empty();
-            (result.messages.length).should.be.equal(2);
+
+            (result.messages.length).should.be.equal(1);
+            (result.messages[0]).should.be.eql({
+                source: [ 'script' ],
+                msg: "Cannot read property 'config' of undefined"
+            });
         });
 
     setupTest(
@@ -23,7 +29,12 @@ describe('rule-processor-negative-tests', function() {
             (result).should.be.an.Object();
             (result.success).should.be.false();
             (result.messages).should.not.be.empty();
-            (result.messages.length).should.be.equal(2);
+
+            (result.messages.length).should.be.equal(1);
+            (result.messages[0]).should.be.eql({ 
+                source: [ 'target' ], 
+                msg: 'abcd is not defined'
+            });
         });        
 
   /*****/

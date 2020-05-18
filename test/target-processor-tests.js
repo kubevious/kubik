@@ -7,90 +7,90 @@ const RegistryState = require('kubevious-helpers').RegistryState;
 
 describe('target-processor-tests', function() {
 
-  setupTest('process-logic-target-no-filter', 'logic-item-01', function(results) {
-    for(var result of results)
+  setupTest('process-logic-target-no-filter', 'logic-item-01', function(items) {
+    for(var item of items)
     {
-      (result).should.be.an.Object();
-      (result.dn).should.be.a.String();
-      (DnUtils.kind(result.dn)).should.be.equal('image');
+      (item).should.be.an.Object();
+      (item.dn).should.be.a.String();
+      (DnUtils.kind(item.dn)).should.be.equal('image');
     }
 
-    (results.length).should.be.equal(116);
+    (items.length).should.be.equal(116);
   });
 
 
   setupTest('process-logic-target-single-descendants', 'logic-item-descendants-01', 
-    function(results) {
-      for(var result of results)
+    function(items) {
+      for(var item of items)
       {
-        (result).should.be.an.Object();
-        (result.dn).should.be.a.String();
-        (DnUtils.kind(result.dn)).should.be.equal('port');
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        (DnUtils.kind(item.dn)).should.be.equal('port');
       }
 
-      (results.length).should.be.equal(68);
+      (items.length).should.be.equal(68);
     }
   );
 
 
   setupTest('process-logic-target-descendants-and-children', 'logic-item-descendants-02', 
-    function(results) {
-      for(var result of results)
+    function(items) {
+      for(var item of items)
       {
-        (result).should.be.an.Object();
-        (result.dn).should.be.a.String(); 
-        (DnUtils.kind(result.dn)).should.be.equal('ingress');
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String(); 
+        (DnUtils.kind(item.dn)).should.be.equal('ingress');
       }
 
-      (results.length).should.be.equal(5);
+      (items.length).should.be.equal(5);
     }
   );
 
 
   setupTest('process-logic-target-name-filter', 'logic-item-filter-01', 
-    function(results) {
-      for(var result of results)
+    function(items) {
+      for(var item of items)
       {
-        (result).should.be.an.Object();
-        (result.dn).should.be.a.String();
-        (DnUtils.kind(result.dn)).should.be.equal('app');
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        (DnUtils.kind(item.dn)).should.be.equal('app');
 
-        DnUtils.startsWithAnyOf(result.dn, ['root/ns-[gitlab]', 'root/ns-[sock-shop]']).should.be.equal(true, result.dn);
+        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]', 'root/ns-[sock-shop]']).should.be.equal(true);
       }
 
-      (results.length).should.be.equal(34);
+      (items.length).should.be.equal(34);
     }
   );
 
 
   setupTest('process-logic-target-custom-filter-simple', 'logic-item-custom-filter-01', 
-    function(results) {
-      for(var result of results)
+    function(items) {
+      for(var item of items)
       {
-        (result).should.be.an.Object();
-        (result.dn).should.be.a.String();
-        (DnUtils.kind(result.dn)).should.be.equal('service');
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        (DnUtils.kind(item.dn)).should.be.equal('service');
 
-        DnUtils.endsWithAnyOf(result.dn, ['/service-[NodePort]']).should.be.equal(true, result.dn);
+        DnUtils.endsWithAnyOf(item.dn, ['/service-[NodePort]']).should.be.equal(true);
       }
 
-      (results.length).should.be.equal(5);
+      (items.length).should.be.equal(5);
     }
   );
 
 
   setupTest('process-logic-target-custom-filter-parent', 'logic-item-custom-filter-parent-01', 
-    function(results) {
-      for(var result of results)
+    function(items) {
+      for(var item of items)
       {
-        (result).should.be.an.Object();
-        (result.dn).should.be.a.String();
-        (DnUtils.kind(result.dn)).should.be.equal('service');
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        (DnUtils.kind(item.dn)).should.be.equal('service');
 
-        DnUtils.endsWithAnyOf(result.dn, ['/service-[NodePort]']).should.be.equal(true, result.dn);
+        DnUtils.endsWithAnyOf(item.dn, ['/service-[NodePort]']).should.be.equal(true);
       }
 
-      (results.length).should.be.equal(2);
+      (items.length).should.be.equal(2);
     }
   );
 
@@ -122,20 +122,20 @@ describe('target-processor-tests', function() {
 
           return processor.execute(state);
         })
-        .then(results => {
+        .then(result => {
 
-          (results).should.be.an.Array;
+          (result.items).should.be.an.Array;
 
           if (debugOutputObjects)
           {
-            console.log('COUNT: ' + results.length);
-            for(var result of results)
+            console.log('COUNT: ' + result.items.length);
+            for(var item of result.items)
             {
-              console.log('* ' + result.dn);
+              console.log('* ' + item.dn);
             }
           }
 
-          validateCb(results)
+          validateCb(result.items)
         })
         ;
     });

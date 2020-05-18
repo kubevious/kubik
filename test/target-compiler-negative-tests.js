@@ -18,6 +18,10 @@ describe('target-compiler-negative-tests', function() {
           (result).should.be.an.Object();
           (result.success).should.be.false();
           (result.messages).should.not.be.empty();
+          for(var x of result.messages)
+          {
+            (x).should.be.a.String();
+          }
         })
 
     });

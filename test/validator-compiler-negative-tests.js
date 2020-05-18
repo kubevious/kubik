@@ -42,11 +42,18 @@ describe('validator-compiler-negative-tests', function() {
             .then(result => {
               (result).should.be.an.Object();
               (result.success).should.be.false();
+
               (result.messages).should.not.be.empty();
+              for(var x of result.messages)
+              {
+                (x).should.be.a.String();
+              }
+
               (result.validation).should.be.an.Object();
               (result.validation.hasErrors).should.be.a.Boolean();
               (result.validation.hasWarnings).should.be.a.Boolean();
-            })
+
+            });
             
         });
 
