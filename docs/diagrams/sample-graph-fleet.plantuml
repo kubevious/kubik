@@ -1,0 +1,85 @@
+@startuml
+
+class "Fleet" as fleet
+
+class "Truck" as truck1 {
+    name = "TRUUUK"
+    .. props ..
+    axleCount: 3
+}
+
+class "Driver" as driver1 {
+    name = "Jane"
+    .. props ..
+    state = "CA"
+    shiftStart = "2020-05-01T03:00:27Z"
+}
+
+class "Container" as cont1_1 {
+    name = "Maersk-001"
+    .. props ..
+    weight = 4
+}
+
+class "Material" as material1_1 {
+    name = "Horse"
+    .. props ..
+    livestock = true
+}
+
+
+class "Truck" as truck2 {
+    name = "CARSICK"
+    .. props ..
+    axleCount: 5
+}
+
+class "Driver" as driver2 {
+    name = "Joe"
+    .. props ..
+    state = "TX"
+    shiftStart = "2020-05-01T07:00:27Z"
+}
+
+class "Container" as cont2_1 {
+    name = "Maersk-002"
+    .. props ..
+    weight = 5
+}
+
+class "Material" as material2_1 {
+    name = "Corn"
+    .. props ..
+    food = true
+}
+
+
+class "Container" as cont2_2 {
+    name = "Maersk-003"
+    .. props ..
+    weight = 3
+}
+
+
+class "Material" as material2_2 {
+    name = "Waste"
+    .. props ..
+    biohazard = true
+}
+
+
+fleet --> truck1
+truck1 --> driver1
+truck1 --> cont1_1
+cont1_1 --> material1_1
+
+fleet --> truck2
+truck2 --> driver2
+truck2 --> cont2_1
+cont2_1 --> material2_1
+truck2 --> cont2_2
+cont2_2 --> material2_2
+
+hide circle
+
+@enduml

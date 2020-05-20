@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="474px" preserveAspectRatio="none" style="width:1002px;height:474px;" version="1.1" viewBox="0 0 1002 474" width="1002px" zoomAndPan="magnify"><defs><filter height="300%" id="f16bs5tn84glgx" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[b47826e9676a443f3f5d10a5f8295dbe]
+class fleet--><rect fill="#FEFECE" filter="url(#f16bs5tn84glgx)" height="39.9688" id="fleet" style="stroke: #A80036; stroke-width: 1.5;" width="36" x="467.5" y="8"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="30" x="470.5" y="24.1387">Fleet</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="468.5" x2="502.5" y1="31.9688" y2="31.9688"/><line style="stroke: #A80036; stroke-width: 1.5;" x1="468.5" x2="502.5" y1="39.9688" y2="39.9688"/><!--MD5=[c2b0e8c5c32f80fe9ee1b4401381847b]
+class truck1--><rect fill="#FEFECE" filter="url(#f16bs5tn84glgx)" height="74.3828" id="truck1" style="stroke: #A80036; stroke-width: 1.5;" width="117" x="268" y="108"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="33" x="310" y="124.1387">Truck</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="269" x2="384" y1="131.9688" y2="131.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="105" x="274" y="146.1792">name = "TRUUUK"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="72" x="274" y="175.7886">axleCount: 3</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="269" x2="311" y1="159.1758" y2="159.1758"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="31" x="311" y="162.4839">props</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="342" x2="384" y1="159.1758" y2="159.1758"/><!--MD5=[d89db9db712dc7d879602aefcc4566b6]
+class driver1--><rect fill="#FEFECE" filter="url(#f16bs5tn84glgx)" height="87.1875" id="driver1" style="stroke: #A80036; stroke-width: 1.5;" width="217" x="6" y="242"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="37" x="96" y="258.1387">Driver</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="222" y1="265.9688" y2="265.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="85" x="12" y="280.1792">name = "Jane"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="72" x="12" y="309.7886">state = "CA"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="205" x="12" y="322.5933">shiftStart = "2020-05-01T03:00:27Z"</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="7" x2="99" y1="293.1758" y2="293.1758"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="31" x="99" y="296.4839">props</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="130" x2="222" y1="293.1758" y2="293.1758"/><!--MD5=[def197f6fc2c3d5dd39638fe7e9b1fea]
+class cont1_1--><rect fill="#FEFECE" filter="url(#f16bs5tn84glgx)" height="74.3828" id="cont1_1" style="stroke: #A80036; stroke-width: 1.5;" width="137" x="258" y="248.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="57" x="298" y="264.6387">Container</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="259" x2="394" y1="272.4688" y2="272.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="125" x="264" y="286.6792">name = "Maersk-001"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="62" x="264" y="316.2886">weight = 4</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="259" x2="311" y1="299.6758" y2="299.6758"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="31" x="311" y="302.9839">props</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="342" x2="394" y1="299.6758" y2="299.6758"/><!--MD5=[8441d6ecc43123f614dd3daafa00bfdd]
+class material1_1--><rect fill="#FEFECE" filter="url(#f16bs5tn84glgx)" height="74.3828" id="material1_1" style="stroke: #A80036; stroke-width: 1.5;" width="105" x="274" y="389"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="47" x="303" y="405.1387">Material</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="275" x2="378" y1="412.9688" y2="412.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="93" x="280" y="427.1792">name = "Horse"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="90" x="280" y="456.7886">livestock = true</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="275" x2="311" y1="440.1758" y2="440.1758"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="31" x="311" y="443.4839">props</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="342" x2="378" y1="440.1758" y2="440.1758"/><!--MD5=[3420b7e7da021e98dd23876c217db078]
+class truck2--><rect fill="#FEFECE" filter="url(#f16bs5tn84glgx)" height="74.3828" id="truck2" style="stroke: #A80036; stroke-width: 1.5;" width="121" x="584" y="108"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="33" x="628" y="124.1387">Truck</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="585" x2="704" y1="131.9688" y2="131.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="109" x="590" y="146.1792">name = "CARSICK"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="72" x="590" y="175.7886">axleCount: 5</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="585" x2="629" y1="159.1758" y2="159.1758"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="31" x="629" y="162.4839">props</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="660" x2="704" y1="159.1758" y2="159.1758"/><!--MD5=[24e1f2418f955cc93c64bc948b1d5712]
+class driver2--><rect fill="#FEFECE" filter="url(#f16bs5tn84glgx)" height="87.1875" id="driver2" style="stroke: #A80036; stroke-width: 1.5;" width="217" x="430" y="242"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="37" x="520" y="258.1387">Driver</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="431" x2="646" y1="265.9688" y2="265.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="78" x="436" y="280.1792">name = "Joe"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="71" x="436" y="309.7886">state = "TX"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="205" x="436" y="322.5933">shiftStart = "2020-05-01T07:00:27Z"</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="431" x2="523" y1="293.1758" y2="293.1758"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="31" x="523" y="296.4839">props</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="554" x2="646" y1="293.1758" y2="293.1758"/><!--MD5=[0bcf1be3eceb285cc86237677d7c68a4]
+class cont2_1--><rect fill="#FEFECE" filter="url(#f16bs5tn84glgx)" height="74.3828" id="cont2_1" style="stroke: #A80036; stroke-width: 1.5;" width="137" x="682" y="248.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="57" x="722" y="264.6387">Container</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="683" x2="818" y1="272.4688" y2="272.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="125" x="688" y="286.6792">name = "Maersk-002"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="62" x="688" y="316.2886">weight = 5</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="683" x2="735" y1="299.6758" y2="299.6758"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="31" x="735" y="302.9839">props</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="766" x2="818" y1="299.6758" y2="299.6758"/><!--MD5=[eefe1d4a3cd43094744a8a813550a189]
+class material2_1--><rect fill="#FEFECE" filter="url(#f16bs5tn84glgx)" height="74.3828" id="material2_1" style="stroke: #A80036; stroke-width: 1.5;" width="98" x="701.5" y="389"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="47" x="727" y="405.1387">Material</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="702.5" x2="798.5" y1="412.9688" y2="412.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="86" x="707.5" y="427.1792">name = "Corn"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="65" x="707.5" y="456.7886">food = true</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="702.5" x2="735" y1="440.1758" y2="440.1758"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="31" x="735" y="443.4839">props</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="766" x2="798.5" y1="440.1758" y2="440.1758"/><!--MD5=[5a50f5be4a9c095274417359ebe77144]
+class cont2_2--><rect fill="#FEFECE" filter="url(#f16bs5tn84glgx)" height="74.3828" id="cont2_2" style="stroke: #A80036; stroke-width: 1.5;" width="137" x="854" y="248.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="57" x="894" y="264.6387">Container</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="855" x2="990" y1="272.4688" y2="272.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="125" x="860" y="286.6792">name = "Maersk-003"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="62" x="860" y="316.2886">weight = 3</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="855" x2="907" y1="299.6758" y2="299.6758"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="31" x="907" y="302.9839">props</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="938" x2="990" y1="299.6758" y2="299.6758"/><!--MD5=[3af8d4cf382bcb4998d7686f1eca3eb9]
+class material2_2--><rect fill="#FEFECE" filter="url(#f16bs5tn84glgx)" height="74.3828" id="material2_2" style="stroke: #A80036; stroke-width: 1.5;" width="108" x="868.5" y="389"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="47" x="899" y="405.1387">Material</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="869.5" x2="975.5" y1="412.9688" y2="412.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="96" x="874.5" y="427.1792">name = "Waste"</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="96" x="874.5" y="456.7886">biohazard = true</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="869.5" x2="907" y1="440.1758" y2="440.1758"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="31" x="907" y="443.4839">props</text><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 1.0,2.0;" x1="938" x2="975.5" y1="440.1758" y2="440.1758"/><!--MD5=[91274ec3932a64fa7cbeec9f05f8978a]
+link fleet to truck1--><path d="M467.261,42.192 C446.269,57.375 410.819,83.015 380.747,104.765 " fill="none" id="fleet-&gt;truck1" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="376.352,107.944,385.9888,105.9111,380.4035,105.0139,381.3007,99.4287,376.352,107.944" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[566d4ee1e59104419b23d534352313d4]
+link truck1 to driver1--><path d="M271.353,182.028 C244.801,199.374 212.671,220.365 184.422,238.82 " fill="none" id="truck1-&gt;driver1" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="179.923,241.759,189.6453,240.1849,184.1088,239.0242,185.2695,233.4877,179.923,241.759" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[c654165a52badc1db2c9a49f371b290f]
+link truck1 to cont1_1--><path d="M326.5,182.028 C326.5,200.636 326.5,223.439 326.5,242.807 " fill="none" id="truck1-&gt;cont1_1" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="326.5,248.172,330.5,239.172,326.5,243.172,322.5,239.172,326.5,248.172" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[a221497dfe16aeed6f0211c2b9e90cf3]
+link cont1_1 to material1_1--><path d="M326.5,322.528 C326.5,341.136 326.5,363.9394 326.5,383.3065 " fill="none" id="cont1_1-&gt;material1_1" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="326.5,388.6716,330.5,379.6716,326.5,383.6716,322.5,379.6716,326.5,388.6716" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[d104e5bdb311853dc1cbe1175bf239fc]
+link fleet to truck2--><path d="M503.739,42.192 C524.731,57.375 560.181,83.015 590.253,104.765 " fill="none" id="fleet-&gt;truck2" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="594.648,107.944,589.6993,99.4287,590.5965,105.0139,585.0112,105.9111,594.648,107.944" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[f455da04210a0f46baee74923a4c969d]
+link truck2 to driver2--><path d="M616.926,182.028 C603.924,199.017 588.245,219.503 574.335,237.678 " fill="none" id="truck2-&gt;driver2" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="571.211,241.759,579.8575,237.0433,574.2499,237.7885,573.5047,232.181,571.211,241.759" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[3fb42d3b1deaa47f051a941e67b3fec1]
+link truck2 to cont2_1--><path d="M672.074,182.028 C686.559,200.954 704.365,224.22 719.348,243.797 " fill="none" id="truck2-&gt;cont2_1" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="722.696,248.172,720.4001,238.5945,719.6562,244.2022,714.0484,243.4582,722.696,248.172" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[59abf5045b585b137239bf3d207c0730]
+link cont2_1 to material2_1--><path d="M750.5,322.528 C750.5,341.136 750.5,363.9394 750.5,383.3065 " fill="none" id="cont2_1-&gt;material2_1" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="750.5,388.6716,754.5,379.6716,750.5,383.6716,746.5,379.6716,750.5,388.6716" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[03bfe9bd92098919ce2bf9881933de20]
+link truck2 to cont2_2--><path d="M705.165,176.223 C747.486,197.308 804.193,225.559 849.07,247.917 " fill="none" id="truck2-&gt;cont2_2" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="853.651,250.199,847.3793,242.6052,849.1757,247.9692,843.8117,249.7656,853.651,250.199" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[c27ec4956db03d9ca70dfce7f134d888]
+link cont2_2 to material2_2--><path d="M922.5,322.528 C922.5,341.136 922.5,363.9394 922.5,383.3065 " fill="none" id="cont2_2-&gt;material2_2" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="922.5,388.6716,926.5,379.6716,922.5,383.6716,918.5,379.6716,922.5,388.6716" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[7a3ca5e09d760d9291d2eb3a6970bc16]
+@startuml
+class "Fleet" as fleet
+
+class "Truck" as truck1 {
+    name = "TRUUUK"
+    .. props ..
+    axleCount: 3
+}
+
+class "Driver" as driver1 {
+    name = "Jane"
+    .. props ..
+    state = "CA"
+    shiftStart = "2020-05-01T03:00:27Z"
+}
+
+class "Container" as cont1_1 {
+    name = "Maersk-001"
+    .. props ..
+    weight = 4
+}
+
+class "Material" as material1_1 {
+    name = "Horse"
+    .. props ..
+    livestock = true
+}
+
+
+class "Truck" as truck2 {
+    name = "CARSICK"
+    .. props ..
+    axleCount: 5
+}
+
+class "Driver" as driver2 {
+    name = "Joe"
+    .. props ..
+    state = "TX"
+    shiftStart = "2020-05-01T07:00:27Z"
+}
+
+class "Container" as cont2_1 {
+    name = "Maersk-002"
+    .. props ..
+    weight = 5
+}
+
+class "Material" as material2_1 {
+    name = "Corn"
+    .. props ..
+    food = true
+}
+
+
+class "Container" as cont2_2 {
+    name = "Maersk-003"
+    .. props ..
+    weight = 3
+}
+
+
+class "Material" as material2_2 {
+    name = "Waste"
+    .. props ..
+    biohazard = true
+}
+
+
+fleet - -> truck1
+truck1 - -> driver1
+truck1 - -> cont1_1
+cont1_1 - -> material1_1
+
+fleet - -> truck2
+truck2 - -> driver2
+truck2 - -> cont2_1
+cont2_1 - -> material2_1
+truck2 - -> cont2_2
+cont2_2 - -> material2_2
+
+hide circle
+@enduml
+
+PlantUML version 1.2020.10(Sun May 17 09:35:57 UTC 2020)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 14.0.1+7
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
