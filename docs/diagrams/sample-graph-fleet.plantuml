@@ -42,7 +42,7 @@ class "Driver" as driver2 {
 }
 
 class "Container" as cont2_1 {
-    name = "Maersk-002"
+    name = "Cosco-002"
     .. props ..
     weight = 5
 }

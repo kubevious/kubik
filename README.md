@@ -56,6 +56,8 @@ Each node in the graph has a **type** and **name**. In the example above the typ
 Multiple sets of key-value or array objects can also be associated with each node.
 
 ## Target Script Specification
+The purpose of the target script is to select a subset of nodes that matches required criteria. The selected nodes would be passed along to the rule script for validation.
+
 The target script starts with **select** statement that takes the node **type** as an input. That statement would select all nodes of the given type.
 ```js
 select('Door')
@@ -84,11 +86,11 @@ select('Material')
     .name('Horse')
 ```
 
-More complex filters can be defied as well. To filter trucks that have more than 3 axles:
+More complex filters can be defied as well. To filter "Maersk" containers:
 ```js
-select('Truck')
+select('Container')
     .filter(({item}) => {
-        return (item.props.axleCount > 3);
+        return item.name.startsWith('Maersk');
     }))
 ```
 
@@ -109,3 +111,23 @@ select('Truck')
     }))
 .descendant("Material")
 ```
+
+Multiple filters, child and descendent queries can be specified chained together.
+```js
+select('Truck')
+    .filter(({item}) => {
+        return (item.props.axleCount >= 5);
+    }))
+.child("Container")
+    .filter(({item}) => {
+        return (item.props.weight >= 4);
+    }))
+.descendant("Material")
+    .filter(({item}) => {
+        return item.props.biohazard;
+    }))
+```
+
+## Rule Script Specification
+Nodes selected from the target script would be passed to rule script for evaluation. The rule script would have access to the node, along with the name, properties and also has access to the entire graph.
+
