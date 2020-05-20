@@ -1,0 +1,28 @@
+@startuml
+
+object "Car" as car
+
+object "Door" as door_front {
+    name = "front"
+    locked = true
+}
+
+object "Door" as door_rear {
+    name = "rear"
+    locked = false
+}
+
+object "Window" as window_front {
+    open = true
+}
+
+object "Window" as window_rear {
+    open = true
+}
+
+car --> door_front
+car --> door_rear
+door_front --> window_front
+door_rear --> window_rear
+
+@enduml

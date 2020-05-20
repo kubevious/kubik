@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="259px" preserveAspectRatio="none" style="width:236px;height:259px;" version="1.1" viewBox="0 0 236 259" width="236px" zoomAndPan="magnify"><defs><filter height="300%" id="fx1ce2cubaqxe" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FEFECE" filter="url(#fx1ce2cubaqxe)" height="33.9688" style="stroke: #A80036; stroke-width: 1.5;" width="34" x="99" y="8"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="20" x="106" y="21.1387">Car</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="100" x2="132" y1="25.9688" y2="25.9688"/><rect fill="#FEFECE" filter="url(#fx1ce2cubaqxe)" height="49.25" style="stroke: #A80036; stroke-width: 1.5;" width="94" x="6" y="102"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="30" x="38" y="115.1387">Door</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="7" x2="99" y1="119.9688" y2="119.9688"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="82" x="12" y="133.251">name = "front"</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="72" x="12" y="144.8916">locked = true</text><rect fill="#FEFECE" filter="url(#fx1ce2cubaqxe)" height="49.25" style="stroke: #A80036; stroke-width: 1.5;" width="90" x="135" y="102"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="30" x="165" y="115.1387">Door</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="136" x2="224" y1="119.9688" y2="119.9688"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="78" x="141" y="133.251">name = "rear"</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="76" x="141" y="144.8916">locked = false</text><rect fill="#FEFECE" filter="url(#fx1ce2cubaqxe)" height="37.6094" style="stroke: #A80036; stroke-width: 1.5;" width="76" x="15" y="211"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="48" x="29" y="224.1387">Window</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="16" x2="90" y1="228.9688" y2="228.9688"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="64" x="21" y="242.251">open = true</text><rect fill="#FEFECE" filter="url(#fx1ce2cubaqxe)" height="37.6094" style="stroke: #A80036; stroke-width: 1.5;" width="76" x="142" y="211"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="48" x="156" y="224.1387">Window</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="143" x2="217" y1="228.9688" y2="228.9688"/><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="64" x="148" y="242.251">open = true</text><!--MD5=[5e161876ff85e4c0723db42cb3638d55]
+link car to door_front--><path d="M105.5968,42.43 C96.1246,57.39 81.9421,79.79 70.6905,97.56 " fill="none" id="car-&gt;door_front" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="67.8977,101.971,76.0927,96.5082,70.5731,97.747,69.3343,92.2275,67.8977,101.971" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[cb612666339bdb249211026cce25ccc5]
+link car to door_rear--><path d="M126.568,42.43 C136.191,57.39 150.598,79.79 162.029,97.56 " fill="none" id="car-&gt;door_rear" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="164.866,101.971,163.3606,92.2379,162.1608,97.766,156.6326,96.5663,164.866,101.971" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[53482af697fd56d2bf2d8c1799ec87a6]
+link door_front to window_front--><path d="M53,151.0413 C53,167.4571 53,189.2655 53,205.6412 " fill="none" id="door_front-&gt;window_front" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="53,210.9708,57,201.9708,53,205.9708,49,201.9708,53,210.9708" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[375e0c3c2d4a930228e7be6e944c23cb]
+link door_rear to window_rear--><path d="M180,151.0413 C180,167.4571 180,189.2655 180,205.6412 " fill="none" id="door_rear-&gt;window_rear" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="180,210.9708,184,201.9708,180,205.9708,176,201.9708,180,210.9708" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[eade1219826c8a5e57bd14a96114b1d0]
+@startuml
+object "Car" as car
+
+object "Door" as door_front {
+    name = "front"
+    locked = true
+}
+
+object "Door" as door_rear {
+    name = "rear"
+    locked = false
+}
+
+object "Window" as window_front {
+    open = true
+}
+
+object "Window" as window_rear {
+    open = true
+}
+
+car - -> door_front
+car - -> door_rear
+door_front - -> window_front
+door_rear - -> window_rear
+@enduml
+
+PlantUML version 1.2020.10(Sun May 17 09:35:57 UTC 2020)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Java Version: 14.0.1+7
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
