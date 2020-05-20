@@ -67,6 +67,45 @@ select('Door')
 .child('Window')
 ```
 
+For further capabilities, lets consider bit more complex example below. The graph represents a fleet of trucks that move *(shipping)* containers, materials and corresponding drivers.
 
-For further capabilities, lets consider bit more complex example:
 ![Sample Fleet Graph](docs/diagrams/sample-graph-fleet.svg)
+
+Nodes can be filtered by name:
+```js
+select('Material')
+    .name('Corn')
+```
+
+Or by matching myltiple names. The target script below would select both "Corn" and "Horse" materials:
+```js
+select('Material')
+    .name('Corn')
+    .name('Horse')
+```
+
+More complex filters can be defied as well. To filter trucks that have more than 3 axles:
+```js
+select('Truck')
+    .filter(({item}) => {
+        return (item.props.axleCount > 3);
+    }))
+```
+
+Selecting children of filtered objects. Script below would target drivers of 3 or less axle trucks.
+```js
+select('Truck')
+    .filter(({item}) => {
+        return (item.props.axleCount <= 3);
+    }))
+.child("Driver")
+```
+
+Descendents can also be selected using a similar method. The result would be "Corn" and "Waste" matrials.
+```js
+select('Truck')
+    .filter(({item}) => {
+        return (item.props.axleCount > 3);
+    }))
+.descendant("Material")
+```
