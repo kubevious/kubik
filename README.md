@@ -55,10 +55,10 @@ Each node in the graph has a **type** and **name**. In the example above the typ
 
 Multiple sets of key-value or array objects can also be associated with each node.
 
-## Target Script Specification
-The purpose of the target script is to select a subset of nodes that matches required criteria. The selected nodes would be passed along to the rule script for validation.
+## Target Script
+The purpose of the target script is to select a subset of nodes that matches required criteria. The selected node are be passed along to the rule script for validation.
 
-The target script starts with **select** statement that takes the node **type** as an input. That statement would select all nodes of the given type.
+The target script starts with **select** statement that takes the node **type** as an input. That statement selects all nodes of the given type.
 ```js
 select('Door')
 ```
@@ -79,14 +79,14 @@ select('Material')
     .name('Corn')
 ```
 
-Or by matching myltiple names. The target script below would select both "Corn" and "Horse" materials:
+Or by matching myltiple names. The target script below selects both "Corn" and "Horse" materials:
 ```js
 select('Material')
     .name('Corn')
     .name('Horse')
 ```
 
-More complex filters can be defied as well. To filter "Maersk" containers:
+Arbitrary programmable filters can be defied and expressed using JavaScript syntax. To filter "Maersk" containers:
 ```js
 select('Container')
     .filter(({item}) => {
@@ -94,7 +94,7 @@ select('Container')
     }))
 ```
 
-Selecting children of filtered objects. Script below would target drivers of 3 or less axle trucks.
+Selecting children of filtered objects. Script below targets drivers of 3 or less axle trucks.
 ```js
 select('Truck')
     .filter(({item}) => {
@@ -103,7 +103,7 @@ select('Truck')
 .child("Driver")
 ```
 
-Descendents can also be selected using a similar method. The result would be "Corn" and "Waste" matrials.
+Descendents can also be selected using a similar method. The resulting nodes are "Corn" and "Waste" matrials.
 ```js
 select('Truck')
     .filter(({item}) => {
@@ -112,7 +112,7 @@ select('Truck')
 .descendant("Material")
 ```
 
-Multiple filters, child and descendent queries can be specified chained together.
+Multiple filters, child and descendent queries can be chained together.
 ```js
 select('Truck')
     .filter(({item}) => {
@@ -128,6 +128,31 @@ select('Truck')
     }))
 ```
 
-## Rule Script Specification
-Nodes selected from the target script would be passed to rule script for evaluation. The rule script would have access to the node, along with the name, properties and also has access to the entire graph.
+## Rule Script
+Nodes selected from the target script are be passed to rule script for evaluation. Rules are expressed using JavaScript syntax. The rule script has access to the node, along with the name, properties and also has access to the entire graph. 
 
+The current node is represented in **item** variable. Just like in case of target script, in rule script properties are accessed through *props* field. A call to **error()** function marks the node as invalid.
+
+Some examples of rules below. Validating that hazardous materials are in containers below 4 tons:
+```js
+if (item.props.biohazard && item.parent.props.weight > 4) {
+    error();
+}
+```
+
+Enforcing California drivers not to transport livestock:
+```js
+if (item.props.state == 'CA'))
+{
+    for(var container of item.parent.children('Container'))
+    {
+        for(var material of container.children('Material'))
+        {
+            if (material.props.livestock)
+            {
+                error();
+            }
+        }
+    }
+}
+```
