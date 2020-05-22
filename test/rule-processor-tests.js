@@ -16,7 +16,10 @@ describe('rule-processor-tests', function() {
 
             for(var x of _.values(result.ruleItems))
             {
-            (x.hasError).should.be.true();
+                should(x.hasError).be.true();
+                should(x.hasWarning).be.false();
+                (x.marks).should.be.Object();
+                (_.keys(x.marks).length).should.be.equal(0);
             }
 
         });
@@ -32,12 +35,66 @@ describe('rule-processor-tests', function() {
 
             for(var x of _.values(result.ruleItems))
             {
-            (x.hasError).should.be.true();
+                should(x.hasError).be.true();
+                should(x.hasWarning).be.false();
+                (x.marks).should.be.Object();
+                (_.keys(x.marks).length).should.be.equal(0);
             }
         
         });
         
+    setupTest(
+        'logic-item-filter-03',
+        'logic-warn', 
+        (result) => {
+            (result.ruleItems).should.be.an.Object();
+            (_.keys(result.ruleItems).length).should.be.equal(13);
 
+            for(var x of _.values(result.ruleItems))
+            {
+                should(x.hasError).be.false();
+                should(x.hasWarning).be.true();
+                (x.marks).should.be.Object();
+                (_.keys(x.marks).length).should.be.equal(0);
+            }
+        });
+           
+    setupTest(
+        'logic-item-filter-01',
+        'logic-marker', 
+        (result) => {
+            (result.ruleItems).should.be.an.Object();
+            (_.keys(result.ruleItems).length).should.be.equal(34);
+
+            for(var x of _.values(result.ruleItems))
+            {
+                should(x.hasError).be.false();
+                should(x.hasWarning).be.false();
+
+                (x.marks).should.be.Object();
+                (x.marks['cool']).should.be.true();
+                (_.keys(x.marks).length).should.be.equal(1);
+            }
+        });
+
+    setupTest(
+        'logic-item-filter-04',
+        'logic-marker', 
+        (result) => {
+            (result.ruleItems).should.be.an.Object();
+            (_.keys(result.ruleItems).length).should.be.equal(1);
+
+            for(var x of _.values(result.ruleItems))
+            {
+                should(x.hasError).be.false();
+                should(x.hasWarning).be.false();
+
+                (x.marks).should.be.Object();
+                (x.marks['cool']).should.be.true();
+                (x.marks['new']).should.be.true();
+                (_.keys(x.marks).length).should.be.equal(2);
+            }
+        });
   /*****/
 
   function setupTest(targetName, validatorName, validateCb, debugOutputObjects)
