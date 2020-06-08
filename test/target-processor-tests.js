@@ -95,6 +95,22 @@ describe('target-processor-tests', function() {
   );
 
 
+  setupTest('process-logic-target-custom-filter-descendans', 'logic-item-custom-filter-02', 
+    function(items) {
+      for(var item of items)
+      {
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        (DnUtils.kind(item.dn)).should.be.equal('app');
+
+        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]']).should.be.equal(true);
+      }
+
+      (items.length).should.be.equal(3);
+    }
+  );
+
+
   /*****/
   function setupTest(name, targetFileName, validateCb, debugOutputObjects)
   {
