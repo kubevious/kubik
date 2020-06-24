@@ -1,0 +1,1 @@
+error("My Custom Warning")

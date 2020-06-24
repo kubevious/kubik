@@ -53,7 +53,25 @@ describe('validator-processor-tests', function() {
 
   setupTest('logic-warn', 'item-01', function(result) {
     (result.validation.hasErrors).should.be.equal(false);
+    (_.keys(result.validation.errorMsgs).length).should.be.equal(0);
     (result.validation.hasWarnings).should.be.equal(true);
+    (_.keys(result.validation.warnMsgs).length).should.be.equal(0);
+  });
+
+  setupTest('logic-warn-msg', 'item-01', function(result) {
+    (result.validation.hasErrors).should.be.equal(false);
+    (_.keys(result.validation.errorMsgs).length).should.be.equal(0);
+    (result.validation.hasWarnings).should.be.equal(true);
+    (_.keys(result.validation.warnMsgs).length).should.be.equal(1);
+    (_.keys(result.validation.warnMsgs)[0]).should.be.equal("this is My custom Warning");
+  });
+
+  setupTest('logic-error-msg', 'item-01', function(result) {
+    (result.validation.hasErrors).should.be.equal(true);
+    (_.keys(result.validation.errorMsgs).length).should.be.equal(1);
+    (_.keys(result.validation.errorMsgs)[0]).should.be.equal("My Custom Warning");
+    (result.validation.hasWarnings).should.be.equal(false);
+    (_.keys(result.validation.warnMsgs).length).should.be.equal(0);
   });
 
   setupTest('logic-marker', 'item-01', function(result) {
@@ -63,6 +81,7 @@ describe('validator-processor-tests', function() {
     (result.validation.marks['cool']).should.be.true();
     (_.keys(result.validation.marks).length).should.be.equal(1);
   });
+
   setupTest('logic-marker', 'item-02', function(result) {
     (result.validation.hasErrors).should.be.equal(false);
     (result.validation.hasWarnings).should.be.equal(false);
