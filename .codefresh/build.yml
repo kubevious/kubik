@@ -21,7 +21,9 @@ steps:
     working_directory: "${{clone}}"
     commands:
       - npm install
+      - find . | grep "helper-mysql"
       - npm install --only=dev
+      - find . | grep "helper-mysql"
 
   test:
     title: Run Unit Tests
@@ -29,4 +31,5 @@ steps:
     image: 'kubevious/node-builder:12'
     working_directory: "${{clone}}"
     commands:
+      - find . | grep "helper-mysql"
       - npm test
