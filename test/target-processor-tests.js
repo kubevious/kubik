@@ -111,20 +111,85 @@ describe('target-processor-tests', function() {
   );
 
   setupTest('process-logic-target-custom-filter-memory-unit', 'logic-item-custom-filter-unit-memory-01', 
-  function(items) {
-    for(var item of items)
-    {
-      // (item).should.be.an.Object();
-      // (item.dn).should.be.a.String();
-      // (DnUtils.kind(item.dn)).should.be.equal('app');
+    function(items) {
+      for(var item of items)
+      {
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        (DnUtils.kind(item.dn)).should.be.equal('cont');
 
-      // DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]']).should.be.equal(true);
+        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[openfaas]']).should.be.equal(true);
+      }
+
+      (items.length).should.be.equal(1);
     }
+  );
 
-    // (items.length).should.be.equal(3);
-  }
-);
+  //
+  setupTest('process-logic-target-label-filter', 'logic-item-label-filter-01', 
+    function(items) {
+      for(var item of items)
+      {
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        (DnUtils.kind(item.dn)).should.be.equal('launcher');
 
+        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]']).should.be.equal(true);
+      }
+
+      (items.length).should.be.equal(1);
+    }
+  );
+
+  //
+  setupTest('process-logic-target-label-filter', 'logic-item-label-filter-03', 
+    function(items) {
+      for(var item of items)
+      {
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        (DnUtils.kind(item.dn)).should.be.equal('launcher');
+      }
+
+      (items.length).should.be.equal(2);
+    }
+  );
+
+  //
+  setupTest('process-logic-target-label-filter', 'logic-item-label-filter-04', 
+    function(items) {
+      for(var item of items)
+      {
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        (DnUtils.kind(item.dn)).should.be.equal('launcher');
+        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]']).should.be.equal(true);
+      }
+
+      (items.length).should.be.equal(1);
+    }
+  );
+
+  //
+  setupTest('process-logic-target-label-filter', 'logic-item-label-filter-05', 
+    function(items) {
+      (items.length).should.be.equal(0);
+    }
+  );
+
+  //
+  setupTest('process-logic-target-label-filter', 'logic-item-label-filter-06', 
+    function(items) {
+      for(var item of items)
+      {
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        (DnUtils.kind(item.dn)).should.be.equal('launcher');
+      }
+
+      (items.length).should.be.equal(2);
+    }
+  );
 
 
   /*****/
@@ -134,6 +199,10 @@ describe('target-processor-tests', function() {
 
       var snapshotInfo = FileUtils.readJsonData('snapshot-items.json');
       var state = new RegistryState(snapshotInfo);
+
+
+      // var xx = state.getAssets("root/ns-[gitlab]/app-[gitlab-task-runner]/launcher-[Deployment]");
+      // console.log(xx)
 
       var targetScript = FileUtils.readFile('target/' + targetFileName + '.js');
 
