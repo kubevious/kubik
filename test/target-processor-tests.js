@@ -200,10 +200,6 @@ describe('target-processor-tests', function() {
       var snapshotInfo = FileUtils.readJsonData('snapshot-items.json');
       var state = new RegistryState(snapshotInfo);
 
-
-      // var xx = state.getAssets("root/ns-[gitlab]/app-[gitlab-task-runner]/launcher-[Deployment]");
-      // console.log(xx)
-
       var targetScript = FileUtils.readFile('target/' + targetFileName + '.js');
 
       var processor = new TargetProcessor(targetScript);
