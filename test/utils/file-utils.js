@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const _ = require('the-lodash');
+const Lodash = require('the-lodash');
+const _ = Lodash.default;
 
 
 module.exports.readJsonOrJsData = function(name)

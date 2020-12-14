@@ -1,7 +1,10 @@
 const should = require('should');
+const Lodash = require('the-lodash');
+const _ = Lodash.default;
+
 const TargetProcessor = require('../lib/processors/target/processor');
 const FileUtils = require('./utils/file-utils');
-const _ = require('the-lodash');
+
 
 describe('target-compiler-negative-tests', function() {
 

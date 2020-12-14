@@ -1,9 +1,10 @@
 const should = require('should');
-const _ = require('the-lodash');
+const Lodash = require('the-lodash');
+const _ = Lodash.default;
 const TargetProcessor = require('../lib/processors/target/processor');
 const FileUtils = require('./utils/file-utils');
 const DnUtils = require('./utils/dn-utils');
-const RegistryState = require('kubevious-helpers').RegistryState;
+const { RegistryState } = require('@kubevious/helpers/dist/registry-state');
 
 describe('target-processor-tests', function() {
 

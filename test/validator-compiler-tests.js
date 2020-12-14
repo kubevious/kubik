@@ -1,6 +1,8 @@
 const should = require('should');
-const _ = require('the-lodash');
-const RegistryState = require('kubevious-helpers').RegistryState;
+const Lodash = require('the-lodash');
+const _ = Lodash.default;
+
+const { RegistryState } = require('@kubevious/helpers/dist/registry-state');
 const ValidatorProcessor = require('../lib/processors/validator/processor');
 const FileUtils = require('./utils/file-utils');
 

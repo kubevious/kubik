@@ -1,8 +1,9 @@
 const should = require('should');
-const _ = require('the-lodash');
+const Lodash = require('the-lodash');
+const _ = Lodash.default;
 const FileUtils = require('./utils/file-utils');
 const RuleProcessor = require('../').RuleProcessor;
-const RegistryState = require('kubevious-helpers').RegistryState;
+const { RegistryState } = require('@kubevious/helpers/dist/registry-state');
 
 describe('rule-processor-negative-tests', function() {
 

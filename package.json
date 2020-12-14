@@ -21,8 +21,9 @@
     "should": "^13.2.3"
   },
   "dependencies": {
-    "kubevious-helpers": "git+https://github.com/kubevious/helpers.git",
-    "the-lodash": "^1.1.1",
-    "the-promise": "^1.2.3"
+    "@kubevious/helpers": "^1.0.10",
+    "the-lodash": "^2.0.0",
+    "the-logger": "^2.0.4",
+    "the-promise": "^2.0.3"
   }
 }

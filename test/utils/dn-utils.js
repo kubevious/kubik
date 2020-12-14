@@ -1,5 +1,6 @@
-const _ = require('the-lodash')
-const DnUtils = require('kubevious-helpers').DnUtils;
+const Lodash = require('the-lodash');
+const _ = Lodash.default;
+const DnUtils = require('@kubevious/helpers/dist/dn-utils');
 
 module.exports.startsWithAnyOf = function(dn, options)
 {
