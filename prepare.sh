@@ -4,6 +4,7 @@ MY_DIR="$(dirname $MY_PATH)"
 cd $MY_DIR
 
 rm -rf node_modules/
+rm -rf dist/
 
 npm install
 npm install --only=dev
