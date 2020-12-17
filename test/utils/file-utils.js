@@ -3,6 +3,18 @@ const fs = require('fs');
 const Lodash = require('the-lodash');
 const _ = Lodash.default;
 
+const { RegistryState } = require('@kubevious/helpers/dist/registry-state');
+
+module.exports.readRegistryState = function(name)
+{
+    var jsonData = module.exports.readJsonData(name);
+    var snapshotInfo = {
+        date: jsonData.date,
+        items: _.values(jsonData.items)
+    };
+    var state = new RegistryState(snapshotInfo);
+    return state;
+}
 
 module.exports.readJsonOrJsData = function(name)
 {

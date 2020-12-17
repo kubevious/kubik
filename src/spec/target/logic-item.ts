@@ -67,7 +67,7 @@ export class LogicItem {
         return this._scope.resource(kind, apiGroup)
     }
 
-    debugOutput(indent: number) {
+    debugOutput(indent?: number) {
         if (!indent) {
             indent = 0
         }

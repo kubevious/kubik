@@ -1,10 +1,10 @@
-const should = require('should');
-const Lodash = require('the-lodash');
-const _ = Lodash.default;
+import 'mocha';
+import should = require('should');
+import _ from 'the-lodash';
 
-const TargetProcessor = require('../lib/processors/target/processor');
+import { TargetProcessor } from '../src/processors/target/processor';
+
 const FileUtils = require('./utils/file-utils');
-
 
 describe('target-compiler-tests', function() {
 
@@ -18,7 +18,7 @@ describe('target-compiler-tests', function() {
       var processor = new TargetProcessor(testCase.src);
       return processor.prepare()
         .then(result => {
-          (result).should.be.an.Object();
+          should(result).be.an.Object();
           if (!result.success) {
             console.log(result);
           }

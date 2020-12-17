@@ -4,32 +4,105 @@ stages:
   - "clone"
   - "build"
   - "test"
+  - "publish"
 
 steps:
+  init:
+    title: Init
+    stage: clone
+    image: codefresh/cli
+    shell: bash
+    commands:
+      - cf_export GITHUB_TOKEN=$(codefresh get context github --decrypt -o yaml | yq -y .spec.data.auth.password)
+      - cf_export CICD_REPO_PATH=/codefresh/volume/repo.git
+      - 'echo "Repo: ${{CF_REPO_NAME}}"'
+      - 'echo "Branch: ${{CF_BRANCH}}"'
+      - 'echo "Revision: ${{CF_REVISION}}"'
+      - 'echo "Author: ${{CF_COMMIT_AUTHOR}}"'
+      - 'echo "Message: ${{CF_COMMIT_MESSAGE}}"'
+
   clone:
-    type: "git-clone"
-    title: "Cloning repository"
-    description: "Cloning main repository..."
-    repo: "kubevious/${{CF_REPO_NAME}}"
-    revision: "${{CF_BRANCH}}"
-    stage: "clone"
+    title: Clone Repo
+    stage: clone
+    image: 'alpine/git:latest'
+    working_directory: "/codefresh/volume"
+    commands:
+      - pwd
+      - ls -la
+      - rm -rf ${{CICD_REPO_PATH}}
+      - 'git clone https://${{CF_REPO_OWNER}}:${{GITHUB_TOKEN}}@github.com/${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}.git ${{CICD_REPO_PATH}}'
+      - ls -la
+      - cd ${{CICD_REPO_PATH}}
+      - git reset --hard ${{CF_REVISION}}
+      - ls -la
 
   prepare:
     title: Prepare Dependencies
     stage: build
     image: 'kubevious/node-builder:12'
-    working_directory: "${{clone}}"
+    working_directory: "${{CICD_REPO_PATH}}"
     commands:
-      - npm install
-      - find . | grep "helper-mysql"
-      - npm install --only=dev
-      - find . | grep "helper-mysql"
+      - npm ci
 
-  test:
+  compile:
+    title: Compile
+    stage: build
+    image: 'kubevious/node-builder:12'
+    working_directory: "${{CICD_REPO_PATH}}"
+    commands:
+      - npm run build
+      
+  run_unit_test:
     title: Run Unit Tests
     stage: test
     image: 'kubevious/node-builder:12'
-    working_directory: "${{clone}}"
+    working_directory: "${{CICD_REPO_PATH}}"
+    environment:
+      - "MYSQL_HOST=mysql"
+      - "MYSQL_PORT=3306"
+      - "MYSQL_DB=sample-db"
+      - "MYSQL_USER=root"
+      - "MYSQL_PASS="
     commands:
-      - find . | grep "helper-mysql"
+      - pwd
+      - ls -la
       - npm test
+    services:
+      composition:
+        mysql:
+          image: mysql:8.0.22
+          ports:
+            - 3306
+          environment:
+            - "MYSQL_DATABASE=sample-db"
+            - "MYSQL_ALLOW_EMPTY_PASSWORD=yes"
+          command: --default-authentication-plugin=mysql_native_password
+      readiness:
+        image: mysql:8.0.22
+        timeoutSeconds: 90
+        commands:
+          - "mysql --host=mysql --user=root --password= sample-db -e \"show databases;\""    
+          - "mysql --host=mysql --user=root --password= sample-db < ${CICD_REPO_PATH}/mysql/init.sql"
+          - "mysql --host=mysql --user=root --password= sample-db -e \"show tables;\""    
+
+  publish:
+    title: Publish
+    stage: publish
+    image: 'kubevious/node-builder:12'
+    working_directory: "${{CICD_REPO_PATH}}"
+    when: 
+      condition: 
+        all: 
+          noCiCdAuthor: 'includes("${{CF_COMMIT_MESSAGE}}", "Version Release") == false' 
+          masterBranch: '"${{CF_BRANCH}}" == "master"'
+    commands:
+      - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc
+      - git config --global user.email "cicd@kubevious.io"
+      - git config --global user.name "Kubevious CI/CD"
+      - 'npm version patch -m "Version Release v%s"'
+      - git status
+      - git pull
+      - git status
+      - git push 
+      - git push --tags
+      - npm publish

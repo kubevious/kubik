@@ -1,10 +1,13 @@
-const should = require('should');
-const Lodash = require('the-lodash');
-const _ = Lodash.default;
-const TargetProcessor = require('../lib/processors/target/processor');
+import 'mocha';
+import should = require('should');
+import _ from 'the-lodash';
+
+import { RegistryState } from '@kubevious/helpers/dist/registry-state'
+
+import { FinalItems, TargetProcessor } from '../src/processors/target/processor';
+
 const FileUtils = require('./utils/file-utils');
 const DnUtils = require('./utils/dn-utils');
-const { RegistryState } = require('@kubevious/helpers/dist/registry-state');
 
 describe('target-processor-tests', function() {
 
@@ -194,12 +197,11 @@ describe('target-processor-tests', function() {
 
 
   /*****/
-  function setupTest(name, targetFileName, validateCb, debugOutputObjects)
+  function setupTest(name: string, targetFileName: string, validateCb: (items: FinalItems[]) => void, debugOutputObjects?: boolean)
   {
     it(name, function() {
 
-      var snapshotInfo = FileUtils.readJsonData('snapshot-items.json');
-      var state = new RegistryState(snapshotInfo);
+      var state = <RegistryState>FileUtils.readRegistryState('snapshot-items.json');
 
       var targetScript = FileUtils.readFile('target/' + targetFileName + '.js');
 
@@ -208,7 +210,7 @@ describe('target-processor-tests', function() {
         .then(result => {
           if (debugOutputObjects)
           {
-            processor._scope.debugOutput();
+            processor.scope.debugOutput();
           }
 
           (result).should.be.an.Object();

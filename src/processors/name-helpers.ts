@@ -1,5 +1,5 @@
 import _ from 'the-lodash'
-import KubeviousHelpersDocs from '@kubevious/helpers/dist/docs'
+import * as KubeviousHelpersDocs from '@kubevious/helpers/dist/docs'
 
 var LOGIC_ITEM_KIND_REVERSE_MAPPINNG: { [name: string]: string } = {}
 for (var x of _.keys(KubeviousHelpersDocs.KIND_TO_USER_MAPPING)) {

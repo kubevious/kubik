@@ -54,7 +54,7 @@ export class K8sItem {
         return this._scope.resource(kind, apiGroup)
     }
 
-    debugOutput(indent: number) {
+    debugOutput(indent?: number) {
         if (!indent) {
             indent = 0
         }

@@ -32,15 +32,15 @@ export class ScriptItem {
         if (!node) {
             return null
         }
-        return node.node
+        return node;
     }
 
-    get name() {
+    get name(){
         var node = this.node
         if (!node) {
-            return null
+            return null;
         }
-        return node.name
+        return node.name;
     }
 
     get props() {
@@ -59,45 +59,45 @@ export class ScriptItem {
         return this.getProperties('annotations')
     }
 
-    children(kind: string) {
+    children(kind: string) : ScriptItem[] {
         kind = mapLogicItemName(kind)
-        var children = this._state.childrenByKind(this._dn, kind)
-        children = _.keys(children)
-        return children.map((x: string) => new ScriptItem(x, this._state))
+        let children = this._state.childrenByKind(this._dn, kind)
+        let childrenDns = _.keys(children);
+        return childrenDns.map((x: string) => new ScriptItem(x, this._state))
     }
 
-    hasChildren(kind: string) {
+    hasChildren(kind: string) : boolean {
         kind = mapLogicItemName(kind)
-        var children = this._state.childrenByKind(this._dn, kind)
-        children = _.keys(children)
-        return children.length > 0
+        let children = this._state.childrenByKind(this._dn, kind)
+        let childrenDns = _.keys(children);
+        return childrenDns.length > 0
     }
 
-    descendants(kind: string) {
+    descendants(kind: string) : ScriptItem[] {
         kind = mapLogicItemName(kind)
-        var descendants = this._state.scopeByKind(this._dn, kind)
-        descendants = _.keys(descendants)
-        return descendants.map((x: string) => new ScriptItem(x, this._state))
+        let descendants = this._state.scopeByKind(this._dn, kind)
+        let descendantDns = _.keys(descendants);
+        return descendantDns.map((x: string) => new ScriptItem(x, this._state))
     }
 
-    hasDescendants(kind: string) {
+    hasDescendants(kind: string) : boolean {
         kind = mapLogicItemName(kind)
         var descendants = this._state.scopeByKind(this._dn, kind)
         return _.keys(descendants).length > 0
     }
 
-    getProperties(name: string) {
+    getProperties(name: string) : any {
         var propsGroup = this._state.getProperties(this._dn)
         if (!propsGroup) {
             return {}
         }
-        var props = propsGroup[name]
+        let props = propsGroup[name]
         if (!props) {
             return {}
         }
         if (!props.config) {
             return {}
         }
-        return props.config
+        return props.config;
     }
 }
