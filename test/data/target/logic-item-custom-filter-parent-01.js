@@ -1,10 +1,11 @@
 select('Namespace')
-.child('Application')
-.descendant('Port')
-.child('Service')
-    .filter(({item}) => {
+    .child('Application')
+    .descendant('Container')
+    .descendant('Port')
+    .child('Service')
+    .filter(({item, prev}) => {
         if (item.config.spec.type == 'NodePort') {
-            if (item.parent.config.containerPort == 8080) {
+            if (prev.config.containerPort == 8080) {
                 return true;
             }
         }
