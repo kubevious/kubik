@@ -1,17 +1,16 @@
 import { stringify } from '../utils/debug'
 import { Scope } from './scope'
 
-export interface FilterItem {
-    [name: string]: string
-}
+import { GenericFilter, GenericFilterFunc, KeyValueDict } from './types';
 
 export class K8sItem {
     public _kind: string
     public _scope: Scope
-    public _namespaceFilters: (string | FilterItem | Function)[]
-    public _nameFilters: (string | FilterItem | Function)[]
-    public _labelFilters: (string | FilterItem | Function)[]
-    public _customFilters: (string | FilterItem | Function)[]
+
+    public _namespaceFilters: GenericFilter<string>[]
+    public _nameFilters: GenericFilter<string>[]
+    public _labelFilters: GenericFilter<KeyValueDict>[]
+    public _customFilters: GenericFilterFunc<boolean>[]
     public _apiGroup: string
 
     constructor(kind: string, apiGroup: string) {
@@ -37,15 +36,17 @@ export class K8sItem {
     }
 
     label(key: string, value: string) {
-        return this.labels({ key, value })
+        var filter: KeyValueDict = {};
+        filter[key] = value;
+        return this.labels(filter);
     }
 
-    labels(value: string | { [name: string]: string }) {
+    labels(value: KeyValueDict) {
         this._labelFilters.push(value)
         return this
     }
 
-    filter(value: string) {
+    filter(value: GenericFilterFunc<boolean>) {
         this._customFilters.push(value)
         return this
     }
@@ -67,22 +68,22 @@ export class K8sItem {
         console.log(header + '* K8sItem ' + id)
 
         if (this._namespaceFilters.length > 0) {
-            for (var filter of this._namespaceFilters) {
+            for (let filter of this._namespaceFilters) {
                 console.log(header + '    - Namespace: ' + stringify(filter))
             }
         }
         if (this._nameFilters.length > 0) {
-            for (var filter of this._nameFilters) {
+            for (let filter of this._nameFilters) {
                 console.log(header + '    - Name: ' + stringify(filter))
             }
         }
         if (this._labelFilters.length > 0) {
-            for (var filter of this._labelFilters) {
+            for (let filter of this._labelFilters) {
                 console.log(header + '    - Label: ' + stringify(filter))
             }
         }
         if (this._customFilters.length > 0) {
-            for (var filter of this._customFilters) {
+            for (let filter of this._customFilters) {
                 console.log(header + '    - CustomFilter: ' + stringify(filter))
             }
         }

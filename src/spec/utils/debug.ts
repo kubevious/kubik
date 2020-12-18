@@ -1,8 +1,7 @@
 import _ from 'the-lodash'
-import { FilterItem } from '../target/k8s-item'
 
 export const stringify = function (
-    value: string | FilterItem | Function
+    value: any
 ): string {
     if (_.isFunction(value)) {
         return value.toString()

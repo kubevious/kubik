@@ -5,4 +5,4 @@ cd $MY_DIR
 
 export TS_NODE_COMPILER_OPTIONS="{\"module\": \"commonjs\" }"
 
-mocha -r ./node_modules/ts-node/register 'test/**/*.ts' # -g process-logic-target-custom-filter-parent
+mocha -r ./node_modules/ts-node/register 'test/**/*.ts' # -g process-logic-target-no-filter

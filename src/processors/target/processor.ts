@@ -8,6 +8,7 @@ import { ScriptItem } from '../script-item'
 import { K8sItem } from '../../spec/target/k8s-item'
 import { LogicItem } from '../../spec/target/logic-item'
 import { RegistryState } from '@kubevious/helpers/dist/registry-state'
+import { KeyValueDict } from '../../spec/target/types'
 
 export interface FinalItems {
     [prop: string]: string
@@ -214,12 +215,12 @@ export class TargetProcessor {
         prev: ScriptItem,
         item: ScriptItem
     ) {
-        var evaluator = new Evaluator(
+        var evaluator = new Evaluator<string>(
             this._state!,
             targetSelector,
             prev,
             item,
-            targetSelector._nameFilters as string[]
+            targetSelector._nameFilters
         )
         return evaluator.doesAnyMatch((value) => {
             if (item.name != value) {
@@ -234,12 +235,12 @@ export class TargetProcessor {
         prev: ScriptItem,
         item: ScriptItem
     ) {
-        var evaluator = new Evaluator(
+        var evaluator = new Evaluator<KeyValueDict>(
             this._state!,
             targetSelector,
             prev,
             item,
-            targetSelector._labelFilters as string[]
+            targetSelector._labelFilters
         )
         return evaluator.doesAnyMatch((dict) => {
             for (var key of _.keys(dict)) {
@@ -256,12 +257,12 @@ export class TargetProcessor {
         prev: ScriptItem,
         item: ScriptItem
     ) {
-        var evaluator = new Evaluator(
+        var evaluator = new Evaluator<KeyValueDict>(
             this._state!,
             targetSelector,
             prev,
             item,
-            targetSelector._annotationFilters as string[]
+            targetSelector._annotationFilters
         )
         return evaluator.doesAnyMatch((dict) => {
             for (var key of _.keys(dict)) {
@@ -278,14 +279,14 @@ export class TargetProcessor {
         prev: ScriptItem,
         item: ScriptItem
     ) {
-        var evaluator = new Evaluator(
+        var evaluator = new Evaluator<boolean>(
             this._state!,
             targetSelector,
             prev,
             item,
-            targetSelector._customFilters as string[]
+            targetSelector._customFilters
         )
-        return evaluator.doesAnyMatch()
+        return evaluator.doesAnyMatch(x => x)
     }
 
     _executeLogicItem(targetSelector: LogicItem, prev: ScriptItem) {

@@ -4,11 +4,11 @@ import { Promise } from 'the-promise'
 import { LogicItem } from '../../spec/target/logic-item'
 import { ScriptItem } from '../script-item'
 
-export class Evaluator {
+export class Evaluator<T> {
     public _state: RegistryState
     public _targetSelector: LogicItem
     private _item: ScriptItem
-    private _matchers: string[]
+    private _matchers: (T | MatcherFunc<T>)[]
     private _prev: ScriptItem
 
     constructor(
@@ -16,7 +16,7 @@ export class Evaluator {
         targetSelector: LogicItem,
         prev: ScriptItem,
         item: ScriptItem,
-        matchers: string[]
+        matchers: (T | MatcherFunc<T>)[]
     ) {
         this._state = state
         this._targetSelector = targetSelector
@@ -25,45 +25,24 @@ export class Evaluator {
         this._matchers = matchers
     }
 
-    doesAnyMatch(valueCb?: (cb?: any) => any) {
-        return this.combineValues(valueCb!, (a, b) => {
-            if (a == null && b == null) {
-                return true
+    doesAnyMatch(valueCb: (value: T) => boolean) : Promise<boolean> {
+        if (this._matchers.length == 0) {
+            return Promise.resolve(true);
+        }
+        return this._resolveValues().then((values) => {
+            for(let value of values) {
+                const isMatch = valueCb(value);
+                if (isMatch) {
+                    return true;
+                }
             }
-            return a || b
+            return false;
         })
     }
 
-    doAllMatch(valueCb: () => any) {
-        return this.combineValues(valueCb, (a, b) => a && b)
-    }
-
-    combineValues(valueCb?: () => any, combineCb?: (a: any, b: any) => any) {
-        return this.getValues(valueCb!).then((values) => {
-            if (values.length == 0) {
-                return combineCb!(null, null)
-            }
-            var value = values[0]
-            for (var i = 1; i < values.length; i++) {
-                value = combineCb!(value, values[i])
-            }
-
-            return value
-        })
-    }
-
-    getValues(valueCb: (x: any) => any) {
-        return this._resolveMatchers().then((values) => {
-            if (valueCb) {
-                return values.map((x) => valueCb(x))
-            }
-            return values
-        })
-    }
-
-    _resolveMatchers() {
-        var funcMatchers = this._matchers.filter((x) => _.isFunction(x))
-        var matcherValues = this._matchers.filter((x) => !_.isFunction(x))
+    private _resolveValues() : Promise<T[]> {
+        let funcMatchers = <MatcherFunc<T>[]>this._matchers.filter((x) => _.isFunction(x))
+        let matcherValues = <T[]> this._matchers.filter((x) => !_.isFunction(x))
 
         return Promise.serial(funcMatchers, (x) => {
             return this._resolveMatcherValue(x)
@@ -72,11 +51,19 @@ export class Evaluator {
         })
     }
 
-    _resolveMatcherValue(funcMatcher: any) {
-        var params = {
+    private _resolveMatcherValue(funcMatcher: MatcherFunc<T>) {
+        var params : MatcherFuncArgs = {
             prev: this._prev,
             item: this._item,
         }
         return Promise.resolve(funcMatcher(params))
     }
+}
+
+export type MatcherFunc<T> = (args: MatcherFuncArgs) => T;
+
+interface MatcherFuncArgs
+{
+    item: ScriptItem,
+    prev?: ScriptItem
 }
