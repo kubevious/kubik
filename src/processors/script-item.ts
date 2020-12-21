@@ -1,5 +1,5 @@
 import _ from 'the-lodash'
-import DnUtils from '@kubevious/helpers/dist/dn-utils'
+import { parentDn as utilsParentDn } from '@kubevious/helpers/dist/dn-utils'
 import { RegistryState } from '@kubevious/helpers/dist/registry-state'
 import { mapLogicItemName } from './name-helpers'
 
@@ -20,7 +20,7 @@ export class ScriptItem {
     }
 
     get parent() {
-        var parentDn = DnUtils.parentDn(this._dn)
+        var parentDn = utilsParentDn(this._dn)
         if (!parentDn) {
             return null
         }
