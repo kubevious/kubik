@@ -81,7 +81,7 @@ export class ValidationProcessor {
 
     _validate() {}
 
-    execute(dn: string, state: RegistryState) {
+    execute(dn: string, state: RegistryState) : Promise<Result> {
         var result: Result = {
             success: false,
             messages: [],

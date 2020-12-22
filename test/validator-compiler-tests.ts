@@ -1,19 +1,19 @@
 import should from 'should';
 import _ from 'the-lodash';
-import { RegistryState } from '@kubevious/helpers/dist/registry-state';
 import { Result } from '../src/processors/validator/processor';
 
 import { ValidationProcessor } from '../src/processors/validator/processor';
-const FileUtils = require('./utils/file-utils');
+
+import { readRegistryState, listDirectories, readFileContents, readModule } from './utils/file-utils';
 
 describe('validator-compiler-tests', function() {
 
-  var dirs = FileUtils.listDirectories('validator');
+  var dirs = listDirectories('validator');
 
   dirs.forEach(function(dirEntry: Record<string, string>) {
 
     var dirPath = 'validator/' + dirEntry.name;
-    var dirContents = FileUtils.readFileContents(dirPath);
+    var dirContents = readFileContents(dirPath);
 
     var validatorScript = dirContents['validator.js'];
     if (validatorScript)
@@ -26,10 +26,9 @@ describe('validator-compiler-tests', function() {
 
         it('sample-' + dirEntry.name + '-' + itemName, function() {
 
-          var snapshotInfo = FileUtils.readJsonData('snapshot-items.json');
-          var state = new RegistryState(snapshotInfo);
+          var state = readRegistryState('snapshot-items.json');
 
-          var itemDn = FileUtils.readModule(dirPath, itemName);
+          var itemDn = readModule(dirPath, itemName);
 
           var processor = new ValidationProcessor(validatorScript);
           return processor.prepare()

@@ -1,9 +1,8 @@
 import 'mocha';
 import should from 'should';
 import _ from 'the-lodash';
-import { RegistryState } from '@kubevious/helpers/dist/registry-state';
 
-import { readFile, readJsonData} from './utils/file-utils';
+import { readRegistryState, readFile, readJsonData} from './utils/file-utils';
 import { ExecuteResult, RuleProcessor } from '../src/processors/rule/processor';
 
 describe('rule-processor-tests', function() {
@@ -152,8 +151,7 @@ describe('rule-processor-tests', function() {
 
     it(targetName + '_' + validatorName, function() {
 
-        var snapshotInfo = readJsonData('snapshot-items.json');
-        var state = new RegistryState(snapshotInfo);
+        var state = readRegistryState('snapshot-items.json');
 
         var targetScript = readFile('target/' + targetName + '.js');
 

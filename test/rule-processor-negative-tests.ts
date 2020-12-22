@@ -1,9 +1,8 @@
 import should from 'should'
 import _ from 'the-lodash'
 import 'mocha'
-import { RegistryState } from '@kubevious/helpers/dist/registry-state'
 
-import { readJsonData, readFile } from './utils/file-utils'
+import { readRegistryState, readJsonData, readFile } from './utils/file-utils'
 import { RuleProcessor } from '../src/processors/rule/processor'
 
 describe('rule-processor-negative-tests', function () {
@@ -47,8 +46,7 @@ describe('rule-processor-negative-tests', function () {
         validateCb: (cb: any) => void
     ) {
         it(targetName + '_' + validatorName, function () {
-            var snapshotInfo = readJsonData('snapshot-items.json')
-            var state = new RegistryState(snapshotInfo)
+            var state = readRegistryState('snapshot-items.json');
 
             var targetScript = readFile(targetName + '.js')
 

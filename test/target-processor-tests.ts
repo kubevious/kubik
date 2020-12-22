@@ -2,12 +2,12 @@ import 'mocha';
 import should = require('should');
 import _ from 'the-lodash';
 
-import { RegistryState } from '@kubevious/helpers/dist/registry-state'
 
 import { FinalItems, TargetProcessor } from '../src/processors/target/processor';
 
-const FileUtils = require('./utils/file-utils');
-const DnUtils = require('./utils/dn-utils');
+import { readRegistryState, readFile } from './utils/file-utils';
+
+import * as DnUtils from './utils/dn-utils';
 
 describe('target-processor-tests', function() {
 
@@ -16,7 +16,7 @@ describe('target-processor-tests', function() {
     {
       (item).should.be.an.Object();
       (item.dn).should.be.a.String();
-      (DnUtils.kind(item.dn)).should.be.equal('image');
+      should(DnUtils.kind(item.dn)).be.equal('image');
     }
 
     (items.length).should.be.equal(116);
@@ -29,7 +29,7 @@ describe('target-processor-tests', function() {
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
-        (DnUtils.kind(item.dn)).should.be.equal('port');
+        should(DnUtils.kind(item.dn)).be.equal('port');
       }
 
       (items.length).should.be.equal(68);
@@ -43,7 +43,7 @@ describe('target-processor-tests', function() {
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String(); 
-        (DnUtils.kind(item.dn)).should.be.equal('ingress');
+        should(DnUtils.kind(item.dn)).be.equal('ingress');
       }
 
       (items.length).should.be.equal(5);
@@ -57,7 +57,7 @@ describe('target-processor-tests', function() {
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
-        (DnUtils.kind(item.dn)).should.be.equal('app');
+        should(DnUtils.kind(item.dn)).be.equal('app');
 
         DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]', 'root/ns-[sock-shop]']).should.be.equal(true);
       }
@@ -73,7 +73,7 @@ describe('target-processor-tests', function() {
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
-        (DnUtils.kind(item.dn)).should.be.equal('service');
+        should(DnUtils.kind(item.dn)).be.equal('service');
 
         DnUtils.endsWithAnyOf(item.dn, ['/service-[NodePort]']).should.be.equal(true);
       }
@@ -89,7 +89,7 @@ describe('target-processor-tests', function() {
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
-        (DnUtils.kind(item.dn)).should.be.equal('service');
+        should(DnUtils.kind(item.dn)).be.equal('service');
 
         DnUtils.endsWithAnyOf(item.dn, ['/service-[NodePort]']).should.be.equal(true);
       }
@@ -105,7 +105,7 @@ describe('target-processor-tests', function() {
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
-        (DnUtils.kind(item.dn)).should.be.equal('app');
+        should(DnUtils.kind(item.dn)).be.equal('app');
 
         DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]']).should.be.equal(true);
       }
@@ -120,7 +120,7 @@ describe('target-processor-tests', function() {
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
-        (DnUtils.kind(item.dn)).should.be.equal('cont');
+        should(DnUtils.kind(item.dn)).be.equal('cont');
 
         DnUtils.startsWithAnyOf(item.dn, ['root/ns-[openfaas]']).should.be.equal(true);
       }
@@ -136,7 +136,7 @@ describe('target-processor-tests', function() {
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
-        (DnUtils.kind(item.dn)).should.be.equal('launcher');
+        should(DnUtils.kind(item.dn)).be.equal('launcher');
 
         DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]']).should.be.equal(true);
       }
@@ -152,7 +152,7 @@ describe('target-processor-tests', function() {
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
-        (DnUtils.kind(item.dn)).should.be.equal('launcher');
+        should(DnUtils.kind(item.dn)).be.equal('launcher');
       }
 
       (items.length).should.be.equal(2);
@@ -166,7 +166,7 @@ describe('target-processor-tests', function() {
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
-        (DnUtils.kind(item.dn)).should.be.equal('launcher');
+        should(DnUtils.kind(item.dn)).be.equal('launcher');
         DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]']).should.be.equal(true);
       }
 
@@ -188,7 +188,7 @@ describe('target-processor-tests', function() {
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
-        (DnUtils.kind(item.dn)).should.be.equal('launcher');
+        should(DnUtils.kind(item.dn)).be.equal('launcher');
       }
 
       (items.length).should.be.equal(2);
@@ -201,9 +201,9 @@ describe('target-processor-tests', function() {
   {
     it(name, function() {
 
-      var state = <RegistryState>FileUtils.readRegistryState('snapshot-items.json');
+      var state = readRegistryState('snapshot-items.json');
 
-      var targetScript = FileUtils.readFile('target/' + targetFileName + '.js');
+      var targetScript = readFile('target/' + targetFileName + '.js');
 
       var processor = new TargetProcessor(targetScript);
       return processor.prepare()

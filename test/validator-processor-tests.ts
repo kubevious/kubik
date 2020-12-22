@@ -1,15 +1,15 @@
+import 'mocha';
 import should from 'should';
 import _ from 'the-lodash';
-import { RegistryState } from '@kubevious/helpers/dist/registry-state';
 
 import { ValidationProcessor, Result } from '../src/processors/validator/processor';
-import { readFile, readJsonData, readModule} from './utils/file-utils';
+import { readRegistryState, readFile, readJsonData, readModule} from './utils/file-utils';
 
 describe('validator-processor-tests', function() {
 
   setupTest('logic-image-01', 'item-01', function(result) {
-    (result.validation!.hasErrors).should.be.equal(true);
-    (result.validation!.hasWarnings).should.be.equal(false);
+    should(result.validation!.hasErrors).be.equal(true);
+    should(result.validation!.hasWarnings).be.equal(false);
   });
 
   setupTest('logic-image-01', 'item-02', function(result) {
@@ -97,8 +97,7 @@ describe('validator-processor-tests', function() {
   {
     it(caseName + '_' + itemName, function() {
 
-      var snapshotInfo = readJsonData('snapshot-items.json');
-      var state = new RegistryState(snapshotInfo);
+      var state = readRegistryState('snapshot-items.json');
 
       var dirPath = 'validator/' + caseName;
 

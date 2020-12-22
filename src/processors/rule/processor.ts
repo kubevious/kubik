@@ -114,7 +114,7 @@ export class RuleProcessor {
         )
     }
 
-    _executeValidator(item: FinalItems): void {
+    _executeValidator(item: FinalItems): Promise<any> {
         return this._validationProcessor!.execute(item.dn, this._state).then(
             (result: Result) => {
                 this._acceptScriptErrors('script', result)

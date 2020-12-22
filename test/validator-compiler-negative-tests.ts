@@ -2,8 +2,7 @@ import should from 'should';
 import _ from 'the-lodash';
 
 import { Result, ValidationProcessor } from '../src/processors/validator/processor';
-import { readFileContents, readModule, readJsonData, listDirectories} from './utils/file-utils';
-import { RegistryState } from '@kubevious/helpers/dist/registry-state';
+import { readRegistryState, readFileContents, readModule, readJsonData, listDirectories} from './utils/file-utils';
 
 describe('validator-compiler-negative-tests', function() {
 
@@ -24,8 +23,7 @@ describe('validator-compiler-negative-tests', function() {
       itemNames.forEach(function(itemName) {
 
         it('sample-' + dirEntry.name + '-' + itemName, function() {
-          var snapshotInfo = readJsonData('snapshot-items.json');
-          var state = new RegistryState(snapshotInfo);
+          var state = readRegistryState('snapshot-items.json');
 
           var itemDn = readModule(dirPath, itemName);
 
