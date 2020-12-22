@@ -3,6 +3,10 @@
   "version": "1.0.1",
   "description": "Kubik - domain specific validation language",
   "main": "dist/index.js",
+  "types": "dist",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'",
     "build": "tsc",

@@ -26,22 +26,20 @@ export interface ExecuteResult {
 
 export class RuleProcessor {
     private _state: RegistryState
-    private _ruleObj: RuleObj
     private _ruleTargetSrc: string
     private _ruleScriptSrc: string
     private _executeResult: ExecuteResult | null
     private _targetProcessor?: TargetProcessor
     private _validationProcessor?: ValidationProcessor
 
-    constructor(state: RegistryState, ruleObj: RuleObj) {
+    constructor(state: RegistryState, rule: RuleObj) {
         this._state = state
-        this._ruleObj = ruleObj
-        this._ruleTargetSrc = ruleObj.target
-        this._ruleScriptSrc = ruleObj.script
+        this._ruleTargetSrc = rule.target
+        this._ruleScriptSrc = rule.script
         this._executeResult = null
     }
 
-    process(): Promise<any> {
+    process(): Promise<ExecuteResult> {
         this._executeResult = {
             success: true,
             targetItems: [],
@@ -66,16 +64,17 @@ export class RuleProcessor {
                     success: false,
                     messages: ['Unknown error happened.'],
                 })
+                return this._getExecuteResult();
             })
     }
 
-    _prepare() {
+    private _prepare() {
         return this._prepareTargets().then(() => {
             return this._prepareScript()
         })
     }
 
-    _execute() {
+    private _execute() {
         return this._executeTarget().then(() => {
             if (!this._hasError()) {
                 return
@@ -85,21 +84,21 @@ export class RuleProcessor {
         })
     }
 
-    _prepareTargets() {
+    private _prepareTargets() {
         this._targetProcessor = new TargetProcessor(this._ruleTargetSrc)
         return this._targetProcessor.prepare().then((result: Result) => {
             this._acceptScriptErrors('target', result)
         })
     }
 
-    _prepareScript() {
+    private _prepareScript() {
         this._validationProcessor = new ValidationProcessor(this._ruleScriptSrc)
         return this._validationProcessor.prepare().then((result: Result) => {
             this._acceptScriptErrors('script', result)
         })
     }
 
-    _executeTarget() {
+    private _executeTarget() {
         return this._targetProcessor!.execute(this._state).then((result) => {
             this._acceptScriptErrors('target', result)
             if (result.success) {
@@ -108,13 +107,13 @@ export class RuleProcessor {
         })
     }
 
-    _executeValidators() {
+    private _executeValidators() {
         return Promise.serial(this._executeResult!.targetItems, (x) =>
             this._executeValidator(x)
         )
     }
 
-    _executeValidator(item: FinalItems): Promise<any> {
+    private _executeValidator(item: FinalItems): Promise<any> {
         return this._validationProcessor!.execute(item.dn, this._state).then(
             (result: Result) => {
                 this._acceptScriptErrors('script', result)
@@ -144,7 +143,7 @@ export class RuleProcessor {
         )
     }
 
-    _getRuleItem(dn: string) {
+    private _getRuleItem(dn: string) {
         if (!this._executeResult!.ruleItems[dn]) {
             this._executeResult!.ruleItems[dn] = {
                 errors: null,
@@ -155,11 +154,11 @@ export class RuleProcessor {
         return this._executeResult!.ruleItems[dn]
     }
 
-    _hasError() {
+    private _hasError() {
         return this._executeResult!.success
     }
 
-    _acceptScriptErrors(source: string, result: Result) {
+    private _acceptScriptErrors(source: string, result: Result) {
         if (!result.success) {
             this._executeResult!.success = false
             for (var msg of result.messages!) {
@@ -176,7 +175,7 @@ export class RuleProcessor {
         }
     }
 
-    _getExecuteResult(): ExecuteResult {
+    private _getExecuteResult(): ExecuteResult {
         var result = this._executeResult!
         this._executeResult = null
         delete result!.messageHashes

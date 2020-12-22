@@ -1,1 +1,1 @@
-export { RuleProcessor } from './processors/rule/processor'
+export { RuleProcessor, ExecuteResult } from './processors/rule/processor'

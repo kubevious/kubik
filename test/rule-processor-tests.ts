@@ -3,7 +3,7 @@ import should from 'should';
 import _ from 'the-lodash';
 
 import { readRegistryState, readFile, readJsonData} from './utils/file-utils';
-import { ExecuteResult, RuleProcessor } from '../src/processors/rule/processor';
+import { ExecuteResult, RuleProcessor } from '../src';
 
 describe('rule-processor-tests', function() {
 
