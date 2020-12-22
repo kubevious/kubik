@@ -1,8 +1,7 @@
-const Lodash = require('the-lodash');
-const _ = Lodash.default;
-const DnUtils = require('@kubevious/helpers/dist/dn-utils');
+import _ from 'the-lodash';
+import { parseDn } from '@kubevious/helpers/dist/dn-utils';
 
-module.exports.startsWithAnyOf = function(dn, options)
+export function startsWithAnyOf(dn: string, options: string[]): boolean
 {
     for(var x of options)
     {
@@ -13,7 +12,7 @@ module.exports.startsWithAnyOf = function(dn, options)
     return false;
 }
 
-module.exports.endsWithAnyOf = function(dn, options)
+export function endsWithAnyOf(dn: string, options: string[]): boolean
 {
     for(var x of options)
     {
@@ -24,9 +23,9 @@ module.exports.endsWithAnyOf = function(dn, options)
     return false;
 }
 
-module.exports.kind = function(dn)
+export function kind(dn: string): string | null
 {
-    var parts = DnUtils.parseDn(dn);
+    var parts = parseDn(dn);
     var lastPart = _.last(parts);
     if (!lastPart) {
         return null;

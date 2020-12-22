@@ -3,12 +3,11 @@ import should = require('should');
 import _ from 'the-lodash';
 
 import { TargetProcessor } from '../src/processors/target/processor';
-
-const FileUtils = require('./utils/file-utils');
+import { readFileContents } from './utils/file-utils';
 
 describe('target-compiler-tests', function() {
 
-  var files = FileUtils.readFileContents('target');
+  var files = readFileContents('target');
   var testCases = _.keys(files).map(x => ({ name: x, src: files[x]}));
 
   testCases.forEach(function(testCase) {

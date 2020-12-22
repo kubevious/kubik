@@ -70,7 +70,7 @@ export class TargetProcessor {
             .then(() => result)
     }
 
-    execute(state: RegistryState) {
+    execute(state: RegistryState): Promise<any> {
         this._errorMessages = []
         var result: TargetResult = {
             success: false,
@@ -88,12 +88,12 @@ export class TargetProcessor {
             .then(() => {
                 result.items = _.values(this._finalItems)
                 result.success = result.messages.length == 0
+                return result
             })
             .catch((reason) => {
                 result.success = false
                 this._addError(reason.message)
             })
-            .then(() => result)
     }
 
     _executorNodeR(): any {

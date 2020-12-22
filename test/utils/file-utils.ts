@@ -1,14 +1,14 @@
-const path = require('path');
-const fs = require('fs');
-const Lodash = require('the-lodash');
-const _ = Lodash.default;
+import path from 'path';
+import fs from 'fs';
+import _ from 'the-lodash';
 
-const { RegistryState } = require('@kubevious/helpers/dist/registry-state');
+import { RegistryState } from '@kubevious/helpers/dist/registry-state';
+import { SnapshotInfo } from '@kubevious/helpers/dist/snapshot/types';
 
-module.exports.readRegistryState = function(name)
+export function readRegistryState(name: string)
 {
-    var jsonData = module.exports.readJsonData(name);
-    var snapshotInfo = {
+    var jsonData = readJsonData(name);
+    var snapshotInfo: SnapshotInfo = {
         date: jsonData.date,
         items: _.values(jsonData.items)
     };
@@ -16,32 +16,32 @@ module.exports.readRegistryState = function(name)
     return state;
 }
 
-module.exports.readJsonOrJsData = function(name)
+export function readJsonOrJsData(name: string)
 {
-    if (module.exports.fileExists(name + '.js'))
+    if (fileExists(name + '.js'))
     {
-        return module.exports.readModule(name);
+        return readModule(name);
     }
-    else if (module.exports.fileExists(name + '.json'))
+    else if (fileExists(name + '.json'))
     {
-        return module.exports.readJsonData(name + '.json');
+        return readJsonData(name + '.json');
     }
     throw new Error("File not found: " + name);
 }
 
-module.exports.readModule = function()
+export function readModule(...args: string[])
 {
     var parts = ['..', 'data'];
-    parts = _.concat(parts, arguments);
+    parts = _.concat(parts, args);
     var filePath = path.join.apply(null, parts);
     return require(filePath);
 }
 
-module.exports.readFileContents = function(name)
+export function readFileContents(name: string): Record<string, string>
 {
     const dirPath = path.resolve(__dirname, '..', 'data', name);
     var entries = fs.readdirSync(dirPath, { withFileTypes: true });
-    var files = {};
+    var files: Record<string, string> = {};
     for(var file of entries.filter(x => !x.isDirectory()))
     {
         var fullName = path.join(dirPath, file.name);
@@ -50,7 +50,7 @@ module.exports.readFileContents = function(name)
     return files;
 }
 
-module.exports.listDirectories = function(name)
+export function listDirectories(name: string): Record<string, string>[]
 {
     const dirPath = path.resolve(__dirname, '..', 'data', name);
     var entries = fs.readdirSync(dirPath, { withFileTypes: true });
@@ -66,22 +66,22 @@ module.exports.listDirectories = function(name)
     return paths;
 }
 
-module.exports.fileExists = function(name)
+export function fileExists(name: string): boolean
 {
     const filePath = path.resolve(__dirname, '..', 'data', name);
     return fs.existsSync(filePath);
 }
 
-module.exports.readFile = function(name)
+export function readFile(name: string): string
 {
     const filePath = path.resolve(__dirname, '..', 'data', name);
     var contents = fs.readFileSync(filePath).toString();
     return contents;
 }
 
-module.exports.readJsonData = function(name)
+export function readJsonData(name: string): SnapshotInfo
 {
-    var contents = module.exports.readFile(name);
+    var contents = readFile(name);
     var json = JSON.parse(contents);
     return json;
 }

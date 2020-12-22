@@ -1,6 +1,6 @@
 import _ from 'the-lodash'
 import { Promise } from 'the-promise'
-import HashUtils from '@kubevious/helpers/dist/hash-utils'
+import { calculateObjectHashStr } from '@kubevious/helpers/dist/hash-utils'
 import { FinalItems, TargetProcessor } from '../target/processor'
 import { Result, ValidationProcessor } from '../validator/processor'
 import { RegistryState } from '@kubevious/helpers/dist/registry-state'
@@ -41,7 +41,7 @@ export class RuleProcessor {
         this._executeResult = null
     }
 
-    process() {
+    process(): Promise<any> {
         this._executeResult = {
             success: true,
             targetItems: [],
@@ -58,14 +58,14 @@ export class RuleProcessor {
 
                 return this._execute()
             })
+            .then(() => {
+                return this._getExecuteResult()
+            })
             .catch(() => {
                 this._acceptScriptErrors('rule', {
                     success: false,
                     messages: ['Unknown error happened.'],
                 })
-            })
-            .then(() => {
-                return this._getExecuteResult()
             })
     }
 
@@ -102,7 +102,6 @@ export class RuleProcessor {
     _executeTarget() {
         return this._targetProcessor!.execute(this._state).then((result) => {
             this._acceptScriptErrors('target', result)
-
             if (result.success) {
                 this._executeResult!.targetItems = result.items as FinalItems[]
             }
@@ -110,12 +109,12 @@ export class RuleProcessor {
     }
 
     _executeValidators() {
-        return Promise.serial(this._executeResult!.targetItems!, (x) =>
-            this._executeValidator(x as FinalItems)
+        return Promise.serial(this._executeResult!.targetItems, (x) =>
+            this._executeValidator(x)
         )
     }
 
-    _executeValidator(item: FinalItems) {
+    _executeValidator(item: FinalItems): void {
         return this._validationProcessor!.execute(item.dn, this._state).then(
             (result: Result) => {
                 this._acceptScriptErrors('script', result)
@@ -168,7 +167,7 @@ export class RuleProcessor {
                     source: [source],
                     msg: msg,
                 }
-                var hash = HashUtils.calculateObjectHashStr(msgInfo)
+                var hash = calculateObjectHashStr(msgInfo)
                 if (!(hash in this._executeResult!.messageHashes!)) {
                     this._executeResult!.messageHashes![hash] = true
                     this._executeResult!.messages.push(msgInfo)
@@ -177,8 +176,8 @@ export class RuleProcessor {
         }
     }
 
-    _getExecuteResult() {
-        var result = this._executeResult
+    _getExecuteResult(): ExecuteResult {
+        var result = this._executeResult!
         this._executeResult = null
         delete result!.messageHashes
         return result
