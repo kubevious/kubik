@@ -1,0 +1,1 @@
+export { RuleProcessor } from './processors/rule/processor'
