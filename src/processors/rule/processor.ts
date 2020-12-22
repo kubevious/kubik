@@ -10,15 +10,15 @@ export interface RuleObj {
     script: string
 }
 
+export interface MessageInfo {
+    msg: string;
+    source: string[];
+}
+
 export interface ExecuteResult {
     success: boolean
     targetItems: FinalItems[]
-    messages: {
-        [name: string]: any
-    }[]
-    messageHashes?: {
-        [name: string]: boolean
-    }
+    messages: MessageInfo[]
     ruleItems: {
         [name: string]: any
     }
@@ -29,6 +29,9 @@ export class RuleProcessor {
     private _ruleTargetSrc: string
     private _ruleScriptSrc: string
     private _executeResult: ExecuteResult | null
+    private _messageHashes: {
+        [name: string]: boolean
+    } | null = null;
     private _targetProcessor?: TargetProcessor
     private _validationProcessor?: ValidationProcessor
 
@@ -37,6 +40,7 @@ export class RuleProcessor {
         this._ruleTargetSrc = rule.target
         this._ruleScriptSrc = rule.script
         this._executeResult = null
+        this._messageHashes = null;
     }
 
     process(): Promise<ExecuteResult> {
@@ -44,9 +48,9 @@ export class RuleProcessor {
             success: true,
             targetItems: [],
             messages: [],
-            messageHashes: {},
             ruleItems: {},
         }
+        this._messageHashes = {};
 
         return this._prepare()
             .then(() => {
@@ -167,8 +171,8 @@ export class RuleProcessor {
                     msg: msg,
                 }
                 var hash = calculateObjectHashStr(msgInfo)
-                if (!(hash in this._executeResult!.messageHashes!)) {
-                    this._executeResult!.messageHashes![hash] = true
+                if (!(hash in this._messageHashes!)) {
+                    this._messageHashes![hash] = true
                     this._executeResult!.messages.push(msgInfo)
                 }
             }
@@ -178,7 +182,6 @@ export class RuleProcessor {
     private _getExecuteResult(): ExecuteResult {
         var result = this._executeResult!
         this._executeResult = null
-        delete result!.messageHashes
         return result
     }
 }
