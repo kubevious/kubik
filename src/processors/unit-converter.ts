@@ -1,20 +1,26 @@
 import _ from 'the-lodash'
 
+export interface PropertyValueWithUnit {
+    value: number,
+    unit: string
+}
+
 export class UnitConverter {
     constructor() {}
 
-    memory(value: string) {
-        var x = parseMemory(value)
+    memory(value: PropertyValueWithUnit) {
+        // var x = parseMemory(value)
         return {
             in: (unit: string) => {
-                var y = convertMemory(x, unit)
+                var y = convertMemory(value.value, unit)
                 return y
             },
         }
     }
 
-    percentage(value: string) {
-        return parseFloat(value)
+    percentage(value: PropertyValueWithUnit) {
+        return value.value * 100;
+        // return parseFloat(value)
     }
 }
 

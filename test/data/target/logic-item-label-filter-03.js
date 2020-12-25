@@ -1,3 +1,3 @@
 select('Launcher')
-    .label('app', 'runner')
-    .label('stage', 'dev')
+    .label('component', 'nats')
+    .label('component', 'gateway')

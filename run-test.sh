@@ -5,4 +5,4 @@ cd $MY_DIR
 
 export TS_NODE_COMPILER_OPTIONS="{\"module\": \"commonjs\" }"
 
-mocha -r ./node_modules/ts-node/register 'test/**/*.ts' # -g logic-image-01_item-01
+mocha -r ./node_modules/ts-node/register 'test/**/*.ts'
