@@ -10,7 +10,7 @@ export function readRegistryState(name: string)
     var jsonData = readJsonData(name);
     var snapshotInfo: SnapshotInfo = {
         date: jsonData.date,
-        items: _.values(jsonData.items)
+        items: jsonData.items
     };
     var state = new RegistryState(snapshotInfo);
     return state;

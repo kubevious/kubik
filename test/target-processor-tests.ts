@@ -19,7 +19,7 @@ describe('target-processor-tests', function() {
       should(DnUtils.kind(item.dn)).be.equal('image');
     }
 
-    (items.length).should.be.equal(116);
+    (items.length).should.be.equal(130);
   });
 
 
@@ -32,7 +32,7 @@ describe('target-processor-tests', function() {
         should(DnUtils.kind(item.dn)).be.equal('port');
       }
 
-      (items.length).should.be.equal(68);
+      (items.length).should.be.equal(71);
     }
   );
 

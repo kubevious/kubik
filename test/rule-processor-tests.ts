@@ -13,7 +13,7 @@ describe('rule-processor-tests', function() {
         (result) => {
 
             (result.ruleItems).should.be.an.Object();
-            (_.keys(result.ruleItems).length).should.be.equal(12);
+            (_.keys(result.ruleItems).length).should.be.equal(23);
 
             for(var x of _.values(result.ruleItems))
             {
@@ -71,7 +71,7 @@ describe('rule-processor-tests', function() {
         'logic-error-msg',
         (result) => {
             (result.ruleItems).should.be.an.Object();
-            (_.keys(result.ruleItems).length).should.be.equal(116);
+            (_.keys(result.ruleItems).length).should.be.equal(130);
 
             for(var x of _.values(result.ruleItems))
             {
@@ -92,7 +92,7 @@ describe('rule-processor-tests', function() {
         'logic-warn-msg',
         (result) => {
             (result.ruleItems).should.be.an.Object();
-            (_.keys(result.ruleItems).length).should.be.equal(116);
+            (_.keys(result.ruleItems).length).should.be.equal(130);
 
             for(var x of _.values(result.ruleItems))
             {
@@ -163,12 +163,12 @@ describe('rule-processor-tests', function() {
         return processor.process()
             .then((result: ExecuteResult) => {
 
-                (result)!.should.be.an.Object();
+                should(result).be.an.Object();
                 if (!result!.success!) {
                     console.log(result);
                 }
-                (result!.success)!.should.be.true();
-                (result!.messages)!.should.be.empty();
+                should(result.success).be.true();
+                should(result.messages).be.empty();
 
                 if (validateCb) {
                     validateCb(result);
