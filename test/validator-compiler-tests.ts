@@ -8,17 +8,17 @@ import { readRegistryState, listDirectories, readFileContents, readModule } from
 
 describe('validator-compiler-tests', function() {
 
-  var dirs = listDirectories('validator');
+  let dirs = listDirectories('validator');
 
   dirs.forEach(function(dirEntry: Record<string, string>) {
 
-    var dirPath = 'validator/' + dirEntry.name;
-    var dirContents = readFileContents(dirPath);
+    let dirPath = 'validator/' + dirEntry.name;
+    let dirContents = readFileContents(dirPath);
 
-    var validatorScript = dirContents['validator.js'];
+    let validatorScript = dirContents['validator.js'];
     if (validatorScript)
     {
-      var itemNames =
+      let itemNames =
         _.keys(dirContents)
          .filter(x => _.startsWith(x, 'item-') && _.endsWith(x, '.js') );
 
@@ -26,11 +26,11 @@ describe('validator-compiler-tests', function() {
 
         it('sample-' + dirEntry.name + '-' + itemName, function() {
 
-          var state = readRegistryState('snapshot-items.json');
+          let state = readRegistryState('snapshot-items.json');
 
-          var itemDn = readModule(dirPath, itemName);
+          let itemDn = readModule(dirPath, itemName);
 
-          var processor = new ValidationProcessor(validatorScript);
+          let processor = new ValidationProcessor(validatorScript);
           return processor.prepare()
             .then((result: Result) => {
               (result).should.be.an.Object();

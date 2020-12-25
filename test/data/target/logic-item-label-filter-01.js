@@ -1,2 +1,2 @@
 select('Launcher')
-    .label('app', 'runner')
+    .label('app', 'unicorn')

@@ -1,6 +1,6 @@
 select('Launcher')
     .labels({ 
-        'app': 'runner',
-        'stage': 'prod'
+        'app': 'openfaas',
+        'component': 'gateway'
     })
-    .label('stage', 'dev')
+    .label('app.kubernetes.io/instance', 'gitlab')

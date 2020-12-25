@@ -97,15 +97,15 @@ describe('validator-processor-tests', function() {
   {
     it(caseName + '_' + itemName, function() {
 
-      var state = readRegistryState('snapshot-items.json');
+      let state = readRegistryState('snapshot-items.json');
 
-      var dirPath = 'validator/' + caseName;
+      let dirPath = 'validator/' + caseName;
 
-      var validatorScript = readFile(dirPath + '/validator.js');
+      let validatorScript = readFile(dirPath + '/validator.js');
 
-      var itemDn = readModule(dirPath, itemName);
+      let itemDn = readModule(dirPath, itemName);
 
-      var processor = new ValidationProcessor(validatorScript);
+      let processor = new ValidationProcessor(validatorScript);
       return processor.prepare()
         .then((result: Result) => {
           (result).should.be.an.Object();

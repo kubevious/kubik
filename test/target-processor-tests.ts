@@ -74,8 +74,6 @@ describe('target-processor-tests', function() {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('service');
-
-        DnUtils.endsWithAnyOf(item.dn, ['/service-[NodePort]']).should.be.equal(true);
       }
 
       (items.length).should.be.equal(5);
@@ -90,8 +88,6 @@ describe('target-processor-tests', function() {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('service');
-
-        DnUtils.endsWithAnyOf(item.dn, ['/service-[NodePort]']).should.be.equal(true);
       }
 
       (items.length).should.be.equal(2);
@@ -122,7 +118,27 @@ describe('target-processor-tests', function() {
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('cont');
 
-        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[openfaas]']).should.be.equal(true);
+        DnUtils.startsWithAnyOf(item.dn, [
+          'root/ns-[kubevious]/app-[kubevious-mysql]/cont-[mysql]',
+          'root/ns-[openfaas]/app-[prometheus]/cont-[prometheus]']).should.be.equal(true);
+      }
+
+      (items.length).should.be.equal(2);
+    }
+  );
+
+  setupTest('process-logic-target-custom-filter-memory-unit', 'logic-item-custom-filter-unit-percentage-01', 
+    function(items) {
+      console.log(items.map(x => x))
+      for(var item of items)
+      {
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        should(DnUtils.kind(item.dn)).be.equal('ns');
+
+        DnUtils.startsWithAnyOf(item.dn, [
+          'root/ns-[kube-system]'
+        ]).should.be.equal(true);
       }
 
       (items.length).should.be.equal(1);
@@ -153,6 +169,8 @@ describe('target-processor-tests', function() {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('launcher');
+
+        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[openfaas]']).should.be.equal(true);
       }
 
       (items.length).should.be.equal(2);
@@ -167,7 +185,7 @@ describe('target-processor-tests', function() {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('launcher');
-        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]']).should.be.equal(true);
+        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[openfaas]']).should.be.equal(true);
       }
 
       (items.length).should.be.equal(1);
@@ -189,9 +207,11 @@ describe('target-processor-tests', function() {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('launcher');
+
+        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[openfaas]', 'root/ns-[gitlab]']).should.be.equal(true);
       }
 
-      (items.length).should.be.equal(2);
+      (items.length).should.be.equal(4);
     }
   );
 
@@ -199,7 +219,7 @@ describe('target-processor-tests', function() {
   /*****/
   function setupTest(name: string, targetFileName: string, validateCb: (items: FinalItems[]) => void, debugOutputObjects?: boolean)
   {
-    it(name, function() {
+    it(name + '::' + targetFileName, function() {
 
       var state = readRegistryState('snapshot-items.json');
 
