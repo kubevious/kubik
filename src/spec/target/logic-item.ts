@@ -31,7 +31,7 @@ export class LogicItem {
     }
 
     label(key: string, value: string) {
-        var filter: KeyValueDict = {};
+        let filter: KeyValueDict = {};
         filter[key] = value;
         return this.labels(filter)
     }
@@ -42,7 +42,7 @@ export class LogicItem {
     }
 
     annotation(key: string, value: string) {
-        var filter: KeyValueDict = {}
+        let filter: KeyValueDict = {}
         filter[key] = value
         return this.annotations(filter)
     }
@@ -73,7 +73,7 @@ export class LogicItem {
         if (!indent) {
             indent = 0
         }
-        var header = '  '.repeat(indent)
+        let header = '  '.repeat(indent)
 
         console.log(header + '* LogicItem ' + this._kind)
         if (this._nameFilters.length > 0) {

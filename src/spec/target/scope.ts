@@ -28,7 +28,7 @@ export class Scope {
     }
 
     debugOutput(indent?: number) {
-        for (var child of this._chain) {
+        for (let child of this._chain) {
             child.debugOutput(indent)
         }
     }

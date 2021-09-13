@@ -19,8 +19,8 @@ export class ScriptItem {
         }
     }
 
-    get parent() {
-        var parentDn = utilsParentDn(this._dn)
+    get parent() : ScriptItem | null {
+        let parentDn = utilsParentDn(this._dn)
         if (!parentDn) {
             return null
         }
@@ -28,7 +28,7 @@ export class ScriptItem {
     }
 
     get node() {
-        var node = this._state.getNode(this._dn)
+        let node = this._state.getNode(this._dn)
         if (!node) {
             return null
         }
@@ -36,7 +36,7 @@ export class ScriptItem {
     }
 
     get name(){
-        var node = this.node
+        let node = this.node
         if (!node) {
             return null;
         }
@@ -82,12 +82,12 @@ export class ScriptItem {
 
     hasDescendants(kind: string) : boolean {
         kind = mapLogicItemName(kind)
-        var descendants = this._state.scopeByKind(this._dn, kind)
+        let descendants = this._state.scopeByKind(this._dn, kind)
         return _.keys(descendants).length > 0
     }
 
     getProperties(name: string) : any {
-        var propsGroup = this._state.getProperties(this._dn)
+        let propsGroup = this._state.getProperties(this._dn)
         if (!propsGroup) {
             return {}
         }

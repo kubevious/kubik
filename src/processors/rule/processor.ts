@@ -165,12 +165,12 @@ export class RuleProcessor {
     private _acceptScriptErrors(source: string, result: Result) {
         if (!result.success) {
             this._executeResult!.success = false
-            for (var msg of result.messages!) {
-                var msgInfo = {
+            for (let msg of result.messages!) {
+                let msgInfo = {
                     source: [source],
                     msg: msg,
                 }
-                var hash = calculateObjectHashStr(msgInfo)
+                let hash = calculateObjectHashStr(msgInfo)
                 if (!(hash in this._messageHashes!)) {
                     this._messageHashes![hash] = true
                     this._executeResult!.messages.push(msgInfo)
@@ -180,7 +180,7 @@ export class RuleProcessor {
     }
 
     private _getExecuteResult(): ExecuteResult {
-        var result = this._executeResult!
+        let result = this._executeResult!
         this._executeResult = null
         return result
     }

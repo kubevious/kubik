@@ -52,7 +52,7 @@ export class TargetProcessor {
 
     prepare() {
         this._errorMessages = []
-        var result = {
+        let result = {
             success: false,
             messages: this._errorMessages,
         }
@@ -72,7 +72,7 @@ export class TargetProcessor {
 
     execute(state: RegistryState): Promise<any> {
         this._errorMessages = []
-        var result: TargetResult = {
+        let result: TargetResult = {
             success: false,
             items: [],
             messages: this._errorMessages,
@@ -101,7 +101,7 @@ export class TargetProcessor {
             return
         }
 
-        var executorNode = _.head(this._executorNodes)
+        let executorNode = _.head(this._executorNodes)
         this._executorNodes.splice(0, 1)
 
         return Promise.resolve()
@@ -189,7 +189,7 @@ export class TargetProcessor {
         prev: ScriptItem,
         item: ScriptItem
     ) {
-        var filters = [
+        let filters = [
             () => this._filterLogicItemByName(targetSelector, prev, item),
             () => this._filterLogicItemByLabel(targetSelector, prev, item),
             () => this._filterLogicItemByAnnotation(targetSelector, prev, item),
@@ -197,7 +197,7 @@ export class TargetProcessor {
                 this._filterLogicItemByCustomFilter(targetSelector, prev, item),
         ]
 
-        var isMatched = true
+        let isMatched = true
         return Promise.serial(filters, (filter) => {
             if (!isMatched) {
                 return
@@ -215,7 +215,7 @@ export class TargetProcessor {
         prev: ScriptItem,
         item: ScriptItem
     ) {
-        var evaluator = new Evaluator<string>(
+        let evaluator = new Evaluator<string>(
             this._state!,
             targetSelector,
             prev,
@@ -235,7 +235,7 @@ export class TargetProcessor {
         prev: ScriptItem,
         item: ScriptItem
     ) {
-        var evaluator = new Evaluator<KeyValueDict>(
+        let evaluator = new Evaluator<KeyValueDict>(
             this._state!,
             targetSelector,
             prev,
@@ -243,7 +243,7 @@ export class TargetProcessor {
             targetSelector._labelFilters
         )
         return evaluator.doesAnyMatch((dict) => {
-            for (var key of _.keys(dict)) {
+            for (let key of _.keys(dict)) {
                 if (item.labels[key] != dict[key]) {
                     return false
                 }
@@ -257,7 +257,7 @@ export class TargetProcessor {
         prev: ScriptItem,
         item: ScriptItem
     ) {
-        var evaluator = new Evaluator<KeyValueDict>(
+        let evaluator = new Evaluator<KeyValueDict>(
             this._state!,
             targetSelector,
             prev,
@@ -265,7 +265,7 @@ export class TargetProcessor {
             targetSelector._annotationFilters
         )
         return evaluator.doesAnyMatch((dict) => {
-            for (var key of _.keys(dict)) {
+            for (let key of _.keys(dict)) {
                 if (item.annotations[key] != dict[key]) {
                     return false
                 }
@@ -279,7 +279,7 @@ export class TargetProcessor {
         prev: ScriptItem,
         item: ScriptItem
     ) {
-        var evaluator = new Evaluator<boolean>(
+        let evaluator = new Evaluator<boolean>(
             this._state!,
             targetSelector,
             prev,
@@ -290,13 +290,13 @@ export class TargetProcessor {
     }
 
     _executeLogicItem(targetSelector: LogicItem, prev: ScriptItem) {
-        var mappedKind = mapLogicItemName(targetSelector._kind)
+        let mappedKind = mapLogicItemName(targetSelector._kind)
 
         // console.log("[_executeLogicItem] :: " + targetSelector._kind + "(" + mappedKind + ") :: " + targetSelector._location);
 
         if (targetSelector._location == 'descendant') {
             if (prev) {
-                var result = this._state!.scopeByKind(prev._dn, mappedKind)
+                let result = this._state!.scopeByKind(prev._dn, mappedKind)
                 return result
             } else {
                 return this._state!.findByKind(mappedKind)
@@ -311,7 +311,7 @@ export class TargetProcessor {
     _acceptFinalItems(items: ScriptItem[]) {
         // console.log("[_acceptFinalItems] :: count: " + items.length);
         // console.log(items);
-        for (var item of items!) {
+        for (let item of items!) {
             this._finalItems![item._dn] = {
                 dn: item._dn,
                 kind: 'logic',
@@ -322,7 +322,7 @@ export class TargetProcessor {
     _acceptChainItems(items: (ScriptItem | null)[], scope: Scope) {
         // console.log("[_acceptChainItems] :: count: " + items.length);
 
-        for (var x of scope._chain) {
+        for (let x of scope._chain) {
             this._executorNodes.push({
                 prevs: items as ScriptItem[],
                 targetSelector: x as LogicItem,
@@ -332,7 +332,7 @@ export class TargetProcessor {
 
     _loadModule() {
         return Promise.resolve().then(() => {
-            var compilerValues = {
+            let compilerValues = {
                 select: (kind: string) => {
                     return this._scope.descendant(kind)
                 },
@@ -341,7 +341,7 @@ export class TargetProcessor {
                 },
             }
 
-            var compiler = new Compiler(
+            let compiler = new Compiler(
                 this._src,
                 'RULE_TARGET',
                 compilerValues
@@ -365,7 +365,7 @@ export class TargetProcessor {
             return
         }
 
-        for (var targetSelector of scope._chain) {
+        for (let targetSelector of scope._chain) {
             this._validateTargetSelector(targetSelector)
         }
     }

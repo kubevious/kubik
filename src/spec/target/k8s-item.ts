@@ -36,7 +36,7 @@ export class K8sItem {
     }
 
     label(key: string, value: string) {
-        var filter: KeyValueDict = {};
+        let filter: KeyValueDict = {};
         filter[key] = value;
         return this.labels(filter);
     }
@@ -59,9 +59,9 @@ export class K8sItem {
         if (!indent) {
             indent = 0
         }
-        var header = '  '.repeat(indent)
+        let header = '  '.repeat(indent)
 
-        var id = this._kind
+        let id = this._kind
         if (this._apiGroup) {
             id = id + ':' + this._apiGroup
         }

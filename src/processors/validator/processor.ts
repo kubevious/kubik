@@ -40,7 +40,7 @@ export class ValidationProcessor {
     }
 
     prepare() {
-        var result = {
+        let result = {
             success: false,
             messages: [],
         }
@@ -62,14 +62,14 @@ export class ValidationProcessor {
 
     _loadModule() {
         return Promise.resolve().then(() => {
-            var compilerValues: CompilerValues = {
+            let compilerValues: CompilerValues = {
                 item: null,
                 error: null,
                 warning: null,
                 mark: null,
             }
 
-            var compiler = new Compiler(
+            let compiler = new Compiler(
                 this._src,
                 'RULE_VALIDATOR',
                 compilerValues
@@ -82,7 +82,7 @@ export class ValidationProcessor {
     _validate() {}
 
     execute(dn: string, state: RegistryState) : Promise<Result> {
-        var result: Result = {
+        let result: Result = {
             success: false,
             messages: [],
             validation: {
@@ -93,9 +93,9 @@ export class ValidationProcessor {
             },
         }
 
-        var item = new ScriptItem(dn, state)
+        let item = new ScriptItem(dn, state)
 
-        var valueMap = {
+        let valueMap = {
             item: item,
             error: (msg: string) => {
                 result.validation!.hasErrors = true

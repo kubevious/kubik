@@ -10,7 +10,7 @@ const PARAMS_TO_HIDE: ParamsToHide = {
     __dirname: true,
     Promise: true,
 }
-for (var x of _.keys(global)) {
+for (let x of _.keys(global)) {
     if (!PARAMS_TO_HIDE[x]) {
         PARAMS_TO_HIDE[x] = true
     }
@@ -48,14 +48,14 @@ export class Compiler {
     compile(): Promise<any> {
         return Promise.construct<any>((resolve, reject) => {
             try {
-                var allParamNames: string[] = []
+                let allParamNames: string[] = []
                 allParamNames = _.concat(allParamNames, _.keys(PARAMS_TO_HIDE))
 
-                for (var key of _.keys(this._values)) {
+                for (let key of _.keys(this._values)) {
                     allParamNames.push(key)
                 }
 
-                var finalSrc =
+                let finalSrc =
                     'module.exports = function(' +
                     allParamNames.join(', ') +
                     ') {\n' +
@@ -63,8 +63,8 @@ export class Compiler {
                     this._src +
                     '\n};'
 
-                var Module: any = module.constructor
-                var m: any = new Module()
+                let Module: any = module.constructor
+                let m: any = new Module()
 
                 if (this._verbose) {
                     console.log('>>>>>>> SCRIPT BEGIN >>>>>>>>')
@@ -74,7 +74,7 @@ export class Compiler {
 
                 m._compile(finalSrc, this._name)
 
-                var runnable = new RunnableScript(m, this._values)
+                let runnable = new RunnableScript(m, this._values)
                 resolve(runnable)
             } catch (reason) {
                 // console.log("*** ERROR: ");
@@ -97,14 +97,14 @@ class RunnableScript {
         valuesMap = valuesMap || {}
         return Promise.construct((resolve, reject) => {
             try {
-                var result = null
-                var paramValues: (string | undefined)[] = []
+                let result = null
+                let paramValues: (string | undefined)[] = []
                 paramValues = _.concat(
                     paramValues,
                     _.keys(PARAMS_TO_HIDE).map((x) => undefined)
                 )
 
-                for (var key of _.keys(this._values)) {
+                for (let key of _.keys(this._values)) {
                     if (key in valuesMap) {
                         paramValues.push(valuesMap[key])
                     } else {

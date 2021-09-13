@@ -6,6 +6,8 @@ cd $MY_DIR
 rm -rf node_modules/
 rm -rf dist/
 
-npm install
-npm install --only=dev
-npm update @kubevious/helpers the-lodash the-logger the-promise
+${MY_DIR}/update-dependencies.sh
+
+yarn
+
+${MY_DIR}/build.sh

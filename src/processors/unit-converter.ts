@@ -9,10 +9,10 @@ export class UnitConverter {
     constructor() {}
 
     memory(value: PropertyValueWithUnit) {
-        // var x = parseMemory(value)
+        // let x = parseMemory(value)
         return {
             in: (unit: string) => {
-                var y = convertMemory(value.value, unit)
+                let y = convertMemory(value.value, unit)
                 return y
             },
         }
@@ -49,7 +49,7 @@ const MEMORY_MULTIPLIER: {
 
 function parseMemory(value: any): number {
     value = _.toLower(value)
-    var unit = value.slice(-1)
+    let unit = value.slice(-1)
     if (unit == 'i' || unit == 'b') {
         unit = value.slice(-2)
         value = value.substring(0, value.length - 2)
@@ -65,8 +65,8 @@ function parseMemory(value: any): number {
 }
 
 function convertMemory(value: number, unit: string) {
-    var unit = _.toLower(unit)
-    var multiplier = MEMORY_MULTIPLIER[unit]
+    unit = _.toLower(unit)
+    let multiplier = MEMORY_MULTIPLIER[unit]
     if (!multiplier) {
         throw new Error('Unknown unit: ' + unit)
     }

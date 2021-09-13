@@ -3,4 +3,8 @@ MY_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE
 MY_DIR="$(dirname $MY_PATH)"
 cd $MY_DIR
 
-npm test
+npm-check-updates -u \
+    the-lodash \
+    the-logger \
+    the-promise \
+    @kubevious/helpers

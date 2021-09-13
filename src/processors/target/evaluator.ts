@@ -52,7 +52,7 @@ export class Evaluator<T> {
     }
 
     private _resolveMatcherValue(funcMatcher: MatcherFunc<T>) {
-        var params : MatcherFuncArgs = {
+        let params : MatcherFuncArgs = {
             prev: this._prev,
             item: this._item,
         }
