@@ -13,7 +13,7 @@ describe('rule-processor-tests', function() {
         (result) => {
 
             (result.ruleItems).should.be.an.Object();
-            (_.keys(result.ruleItems).length).should.be.equal(23);
+            (_.keys(result.ruleItems).length).should.be.equal(17);
 
             for(var x of _.values(result.ruleItems))
             {
@@ -71,7 +71,7 @@ describe('rule-processor-tests', function() {
         'logic-error-msg',
         (result) => {
             (result.ruleItems).should.be.an.Object();
-            (_.keys(result.ruleItems).length).should.be.equal(130);
+            (_.keys(result.ruleItems).length).should.be.equal(113);
 
             for(var x of _.values(result.ruleItems))
             {
@@ -92,7 +92,7 @@ describe('rule-processor-tests', function() {
         'logic-warn-msg',
         (result) => {
             (result.ruleItems).should.be.an.Object();
-            (_.keys(result.ruleItems).length).should.be.equal(130);
+            (_.keys(result.ruleItems).length).should.be.equal(113);
 
             for(var x of _.values(result.ruleItems))
             {

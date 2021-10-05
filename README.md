@@ -112,7 +112,7 @@ select('Truck')
 .descendant("Material")
 ```
 
-Multiple filters, child and descendent queries can be chained together.
+Multiple filters, child and descendant queries can be chained together.
 ```js
 select('Truck')
     .filter(({item}) => {

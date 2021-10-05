@@ -1,2 +1,2 @@
 module.exports = 
-    "root/ns-[kubevious]/app-[kubevious-mysql]/cont-[mysql]";
+    "root/logic/ns-[kubevious]/app-[kubevious-mysql]/cont-[mysql]";

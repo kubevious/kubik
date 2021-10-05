@@ -2,6 +2,10 @@ import _ from 'the-lodash'
 import { Promise } from 'the-promise'
 import { UnitConverter } from './unit-converter'
 
+export interface ParamsToHide {
+    [name: string]: boolean
+}
+
 const PARAMS_TO_HIDE: ParamsToHide = {
     exports: true,
     require: true,
@@ -16,20 +20,17 @@ for (let x of _.keys(global)) {
     }
 }
 
-export interface UnitValue {
-    [unit: string]: UnitConverter | any
-}
-export interface ParamsToHide {
-    [param: string]: boolean
+export interface CompilerScopeDict {
+    [name: string]: any
 }
 
 export class Compiler {
     private _src: string
     private _name: string
-    private _values: UnitValue
+    private _values: CompilerScopeDict;
     private _verbose: boolean
 
-    constructor(src: string, name: string, values: UnitValue) {
+    constructor(src: string, name: string, values: CompilerScopeDict) {
         this._src = src
         this._name = name
         this._values = {
@@ -87,8 +88,8 @@ export class Compiler {
 
 class RunnableScript {
     private _m: NodeModule
-    private _values: UnitValue
-    constructor(m: NodeModule, values: UnitValue) {
+    private _values: CompilerScopeDict
+    constructor(m: NodeModule, values: CompilerScopeDict) {
         this._m = m
         this._values = values
     }

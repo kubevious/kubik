@@ -5,10 +5,10 @@ import { Scope } from '../../spec/target/scope'
 import { Evaluator } from './evaluator'
 import { mapLogicItemName } from '../name-helpers'
 import { ScriptItem } from '../script-item'
-import { K8sItem } from '../../spec/target/k8s-item'
 import { LogicItem } from '../../spec/target/logic-item'
 import { RegistryState } from '@kubevious/helpers/dist/registry-state'
-import { KeyValueDict } from '../../spec/target/types'
+import { KeyValueDict, LogicLocationType } from '../../spec/target/types'
+import { makeRootScope } from '../../spec/target/root'
 
 export interface FinalItems {
     [prop: string]: string
@@ -96,7 +96,7 @@ export class TargetProcessor {
             })
     }
 
-    _executorNodeR(): any {
+    private _executorNodeR(): any {
         if (this._executorNodes.length == 0) {
             return
         }
@@ -109,7 +109,7 @@ export class TargetProcessor {
             .then(() => this._executorNodeR())
     }
 
-    _executorNode(executorNode: ExecutorNode) {
+    private _executorNode(executorNode: ExecutorNode) {
         return Promise.serial(executorNode.prevs, (x) => {
             return Promise.resolve(
                 this._executeTargetSelector(executorNode.targetSelector, x)
@@ -136,14 +136,13 @@ export class TargetProcessor {
         })
     }
 
-    _executeTargetSelector(targetSelector: LogicItem, prev: ScriptItem) {
+    private _executeTargetSelector(targetSelector: LogicItem, prev: ScriptItem) {
         // console.log("[_executeTargetSelector] :: " + item.constructor.name);
 
         return Promise.resolve()
             .then(() => {
                 if (targetSelector.constructor.name == 'LogicItem') {
                     return this._executeLogicItem(targetSelector, prev)
-                } else if (targetSelector.constructor.name == 'K8sItem') {
                 }
             })
             .then((result) => {
@@ -157,7 +156,7 @@ export class TargetProcessor {
             })
     }
 
-    _filterItems(
+    private _filterItems(
         targetSelector: LogicItem,
         prev: ScriptItem,
         items: ScriptItem[]
@@ -177,14 +176,13 @@ export class TargetProcessor {
                             return null
                         })
                     })
-                } else if (targetSelector.constructor.name == 'K8sItem') {
-                    return items
-                }
+                } 
+                return [];
             })
             .then((newItems) => newItems!.filter((x) => x))
     }
 
-    _filterLogicItem(
+    private _filterLogicItem(
         targetSelector: LogicItem,
         prev: ScriptItem,
         item: ScriptItem
@@ -210,7 +208,7 @@ export class TargetProcessor {
         }).then(() => isMatched)
     }
 
-    _filterLogicItemByName(
+    private _filterLogicItemByName(
         targetSelector: LogicItem,
         prev: ScriptItem,
         item: ScriptItem
@@ -230,7 +228,7 @@ export class TargetProcessor {
         })
     }
 
-    _filterLogicItemByLabel(
+    private _filterLogicItemByLabel(
         targetSelector: LogicItem,
         prev: ScriptItem,
         item: ScriptItem
@@ -252,7 +250,7 @@ export class TargetProcessor {
         })
     }
 
-    _filterLogicItemByAnnotation(
+    private _filterLogicItemByAnnotation(
         targetSelector: LogicItem,
         prev: ScriptItem,
         item: ScriptItem
@@ -274,7 +272,7 @@ export class TargetProcessor {
         })
     }
 
-    _filterLogicItemByCustomFilter(
+    private _filterLogicItemByCustomFilter(
         targetSelector: LogicItem,
         prev: ScriptItem,
         item: ScriptItem
@@ -289,26 +287,35 @@ export class TargetProcessor {
         return evaluator.doesAnyMatch(x => x)
     }
 
-    _executeLogicItem(targetSelector: LogicItem, prev: ScriptItem) {
+    private _executeLogicItem(targetSelector: LogicItem, prev: ScriptItem) {
         let mappedKind = mapLogicItemName(targetSelector._kind)
 
         // console.log("[_executeLogicItem] :: " + targetSelector._kind + "(" + mappedKind + ") :: " + targetSelector._location);
 
-        if (targetSelector._location == 'descendant') {
-            if (prev) {
-                let result = this._state!.scopeByKind(prev._dn, mappedKind)
-                return result
-            } else {
-                return this._state!.findByKind(mappedKind)
-            }
-        } else if (targetSelector._location == 'child') {
-            if (prev) {
-                return this._state!.childrenByKind(prev._dn, mappedKind)
-            }
+        switch(targetSelector._location)
+        {
+            case LogicLocationType.descendant:
+                {
+                    if (prev) {
+                        let result = this._state!.scopeByKind(prev._dn, mappedKind)
+                        return result
+                    } else {
+                        return this._state!.findByKind(mappedKind)
+                    }
+                }
+                break;
+
+            case LogicLocationType.child:
+                {
+                    if (prev) {
+                        return this._state!.childrenByKind(prev._dn, mappedKind)
+                    }
+                }
+                break;
         }
     }
 
-    _acceptFinalItems(items: ScriptItem[]) {
+    private _acceptFinalItems(items: ScriptItem[]) {
         // console.log("[_acceptFinalItems] :: count: " + items.length);
         // console.log(items);
         for (let item of items!) {
@@ -319,7 +326,7 @@ export class TargetProcessor {
         }
     }
 
-    _acceptChainItems(items: (ScriptItem | null)[], scope: Scope) {
+    private _acceptChainItems(items: (ScriptItem | null)[], scope: Scope) {
         // console.log("[_acceptChainItems] :: count: " + items.length);
 
         for (let x of scope._chain) {
@@ -330,21 +337,14 @@ export class TargetProcessor {
         }
     }
 
-    _loadModule() {
+    private _loadModule() {
         return Promise.resolve().then(() => {
-            let compilerValues = {
-                select: (kind: string) => {
-                    return this._scope.descendant(kind)
-                },
-                resource: (kind: string, apiGroup: string) => {
-                    return this._scope.resource(kind, apiGroup)
-                },
-            }
+            let rootScope = makeRootScope(this._scope);
 
             let compiler = new Compiler(
                 this._src,
                 'RULE_TARGET',
-                compilerValues
+                rootScope
             )
             return compiler.compile()
         })
@@ -359,7 +359,7 @@ export class TargetProcessor {
         this._validateScope(this._scope)
     }
 
-    _validateScope(scope: Scope) {
+    private _validateScope(scope: Scope) {
         if (this._scope._chain.length > 1) {
             this._addError('Fanout targets are not supported.')
             return
@@ -370,11 +370,11 @@ export class TargetProcessor {
         }
     }
 
-    _validateTargetSelector(targetSelector: K8sItem | LogicItem) {
+    private _validateTargetSelector(targetSelector: LogicItem) {
         this._validateScope(targetSelector._scope)
     }
 
-    _addError(msg: string) {
+    private _addError(msg: string) {
         this._errorMessages.push(msg)
     }
 }

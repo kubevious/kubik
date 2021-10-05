@@ -6,3 +6,9 @@ export type GenericFilter<T> = T | GenericFilterFunc<T>;
 export interface KeyValueDict {
     [name: string]: string
 }
+
+export enum LogicLocationType
+{
+    child,
+    descendant
+}

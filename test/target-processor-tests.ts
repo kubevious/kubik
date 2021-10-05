@@ -12,54 +12,54 @@ import * as DnUtils from './utils/dn-utils';
 describe('target-processor-tests', function() {
 
   setupTest('process-logic-target-no-filter', 'logic-item-01', function(items) {
-    for(var item of items)
+    for(const item of items)
     {
       (item).should.be.an.Object();
       (item.dn).should.be.a.String();
       should(DnUtils.kind(item.dn)).be.equal('image');
     }
 
-    (items.length).should.be.equal(130);
+    (items.length).should.be.equal(113);
   });
 
 
   setupTest('process-logic-target-single-descendants', 'logic-item-descendants-01', 
     function(items) {
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('port');
       }
 
-      (items.length).should.be.equal(71);
+      (items.length).should.be.equal(74);
     }
   );
 
 
   setupTest('process-logic-target-descendants-and-children', 'logic-item-descendants-02', 
     function(items) {
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String(); 
-        should(DnUtils.kind(item.dn)).be.equal('ingress');
+        should(DnUtils.kind(item.dn)).be.equal('port');
       }
 
-      (items.length).should.be.equal(5);
+      (items.length).should.be.equal(74);
     }
   );
 
 
   setupTest('process-logic-target-name-filter', 'logic-item-filter-01', 
     function(items) {
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('app');
 
-        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]', 'root/ns-[sock-shop]']).should.be.equal(true);
+        DnUtils.startsWithAnyOf(item.dn, ['root/logic/ns-[gitlab]', 'root/logic/ns-[sock-shop]']).should.be.equal(true);
       }
 
       (items.length).should.be.equal(34);
@@ -69,21 +69,21 @@ describe('target-processor-tests', function() {
 
   setupTest('process-logic-target-custom-filter-simple', 'logic-item-custom-filter-01', 
     function(items) {
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('service');
       }
 
-      (items.length).should.be.equal(5);
+      (items.length).should.be.equal(4);
     }
   );
 
 
   setupTest('process-logic-target-custom-filter-parent', 'logic-item-custom-filter-parent-01', 
     function(items) {
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
@@ -97,13 +97,13 @@ describe('target-processor-tests', function() {
 
   setupTest('process-logic-target-custom-filter-descendans', 'logic-item-custom-filter-02', 
     function(items) {
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('app');
 
-        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]']).should.be.equal(true);
+        DnUtils.startsWithAnyOf(item.dn, ['root/logic/ns-[gitlab]']).should.be.equal(true);
       }
 
       (items.length).should.be.equal(3);
@@ -112,15 +112,15 @@ describe('target-processor-tests', function() {
 
   setupTest('process-logic-target-custom-filter-memory-unit', 'logic-item-custom-filter-unit-memory-01', 
     function(items) {
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('cont');
 
         DnUtils.startsWithAnyOf(item.dn, [
-          'root/ns-[kubevious]/app-[kubevious-mysql]/cont-[mysql]',
-          'root/ns-[openfaas]/app-[prometheus]/cont-[prometheus]']).should.be.equal(true);
+          'root/logic/ns-[gitlab]/app-[gitlab-task-runner]/cont-[task-runner]',
+          'root/logic/ns-[openfaas]/app-[prometheus]/cont-[prometheus]']).should.be.equal(true);
       }
 
       (items.length).should.be.equal(2);
@@ -129,15 +129,14 @@ describe('target-processor-tests', function() {
 
   setupTest('process-logic-target-custom-filter-memory-unit', 'logic-item-custom-filter-unit-percentage-01', 
     function(items) {
-      console.log(items.map(x => x))
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('ns');
 
         DnUtils.startsWithAnyOf(item.dn, [
-          'root/ns-[kube-system]'
+          'root/logic/ns-[kube-system]'
         ]).should.be.equal(true);
       }
 
@@ -148,13 +147,13 @@ describe('target-processor-tests', function() {
   //
   setupTest('process-logic-target-label-filter', 'logic-item-label-filter-01', 
     function(items) {
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('launcher');
 
-        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[gitlab]']).should.be.equal(true);
+        DnUtils.startsWithAnyOf(item.dn, ['root/logic/ns-[gitlab]']).should.be.equal(true);
       }
 
       (items.length).should.be.equal(1);
@@ -164,13 +163,13 @@ describe('target-processor-tests', function() {
   //
   setupTest('process-logic-target-label-filter', 'logic-item-label-filter-03', 
     function(items) {
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('launcher');
 
-        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[openfaas]']).should.be.equal(true);
+        DnUtils.startsWithAnyOf(item.dn, ['root/logic/ns-[openfaas]']).should.be.equal(true);
       }
 
       (items.length).should.be.equal(2);
@@ -180,12 +179,12 @@ describe('target-processor-tests', function() {
   //
   setupTest('process-logic-target-label-filter', 'logic-item-label-filter-04', 
     function(items) {
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('launcher');
-        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[openfaas]']).should.be.equal(true);
+        DnUtils.startsWithAnyOf(item.dn, ['root/logic/ns-[openfaas]']).should.be.equal(true);
       }
 
       (items.length).should.be.equal(1);
@@ -202,13 +201,13 @@ describe('target-processor-tests', function() {
   //
   setupTest('process-logic-target-label-filter', 'logic-item-label-filter-06', 
     function(items) {
-      for(var item of items)
+      for(const item of items)
       {
         (item).should.be.an.Object();
         (item.dn).should.be.a.String();
         should(DnUtils.kind(item.dn)).be.equal('launcher');
 
-        DnUtils.startsWithAnyOf(item.dn, ['root/ns-[openfaas]', 'root/ns-[gitlab]']).should.be.equal(true);
+        DnUtils.startsWithAnyOf(item.dn, ['root/logic/ns-[openfaas]', 'root/logic/ns-[gitlab]']).should.be.equal(true);
       }
 
       (items.length).should.be.equal(4);
@@ -221,11 +220,11 @@ describe('target-processor-tests', function() {
   {
     it(name + '::' + targetFileName, function() {
 
-      var state = readRegistryState('snapshot-items.json');
+      const state = readRegistryState('snapshot-items.json');
 
-      var targetScript = readFile('target/' + targetFileName + '.js');
+      const targetScript = readFile('target/' + targetFileName + '.js');
 
-      var processor = new TargetProcessor(targetScript);
+      const processor = new TargetProcessor(targetScript);
       return processor.prepare()
         .then(result => {
           if (debugOutputObjects)
@@ -249,7 +248,7 @@ describe('target-processor-tests', function() {
           if (debugOutputObjects)
           {
             console.log('COUNT: ' + result.items.length);
-            for(var item of result.items)
+            for(const item of result.items)
             {
               console.log('* ' + item.dn);
             }
@@ -258,7 +257,9 @@ describe('target-processor-tests', function() {
           validateCb(result.items)
         })
         ;
-    });
+    })
+    .timeout(1000)
+    ;
   }
 
 });

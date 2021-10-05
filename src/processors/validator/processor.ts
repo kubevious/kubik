@@ -25,10 +25,10 @@ export interface Result {
 }
 
 export interface CompilerValues {
-    item?: null
-    error?: null
-    warning?: null
-    mark?: null
+    item: ScriptItem | null;
+    error: ((msg: string) => void) | null;
+    warning: ((msg: string) => void) | null;
+    mark: ((marker: string) => void) | null;
 }
 
 export class ValidationProcessor {
@@ -60,7 +60,7 @@ export class ValidationProcessor {
             .then(() => result)
     }
 
-    _loadModule() {
+    private _loadModule() {
         return Promise.resolve().then(() => {
             let compilerValues: CompilerValues = {
                 item: null,
@@ -79,7 +79,7 @@ export class ValidationProcessor {
         })
     }
 
-    _validate() {}
+    private _validate() {}
 
     execute(dn: string, state: RegistryState) : Promise<Result> {
         let result: Result = {
@@ -127,7 +127,7 @@ export class ValidationProcessor {
             .then(() => result)
     }
 
-    _addError(list: string[], msg: string) {
+    private _addError(list: string[], msg: string) {
         list.push(msg)
     }
 }

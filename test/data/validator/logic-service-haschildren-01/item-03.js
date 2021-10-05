@@ -1,2 +1,2 @@
 module.exports = 
-    "root/ns-[openfaas]/app-[gateway]/service-[NodePort 2]";
+    "root/logic/ns-[openfaas]/app-[gateway]/service-[gateway-external]";

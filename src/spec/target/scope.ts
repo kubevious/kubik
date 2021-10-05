@@ -1,8 +1,8 @@
-import { K8sItem } from './k8s-item'
 import { LogicItem } from './logic-item'
+import { LogicLocationType } from './types'
 
 export class Scope {
-    public _chain: (K8sItem | LogicItem)[]
+    public _chain: (LogicItem)[]
     private _owner: any
 
     constructor(owner: any) {
@@ -11,18 +11,14 @@ export class Scope {
     }
 
     descendant(kind: string) {
-        return this._add(new LogicItem(kind, 'descendant'))
+        return this._add(new LogicItem(kind, LogicLocationType.descendant))
     }
 
     child(kind: string) {
-        return this._add(new LogicItem(kind, 'child'))
+        return this._add(new LogicItem(kind, LogicLocationType.child))
     }
 
-    resource(kind: string, apiGroup: string) {
-        return this._add(new K8sItem(kind, apiGroup))
-    }
-
-    _add(value: K8sItem | LogicItem) {
+    _add(value: LogicItem) {
         this._chain.push(value)
         return value
     }
