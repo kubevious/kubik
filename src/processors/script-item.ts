@@ -1,6 +1,6 @@
 import _ from 'the-lodash'
-import { parentDn as utilsParentDn } from '@kubevious/helpers/dist/dn-utils'
-import { RegistryState } from '@kubevious/helpers/dist/registry-state'
+import { parentDn as utilsParentDn } from '@kubevious/entity-meta'
+import { RegistryState } from '@kubevious/state-registry'
 import { mapLogicItemName } from './name-helpers'
 
 export class ScriptItem {

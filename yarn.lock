@@ -57,12 +57,29 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
   integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
 
+"@kubevious/entity-meta@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.18.tgz#d9b07ec2d05d17659bb2735dda1067e185912018"
+  integrity sha512-LuCwWeJmhGPfP1lNDmkSZtdBN3XYXSX6McL3x+Pgmxx0+viPdAHk16s2UKzSN/3UXztXQ0VOvfnhxxDmFLxeUQ==
+  dependencies:
+    the-lodash "^2.0.9"
+
 "@kubevious/helpers@^1.0.62":
   version "1.0.62"
   resolved "https://registry.yarnpkg.com/@kubevious/helpers/-/helpers-1.0.62.tgz#68a9079411b7ec8a1cb6a15d6d3c458f54b51ff9"
   integrity sha512-8UleQ3aDzjH008x5FVXv5dXa6gHVA3+D8KuChgcntBwWzme8JmIbvrlbIRnUgf6ZsQSHSo26bzHl7YFicMsPyQ==
   dependencies:
     moment "^2.29.1"
+    the-lodash "^2.0.9"
+    the-logger "^2.0.9"
+    the-promise "^2.0.13"
+
+"@kubevious/state-registry@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@kubevious/state-registry/-/state-registry-1.0.3.tgz#2da4b93ccf68fc9a763afc8d86a764555dff43ab"
+  integrity sha512-V30y6YDkEUrIWAynFHCgd0oO/XRrUVJFM5Qdmuhy3wQjp2uJad/t1h0OgT9oUBdkSL+vpDLf5DJLY5FKs+0Omw==
+  dependencies:
+    "@kubevious/entity-meta" "^1.0.18"
     the-lodash "^2.0.9"
     the-logger "^2.0.9"
     the-promise "^2.0.13"

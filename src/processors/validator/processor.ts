@@ -1,4 +1,4 @@
-import { RegistryState } from '@kubevious/helpers/dist/registry-state'
+import { RegistryState } from '@kubevious/state-registry'
 import _ from 'the-lodash'
 import { Promise, Resolvable } from 'the-promise'
 import { Compiler } from '../compiler'

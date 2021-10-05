@@ -2,8 +2,8 @@ import path from 'path';
 import fs from 'fs';
 import _ from 'the-lodash';
 
-import { RegistryState } from '@kubevious/helpers/dist/registry-state';
-import { SnapshotInfo } from '@kubevious/helpers/dist/snapshot/types';
+import { RegistryState } from '@kubevious/state-registry';
+import { SnapshotInfo } from '@kubevious/state-registry';
 
 export function readRegistryState(name: string)
 {

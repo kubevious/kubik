@@ -6,7 +6,7 @@ import { Evaluator } from './evaluator'
 import { mapLogicItemName } from '../name-helpers'
 import { ScriptItem } from '../script-item'
 import { LogicItem } from '../../spec/target/logic-item'
-import { RegistryState } from '@kubevious/helpers/dist/registry-state'
+import { RegistryState } from '@kubevious/state-registry'
 import { KeyValueDict, LogicLocationType } from '../../spec/target/types'
 import { makeRootScope } from '../../spec/target/root'
 

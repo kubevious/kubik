@@ -3,7 +3,7 @@ import { Promise } from 'the-promise'
 import { calculateObjectHashStr } from '@kubevious/helpers/dist/hash-utils'
 import { FinalItems, TargetProcessor } from '../target/processor'
 import { Result, ValidationProcessor } from '../validator/processor'
-import { RegistryState } from '@kubevious/helpers/dist/registry-state'
+import { RegistryState } from '@kubevious/state-registry'
 
 export interface RuleObj {
     target: string

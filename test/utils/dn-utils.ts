@@ -1,5 +1,5 @@
 import _ from 'the-lodash';
-import { parseDn } from '@kubevious/helpers/dist/dn-utils';
+import { parseDn } from '@kubevious/entity-meta';
 
 export function startsWithAnyOf(dn: string, options: string[]): boolean
 {
