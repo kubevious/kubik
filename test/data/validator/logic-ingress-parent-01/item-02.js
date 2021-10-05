@@ -1,2 +1,2 @@
 module.exports = 
-    "root/ns-[gitlab]/app-[gitlab-minio]/cont-[minio]/port-[service (TCP-9000)]/service-[ClusterIP]/ingress-[gitlab-minio]";
+    "root/logic/ns-[gitlab]/app-[gitlab-minio]/service-[gitlab-minio-svc]/ingress-[gitlab-minio]";

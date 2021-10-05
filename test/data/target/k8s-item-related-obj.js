@@ -1,5 +1,0 @@
-resource('PersistentVolumeClaim')
-    .label('env', 'prod')
-.resource('Pod')
-    .namespace(({ prev }) => prev.metadata.namespace)
-    .labels(({ prev }) => prev.metadata.labels)

@@ -1,2 +1,2 @@
 module.exports = 
-    "root/ns-[sock-shop]/app-[user-db]/cont-[user-db]/image-[weaveworksdemos/user-db]";
+    "root/logic/ns-[sock-shop]/app-[user-db]/cont-[user-db]/image-[weaveworksdemos/user-db]";

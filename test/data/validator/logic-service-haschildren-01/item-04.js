@@ -1,2 +1,2 @@
 module.exports = 
-    "root/ns-[gitlab]/app-[gitlab-nginx-ingress-controller]/service-[LoadBalancer]";
+    "root/logic/ns-[gitlab]/app-[gitlab-nginx-ingress-controller]/service-[gitlab-nginx-ingress-controller]";

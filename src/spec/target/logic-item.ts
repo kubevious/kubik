@@ -1,8 +1,7 @@
-import { ScriptItem } from '../../processors/script-item'
 import { stringify } from '../utils/debug'
 import { Scope } from './scope'
 
-import { GenericFilter, GenericFilterFunc, KeyValueDict } from './types';
+import { GenericFilter, GenericFilterFunc, KeyValueDict, LogicLocationType } from './types';
 
 export class LogicItem {
     public _kind: string
@@ -11,9 +10,9 @@ export class LogicItem {
     public _labelFilters: GenericFilter<KeyValueDict>[]
     public _annotationFilters: GenericFilter<KeyValueDict>[]
     public _customFilters: GenericFilterFunc<boolean>[]
-    public _location: string
+    public _location: LogicLocationType
 
-    constructor(kind: string, location: string) {
+    constructor(kind: string, location: LogicLocationType) {
         this._kind = kind
         this._location = location
 
@@ -63,10 +62,6 @@ export class LogicItem {
 
     child(kind: string) {
         return this._scope.child(kind)
-    }
-
-    resource(kind: string, apiGroup: string) {
-        return this._scope.resource(kind, apiGroup)
     }
 
     debugOutput(indent?: number) {

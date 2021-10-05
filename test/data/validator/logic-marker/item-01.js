@@ -1,2 +1,2 @@
 module.exports = 
-    "root/ns-[kubevious]/app-[kubevious]";
+    "root/logic/ns-[kubevious]/app-[kubevious]";

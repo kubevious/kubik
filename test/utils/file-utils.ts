@@ -7,12 +7,12 @@ import { SnapshotInfo } from '@kubevious/helpers/dist/snapshot/types';
 
 export function readRegistryState(name: string)
 {
-    var jsonData = readJsonData(name);
-    var snapshotInfo: SnapshotInfo = {
+    const jsonData = readJsonData(name);
+    const snapshotInfo: SnapshotInfo = {
         date: jsonData.date,
         items: jsonData.items
     };
-    var state = new RegistryState(snapshotInfo);
+    const state = new RegistryState(snapshotInfo);
     return state;
 }
 
@@ -31,20 +31,20 @@ export function readJsonOrJsData(name: string)
 
 export function readModule(...args: string[])
 {
-    var parts = ['..', 'data'];
+    let parts = ['..', 'data'];
     parts = _.concat(parts, args);
-    var filePath = path.join.apply(null, parts);
+    const filePath = path.join.apply(null, parts);
     return require(filePath);
 }
 
 export function readFileContents(name: string): Record<string, string>
 {
     const dirPath = path.resolve(__dirname, '..', 'data', name);
-    var entries = fs.readdirSync(dirPath, { withFileTypes: true });
-    var files: Record<string, string> = {};
-    for(var file of entries.filter(x => !x.isDirectory()))
+    const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+    const files: Record<string, string> = {};
+    for(const file of entries.filter(x => !x.isDirectory()))
     {
-        var fullName = path.join(dirPath, file.name);
+        const fullName = path.join(dirPath, file.name);
         files[file.name] = fs.readFileSync(fullName).toString();
     }
     return files;
@@ -53,11 +53,11 @@ export function readFileContents(name: string): Record<string, string>
 export function listDirectories(name: string): Record<string, string>[]
 {
     const dirPath = path.resolve(__dirname, '..', 'data', name);
-    var entries = fs.readdirSync(dirPath, { withFileTypes: true });
-    var paths = [];
-    for(var entry of entries.filter(x => x.isDirectory()))
+    const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+    const paths = [];
+    for(const entry of entries.filter(x => x.isDirectory()))
     {
-        var fullName = path.join(dirPath, entry.name);
+        const fullName = path.join(dirPath, entry.name);
         paths.push({
             name: entry.name,
             path: fullName
@@ -72,16 +72,27 @@ export function fileExists(name: string): boolean
     return fs.existsSync(filePath);
 }
 
+
+const FILE_CACHE : Record<string, string> = {};
 export function readFile(name: string): string
 {
     const filePath = path.resolve(__dirname, '..', 'data', name);
-    var contents = fs.readFileSync(filePath).toString();
+    if (filePath in FILE_CACHE) {
+        return FILE_CACHE[filePath];
+    }
+    const contents = fs.readFileSync(filePath).toString();
+    FILE_CACHE[filePath] = contents;
     return contents;
 }
 
+const SNAPSHOT_CACHE : Record<string, SnapshotInfo> = {};
 export function readJsonData(name: string): SnapshotInfo
 {
-    var contents = readFile(name);
-    var json = JSON.parse(contents);
+    if (name in SNAPSHOT_CACHE) {
+        return SNAPSHOT_CACHE[name];
+    }
+    const contents = readFile(name);
+    const json = JSON.parse(contents);
+    SNAPSHOT_CACHE[name] = json;
     return json;
 }
