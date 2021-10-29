@@ -1,5 +1,8 @@
 import { LogicItem } from './logic-item'
 import { LogicLocationType } from './types'
+import { NodeKind } from '@kubevious/entity-meta'
+
+export type KindType = string | NodeKind;
 
 export class Scope {
     public _chain: (LogicItem)[]
@@ -10,15 +13,15 @@ export class Scope {
         this._chain = []
     }
 
-    descendant(kind: string) {
+    descendant(kind: KindType) {
         return this._add(new LogicItem(kind, LogicLocationType.descendant))
     }
 
-    child(kind: string) {
+    child(kind: KindType) {
         return this._add(new LogicItem(kind, LogicLocationType.child))
     }
 
-    _add(value: LogicItem) {
+    private _add(value: LogicItem) {
         this._chain.push(value)
         return value
     }

@@ -17,7 +17,7 @@ describe('rule-processor-negative-tests', function () {
             result.messages.length.should.be.equal(1)
             result.messages[0].should.be.eql({
                 source: ['script'],
-                msg: "Cannot read property 'config' of undefined",
+                msg: "Could not resolve node kind label: MissingKind",
             })
         }
     )

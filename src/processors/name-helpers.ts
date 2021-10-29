@@ -1,17 +1,16 @@
 import _ from 'the-lodash'
-import * as KubeviousHelpersDocs from '@kubevious/helpers/dist/docs'
+import { NodeKind, NODE_LABEL_TO_KIND } from '@kubevious/entity-meta'
 
-let LOGIC_ITEM_KIND_REVERSE_MAPPINNG: { [name: string]: string } = {}
-for (let x of _.keys(KubeviousHelpersDocs.KIND_TO_USER_MAPPING)) {
-    LOGIC_ITEM_KIND_REVERSE_MAPPINNG[
-        KubeviousHelpersDocs.KIND_TO_USER_MAPPING[x]
-    ] = x
-}
-
-export const mapLogicItemName = function (kind: string) {
-    let value = LOGIC_ITEM_KIND_REVERSE_MAPPINNG[kind]
-    if (value) {
-        return value
+export const mapLogicItemName = function (kind: string) : NodeKind {
+    try
+    {
+        const value = NODE_LABEL_TO_KIND.get(kind) ;
+        return value;
     }
-    return _.toLower(kind)
+    catch(reason : any)
+    {
+        // console.log(reason);
+        // console.log('KIND: ', kind);
+        throw reason;
+    }
 }

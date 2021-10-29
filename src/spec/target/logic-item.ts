@@ -1,10 +1,12 @@
 import { stringify } from '../utils/debug'
-import { Scope } from './scope'
+import { Scope, KindType } from './scope'
+import { NodeKind } from '@kubevious/entity-meta'
+import { mapLogicItemName } from '../../processors/name-helpers'
 
 import { GenericFilter, GenericFilterFunc, KeyValueDict, LogicLocationType } from './types';
 
 export class LogicItem {
-    public _kind: string
+    public _kind: NodeKind
     public _scope: Scope
     public _nameFilters: GenericFilter<string>[]
     public _labelFilters: GenericFilter<KeyValueDict>[]
@@ -12,9 +14,9 @@ export class LogicItem {
     public _customFilters: GenericFilterFunc<boolean>[]
     public _location: LogicLocationType
 
-    constructor(kind: string, location: LogicLocationType) {
-        this._kind = kind
-        this._location = location
+    constructor(kind: KindType, location: LogicLocationType) {
+        this._kind = mapLogicItemName(kind);
+        this._location = location;
 
         this._scope = new Scope(this)
 
@@ -56,11 +58,11 @@ export class LogicItem {
         return this
     }
 
-    descendant(kind: string) {
+    descendant(kind: KindType) {
         return this._scope.descendant(kind)
     }
 
-    child(kind: string) {
+    child(kind: KindType) {
         return this._scope.child(kind)
     }
 

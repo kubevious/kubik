@@ -6,6 +6,5 @@ REPO_DEPENDENCIES=(
     "the-promise"
     "@kubevious/state-registry"
     "@kubevious/entity-meta"
-    "@kubevious/helpers"
 )
     

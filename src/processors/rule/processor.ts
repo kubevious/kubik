@@ -1,6 +1,6 @@
 import _ from 'the-lodash'
 import { Promise } from 'the-promise'
-import { calculateObjectHashStr } from '@kubevious/helpers/dist/hash-utils'
+import { calculateObjectHashStr } from '../../utils/hash-utils'
 import { FinalItems, TargetProcessor } from '../target/processor'
 import { Result, ValidationProcessor } from '../validator/processor'
 import { RegistryState } from '@kubevious/state-registry'

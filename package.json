@@ -25,11 +25,10 @@
   },
   "homepage": "https://github.com/kubevious/kubik#readme",
   "dependencies": {
-    "@kubevious/entity-meta": "^1.0.18",
-    "@kubevious/helpers": "^1.0.62",
-    "@kubevious/state-registry": "^1.0.3",
+    "@kubevious/entity-meta": "^1.0.40",
+    "@kubevious/state-registry": "^1.0.11",
     "the-lodash": "^2.0.9",
-    "the-logger": "^2.0.9",
+    "the-logger": "^2.0.10",
     "the-promise": "^2.0.13"
   },
   "devDependencies": {

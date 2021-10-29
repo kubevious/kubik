@@ -60,38 +60,38 @@ export class ScriptItem {
     }
 
     children(kind: string) : ScriptItem[] {
-        kind = mapLogicItemName(kind)
-        let children = this._state.childrenByKind(this._dn, kind)
-        let childrenDns = _.keys(children);
+        const kindType = mapLogicItemName(kind);
+        const children = this._state.childrenByKind(this._dn, kindType)
+        const childrenDns = _.keys(children);
         return childrenDns.map((x: string) => new ScriptItem(x, this._state))
     }
 
     hasChildren(kind: string) : boolean {
-        kind = mapLogicItemName(kind)
-        let children = this._state.childrenByKind(this._dn, kind)
-        let childrenDns = _.keys(children);
+        const kindType = mapLogicItemName(kind);
+        const children = this._state.childrenByKind(this._dn, kindType)
+        const childrenDns = _.keys(children);
         return childrenDns.length > 0
     }
 
     descendants(kind: string) : ScriptItem[] {
-        kind = mapLogicItemName(kind)
-        let descendants = this._state.scopeByKind(this._dn, kind)
-        let descendantDns = _.keys(descendants);
+        const kindType = mapLogicItemName(kind);
+        const descendants = this._state.scopeByKind(this._dn, kindType)
+        const descendantDns = _.keys(descendants);
         return descendantDns.map((x: string) => new ScriptItem(x, this._state))
     }
 
     hasDescendants(kind: string) : boolean {
-        kind = mapLogicItemName(kind)
-        let descendants = this._state.scopeByKind(this._dn, kind)
+        const kindType = mapLogicItemName(kind);
+        const descendants = this._state.scopeByKind(this._dn, kindType)
         return _.keys(descendants).length > 0
     }
 
     getProperties(name: string) : any {
-        let propsGroup = this._state.getProperties(this._dn)
+        const propsGroup = this._state.getProperties(this._dn)
         if (!propsGroup) {
             return {}
         }
-        let props = propsGroup[name]
+        const props = propsGroup[name]
         if (!props) {
             return {}
         }
