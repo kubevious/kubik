@@ -28,7 +28,7 @@
     "@kubevious/entity-meta": "^1.0.41",
     "@kubevious/state-registry": "^1.0.11",
     "the-lodash": "^2.0.9",
-    "the-logger": "^2.0.10",
+    "the-logger": "^2.0.14",
     "the-promise": "^2.0.13"
   },
   "devDependencies": {

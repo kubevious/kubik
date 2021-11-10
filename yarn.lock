@@ -1137,6 +1137,14 @@ pino-abstract-transport@^0.4.0, pino-abstract-transport@v0.4.0:
     duplexify "^4.1.2"
     split2 "^3.2.2"
 
+pino-abstract-transport@^0.5.0, pino-abstract-transport@v0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/pino-abstract-transport/-/pino-abstract-transport-0.5.0.tgz#4b54348d8f73713bfd14e3dc44228739aa13d9c0"
+  integrity sha512-+KAgmVeqXYbTtU2FScx1XS3kNyfZ5TrXY07V96QnUSFqo2gAqlvmaxH67Lj7SWazqsMabf+58ctdTcBgnOLUOQ==
+  dependencies:
+    duplexify "^4.1.2"
+    split2 "^4.0.0"
+
 pino-multi-stream@6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/pino-multi-stream/-/pino-multi-stream-6.0.0.tgz#2116bca740cb5eb606f430b20fd480f4944b2b99"
@@ -1155,6 +1163,24 @@ pino-pretty@7.1.0:
     fast-safe-stringify "^2.0.7"
     joycon "^3.0.0"
     pino-abstract-transport "^0.4.0"
+    pump "^3.0.0"
+    readable-stream "^3.6.0"
+    rfdc "^1.3.0"
+    secure-json-parse "^2.4.0"
+    sonic-boom "^2.2.0"
+    strip-json-comments "^3.1.1"
+
+pino-pretty@7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/pino-pretty/-/pino-pretty-7.2.0.tgz#6cd1500fa47a6e9011e87bb65e129cd4555265f1"
+  integrity sha512-pkZhaF1JiyQt4BRqkLANYWuZTxavmuXh3OHsb8goeQasTFgNdzOECXkZWyPYrA0YMRa8zKoVsCzeYz9lI2NYwA==
+  dependencies:
+    args "^5.0.1"
+    colorette "^2.0.7"
+    dateformat "^4.6.3"
+    fast-safe-stringify "^2.0.7"
+    joycon "^3.0.0"
+    pino-abstract-transport "^0.5.0"
     pump "^3.0.0"
     readable-stream "^3.6.0"
     rfdc "^1.3.0"
@@ -1182,6 +1208,22 @@ pino@7.0.3:
     quick-format-unescaped "^4.0.3"
     sonic-boom "^2.2.1"
     thread-stream "^0.11.1"
+
+pino@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/pino/-/pino-7.1.0.tgz#1012882eb2cd75ebd6b33e407d93e9295c996f34"
+  integrity sha512-EdNpwNxlNK2gt48V4P8uvGmfTH7yW+in4MAMGgU69ovtNQqBj+kA3xGjgPQHMXo5vr4rq+vWuBgNiz/LmfK++A==
+  dependencies:
+    fast-redact "^3.0.0"
+    fastify-warning "^0.2.0"
+    get-caller-file "^2.0.5"
+    on-exit-leak-free "^0.2.0"
+    pino-abstract-transport v0.5.0
+    pino-std-serializers "^4.0.0"
+    quick-format-unescaped "^4.0.3"
+    safe-stable-stringify "^2.1.0"
+    sonic-boom "^2.2.1"
+    thread-stream "^0.12.0"
 
 pino@^7.0.0:
   version "7.0.5"
@@ -1291,6 +1333,11 @@ safe-buffer@^5.1.0, safe-buffer@~5.2.0:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
+
+safe-stable-stringify@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/safe-stable-stringify/-/safe-stable-stringify-2.2.0.tgz#26a52f13a6988de16a0d88e20248f38e8a7d840c"
+  integrity sha512-C6AuMdYPuPV/P1leplHNu0lgc2LAElq/g3TdoksDCIVtBhr78o/CH03bt/9SKqugFbKU9CUjsNlCu0fjtQzQUw==
 
 secure-json-parse@^2.4.0:
   version "2.4.0"
@@ -1402,6 +1449,11 @@ split2@^3.2.2:
   integrity sha512-9NThjpgZnifTkJpzTZ7Eue85S49QwpNhZTq6GRJwObb6jnLFNGB7Qm73V5HewTROPyxD0C29xqmaI68bQtV+hg==
   dependencies:
     readable-stream "^3.0.0"
+
+split2@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/split2/-/split2-4.1.0.tgz#101907a24370f85bb782f08adaabe4e281ecf809"
+  integrity sha512-VBiJxFkxiXRlUIeyMQi8s4hgvKCSjtknJv/LVYbrgALPwf5zSKmEwV9Lst25AkvMDnvxODugjdl6KZgwKM1WYQ==
 
 sprintf-js@~1.0.2:
   version "1.0.3"
@@ -1517,6 +1569,18 @@ the-logger@^2.0.10:
     the-lodash "^2.0.9"
     the-promise "^2.0.13"
 
+the-logger@^2.0.14:
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/the-logger/-/the-logger-2.0.14.tgz#c07e5ac25b0b59bb615f3c05bc34b86cabfe54bd"
+  integrity sha512-K0LJdZl+Q864Tqy8p0iql6pYqvm4cp6UCZ6MakEnHZQxhWuXxFDu0nNiY4i+O+b6I0IXXqMSYBP1furkD1xauQ==
+  dependencies:
+    fs-extra "9.0.1"
+    mkdirp "^1.0.4"
+    pino "7.1.0"
+    pino-pretty "7.2.0"
+    the-lodash "^2.0.9"
+    the-promise "^2.0.13"
+
 the-promise@^2.0.13:
   version "2.0.13"
   resolved "https://registry.yarnpkg.com/the-promise/-/the-promise-2.0.13.tgz#1e56f577091965b7945ba8f3938a31cce0889558"
@@ -1531,6 +1595,11 @@ thread-stream@^0.11.1:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/thread-stream/-/thread-stream-0.11.1.tgz#9af0f4b4b9b44744729897bc1665decb2bad2315"
   integrity sha512-YbZEIo+JcScRekY1bl7O717RZGA/1eT7t4n9uyKf5Fu7TYpZKuml185bQdV3l2pgoq0wCobkQySWxdNEORkghg==
+
+thread-stream@^0.12.0:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/thread-stream/-/thread-stream-0.12.1.tgz#83d851903a03c51f10612c2a9b2c087914780ff4"
+  integrity sha512-eFgcefesjNohVbqtNG/rh54HekZeId2xbuVXZpP5PBXTe5S+WIBfAFTbh2KRa4o/4pocgWTOTfnS0MaGOEiFTA==
 
 to-regex-range@^5.0.1:
   version "5.0.1"
