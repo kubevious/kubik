@@ -3,12 +3,13 @@ import { Promise } from 'the-promise'
 import { Compiler } from '../compiler'
 import { Scope } from '../../spec/target/scope'
 import { Evaluator } from './evaluator'
-import { mapLogicItemName } from '../name-helpers'
 import { ScriptItem } from '../script-item'
 import { LogicItem } from '../../spec/target/logic-item'
-import { RegistryState } from '@kubevious/state-registry'
+import { RegistryState, RegistryStateNode } from '@kubevious/state-registry'
 import { KeyValueDict, LogicLocationType } from '../../spec/target/types'
 import { makeRootScope } from '../../spec/target/root'
+import { parentDn } from '@kubevious/entity-meta'
+import { mapLogicItemName } from '../name-helpers'
 
 export interface FinalItems {
     [prop: string]: string
@@ -136,7 +137,8 @@ export class TargetProcessor {
         })
     }
 
-    private _executeTargetSelector(targetSelector: LogicItem, prev: ScriptItem) {
+    private _executeTargetSelector(targetSelector: LogicItem, prev: ScriptItem)
+    {
         // console.log("[_executeTargetSelector] :: " + item.constructor.name);
 
         return Promise.resolve()
@@ -150,7 +152,7 @@ export class TargetProcessor {
                 if (!result) {
                     return []
                 }
-                return _.keys(result).map(
+                return result.map(
                     (x) => new ScriptItem(x, this._state!)
                 )
             })
@@ -287,9 +289,8 @@ export class TargetProcessor {
         return evaluator.doesAnyMatch(x => x)
     }
 
-    private _executeLogicItem(targetSelector: LogicItem, prev: ScriptItem) {
-        let mappedKind = mapLogicItemName(targetSelector._kind)
-
+    private _executeLogicItem(targetSelector: LogicItem, prev: ScriptItem) : string[] | undefined
+    {
         // console.log("[_executeLogicItem] :: " + targetSelector._kind + "(" + mappedKind + ") :: " + targetSelector._location);
 
         switch(targetSelector._location)
@@ -297,10 +298,12 @@ export class TargetProcessor {
             case LogicLocationType.descendant:
                 {
                     if (prev) {
-                        let result = this._state!.scopeByKind(prev._dn, mappedKind)
-                        return result
+                        const results = prev.descendants(targetSelector._params.kind!);
+                        return results.map(x => x._dn);
                     } else {
-                        return this._state!.findByKind(mappedKind)
+                        const kindType = mapLogicItemName(targetSelector._params.kind!);
+                        const results = this._state!.findByKind(kindType);
+                        return _.keys(results);
                     }
                 }
                 break;
@@ -308,7 +311,36 @@ export class TargetProcessor {
             case LogicLocationType.child:
                 {
                     if (prev) {
-                        return this._state!.childrenByKind(prev._dn, mappedKind)
+                        const results = prev.children(targetSelector._params.kind!);
+                        return results.map(x => x._dn);
+                    }
+                }
+                break;
+
+            case LogicLocationType.parent:
+                {
+                    if (prev) {
+                        const parent = prev.parent;
+                        if (parent) {
+                            if (targetSelector._params.kind) {
+                                const kindType = mapLogicItemName(targetSelector._params.kind!);
+                                if (parent.kind !== kindType) {
+                                    return [];
+                                }
+                            }
+
+                            return [parent._dn];
+                        }
+                    }
+                }
+                break;
+
+
+            case LogicLocationType.link:
+                {
+                    if (prev) {
+                        const results = prev.links(targetSelector._params.link);
+                        return results.map(x => x._dn);
                     }
                 }
                 break;

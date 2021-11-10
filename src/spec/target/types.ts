@@ -10,5 +10,7 @@ export interface KeyValueDict {
 export enum LogicLocationType
 {
     child,
-    descendant
+    descendant,
+    parent,
+    link,
 }

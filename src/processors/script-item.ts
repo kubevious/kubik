@@ -1,5 +1,5 @@
 import _ from 'the-lodash'
-import { parentDn as utilsParentDn } from '@kubevious/entity-meta'
+import { NodeKind, parentDn as utilsParentDn, getKind, PropsId } from '@kubevious/entity-meta'
 import { RegistryState } from '@kubevious/state-registry'
 import { mapLogicItemName } from './name-helpers'
 
@@ -25,6 +25,10 @@ export class ScriptItem {
             return null
         }
         return new ScriptItem(parentDn, this._state)
+    }
+
+    get kind() : NodeKind {
+        return getKind(this._dn);
     }
 
     get node() {
@@ -67,10 +71,8 @@ export class ScriptItem {
     }
 
     hasChildren(kind: string) : boolean {
-        const kindType = mapLogicItemName(kind);
-        const children = this._state.childrenByKind(this._dn, kindType)
-        const childrenDns = _.keys(children);
-        return childrenDns.length > 0
+        const items = this.children(kind);
+        return (items.length > 0);
     }
 
     descendants(kind: string) : ScriptItem[] {
@@ -81,9 +83,37 @@ export class ScriptItem {
     }
 
     hasDescendants(kind: string) : boolean {
-        const kindType = mapLogicItemName(kind);
-        const descendants = this._state.scopeByKind(this._dn, kindType)
-        return _.keys(descendants).length > 0
+        const items = this.descendants(kind);
+        return (items.length > 0);
+    }
+
+    links(linkOrNone?: string) : ScriptItem[] {
+        const propsValue = this.getProperties(PropsId.targetLinks);
+        if (propsValue)
+        {
+            const linksProps = <TargetLinksConfig>propsValue;
+            if (linkOrNone)
+            {
+                const linkItems = linksProps[linkOrNone!];
+                if (linkItems)
+                {
+                    const dns = linkItems.map((x) => x.dn);
+                    return dns.map((x) => new ScriptItem(x, this._state));
+                }
+            }
+            else
+            {
+                const linkItems = _.flatten(_.values(linksProps));
+                const dns = linkItems.map((x) => x.dn);
+                return dns.map((x) => new ScriptItem(x, this._state));
+            }
+        }
+        return [];
+    }
+
+    hasLinks(linkOrNone?: string) : boolean {
+        const items = this.links(linkOrNone);
+        return (items.length > 0);
     }
 
     getProperties(name: string) : any {
@@ -101,3 +131,5 @@ export class ScriptItem {
         return props.config;
     }
 }
+
+export type TargetLinksConfig = { [link: string] : { dn: string }[] };

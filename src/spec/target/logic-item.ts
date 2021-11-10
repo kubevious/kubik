@@ -1,29 +1,24 @@
 import { stringify } from '../utils/debug'
 import { Scope, KindType } from './scope'
-import { NodeKind } from '@kubevious/entity-meta'
-import { mapLogicItemName } from '../../processors/name-helpers'
 
 import { GenericFilter, GenericFilterFunc, KeyValueDict, LogicLocationType } from './types';
 
 export class LogicItem {
-    public _kind: NodeKind
-    public _scope: Scope
-    public _nameFilters: GenericFilter<string>[]
-    public _labelFilters: GenericFilter<KeyValueDict>[]
-    public _annotationFilters: GenericFilter<KeyValueDict>[]
-    public _customFilters: GenericFilterFunc<boolean>[]
     public _location: LogicLocationType
+    public _params: LogicItemParams;
 
-    constructor(kind: KindType, location: LogicLocationType) {
-        this._kind = mapLogicItemName(kind);
+    public _scope: Scope;
+
+    public _nameFilters: GenericFilter<string>[] = [];
+    public _labelFilters: GenericFilter<KeyValueDict>[] = [];
+    public _annotationFilters: GenericFilter<KeyValueDict>[] = [];
+    public _customFilters: GenericFilterFunc<boolean>[] = [];
+
+    constructor(location: LogicLocationType, params: LogicItemParams) {
         this._location = location;
+        this._params = params;
 
-        this._scope = new Scope(this)
-
-        this._nameFilters = []
-        this._labelFilters = []
-        this._annotationFilters = []
-        this._customFilters = []
+        this._scope = new Scope(this);
     }
 
     name(value: string) {
@@ -72,7 +67,7 @@ export class LogicItem {
         }
         let header = '  '.repeat(indent)
 
-        console.log(header + '* LogicItem ' + this._kind)
+        console.log(header + '* LogicItem :: ' + this._location + ', Params: '  + this._params)
         if (this._nameFilters.length > 0) {
             for (let filter of this._nameFilters) {
                 console.log(header + '    - Name: ' + stringify(filter))
@@ -97,3 +92,10 @@ export class LogicItem {
         this._scope.debugOutput(indent + 1)
     }
 }
+
+export interface LogicItemParams
+{
+    kind?: string | undefined;
+    link?: string | undefined;
+}
+
