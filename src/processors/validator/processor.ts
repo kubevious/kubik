@@ -93,30 +93,33 @@ export class ValidationProcessor {
             },
         }
 
-        let item = new ScriptItem(dn, state)
+        return Promise.resolve()
+            .then(() => {
+                let item = new ScriptItem(dn, state);
 
-        let valueMap = {
-            item: item,
-            error: (msg: string) => {
-                result.validation!.hasErrors = true
-                if (msg) {
-                    result.validation!.errorMsgs[msg] = true
+                let valueMap = {
+                    item: item,
+                    error: (msg: string) => {
+                        result.validation!.hasErrors = true
+                        if (msg) {
+                            result.validation!.errorMsgs[msg] = true
+                        }
+                    },
+                    warning: (msg: string) => {
+                        result.validation!.hasWarnings = true
+                        if (msg) {
+                            result.validation!.warnMsgs[msg] = true
+                        }
+                    },
+                    mark: (kind: string) => {
+                        if (!result.validation!.marks) {
+                            result.validation!.marks = {}
+                        }
+                        result.validation!.marks[kind] = true
+                    },
                 }
-            },
-            warning: (msg: string) => {
-                result.validation!.hasWarnings = true
-                if (msg) {
-                    result.validation!.warnMsgs[msg] = true
-                }
-            },
-            mark: (kind: string) => {
-                if (!result.validation!.marks) {
-                    result.validation!.marks = {}
-                }
-                result.validation!.marks[kind] = true
-            },
-        }
-        return this._runnable!.run(valueMap)
+                return this._runnable!.run(valueMap);
+            })
             .then(() => {
                 result.success = true
             })

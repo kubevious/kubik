@@ -1,11 +1,12 @@
 import _ from 'the-lodash'
-import { NodeKind, parentDn as utilsParentDn, getKind, PropsId } from '@kubevious/entity-meta'
+import { NodeKind, parentDn as utilsParentDn, parseDn, PropsId } from '@kubevious/entity-meta'
 import { RegistryState } from '@kubevious/state-registry'
 import { mapLogicItemName } from './name-helpers'
 
 export class ScriptItem {
-    public _dn: string
-    public _state: RegistryState
+    public _dn: string;
+    private _kind : NodeKind | null;
+    public _state: RegistryState;
 
     constructor(dn: string, state: RegistryState) {
         this._dn = dn
@@ -17,6 +18,15 @@ export class ScriptItem {
         if (!this._state) {
             throw new Error('Missing RegistryState')
         }
+
+        const dnParts = parseDn(dn);
+        const lastDnPart = _.last(dnParts);
+        if (lastDnPart) {
+            this._kind = lastDnPart.kind;
+        } else {
+            this._kind = null;
+        }
+        
     }
 
     get parent() : ScriptItem | null {
@@ -27,8 +37,8 @@ export class ScriptItem {
         return new ScriptItem(parentDn, this._state)
     }
 
-    get kind() : NodeKind {
-        return getKind(this._dn);
+    get kind() : NodeKind | null {
+        return this._kind;
     }
 
     get node() {

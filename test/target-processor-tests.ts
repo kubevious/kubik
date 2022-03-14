@@ -214,6 +214,56 @@ describe('target-processor-tests', function() {
     }
   );
 
+  // 
+  setupTest('process-logic-target-parent', 'logic-item-parent', 
+    function(items) {
+      for(const item of items)
+      {
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        should(DnUtils.kind(item.dn)).be.equal('app');
+      }
+    }
+  );
+
+  // 
+  setupTest('process-logic-target-parent-typed', 'logic-item-parent-typed', 
+    function(items) {
+      for(const item of items)
+      {
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        should(DnUtils.kind(item.dn)).be.equal('app');
+      }
+    }
+  );
+
+  // 
+  setupTest('process-logic-target-parent-double', 'logic-item-parent-double', 
+    function(items) {
+      for(const item of items)
+      {
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        should(DnUtils.kind(item.dn)).be.equal('ns');
+      }
+    }
+  );
+
+  // 
+  setupTest('process-logic-target-ancestor', 'logic-item-ancestor', 
+    function(items) {
+
+      for(const item of items)
+      {
+        (item).should.be.an.Object();
+        (item.dn).should.be.a.String();
+        should(DnUtils.kind(item.dn)).be.equal('app');
+      }
+
+      should(items.length).be.equal(6);
+    }
+  );
 
   /*****/
   function setupTest(name: string, targetFileName: string, validateCb: (items: FinalItems[]) => void, debugOutputObjects?: boolean)
