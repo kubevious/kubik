@@ -25,8 +25,8 @@
   },
   "homepage": "https://github.com/kubevious/kubik#readme",
   "dependencies": {
-    "@kubevious/entity-meta": "^1.0.41",
-    "@kubevious/state-registry": "^1.0.11",
+    "@kubevious/entity-meta": "^1.0.51",
+    "@kubevious/state-registry": "^1.0.13",
     "the-lodash": "^2.0.9",
     "the-logger": "^2.0.14",
     "the-promise": "^2.0.13"

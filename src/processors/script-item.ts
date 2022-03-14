@@ -87,6 +87,24 @@ export class ScriptItem {
         return (items.length > 0);
     }
 
+    ancestors(kind: string) : ScriptItem[] {
+        const kindType = mapLogicItemName(kind);
+
+        let current = this.parent;
+        const ancestors : ScriptItem[] = [];
+
+        while(current)
+        {
+            if (current.kind === kindType)
+            {
+                ancestors.push(current);
+            }
+            current = current.parent;
+        }
+
+        return ancestors;
+    }
+
     links(linkOrNone?: string) : ScriptItem[] {
         const propsValue = this.getProperties(PropsId.targetLinks);
         if (propsValue)

@@ -24,6 +24,10 @@ export class Scope {
         return this._add(new LogicItem(LogicLocationType.parent, { kind: kindOrNone }))
     }
 
+    ancestor(kind: KindType) {
+        return this._add(new LogicItem(LogicLocationType.ancestor, { kind: kind }))
+    }
+
     link(linkOrNone?: string) {
         return this._add(new LogicItem(LogicLocationType.link, { link: linkOrNone }))
     }

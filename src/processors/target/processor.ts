@@ -336,6 +336,18 @@ export class TargetProcessor {
                 break;
 
 
+            case LogicLocationType.ancestor:
+                {
+                    if (prev) {
+                        if (targetSelector._params.kind) {
+                            const ancestors = prev.ancestors(targetSelector._params.kind);
+                            return ancestors.map(x => x._dn);
+                        }
+                        return [];
+                    }
+                }
+                break;
+
             case LogicLocationType.link:
                 {
                     if (prev) {

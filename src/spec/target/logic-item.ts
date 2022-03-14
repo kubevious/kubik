@@ -61,6 +61,18 @@ export class LogicItem {
         return this._scope.child(kind)
     }
 
+    parent(kindOrNone?: KindType) {
+        return this._scope.parent(kindOrNone)
+    }
+
+    ancestor(kind: KindType) {
+        return this._scope.ancestor(kind)
+    }
+
+    link(linkOrNone?: string) {
+        return this._scope.link(linkOrNone)
+    }
+
     debugOutput(indent?: number) {
         if (!indent) {
             indent = 0

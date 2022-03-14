@@ -12,5 +12,6 @@ export enum LogicLocationType
     child,
     descendant,
     parent,
+    ancestor,
     link,
 }
