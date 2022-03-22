@@ -29,6 +29,10 @@ export function makeRootScope(scope: Scope)
             return scope.descendant(NodeKind.infra);
         },
 
+        RBAC: () => {
+            return scope.descendant(NodeKind.rbac);
+        },
+
         select: (kind: string) => {
             return scope.descendant(NodeKind.logic)
                         .descendant(kind)
