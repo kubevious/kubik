@@ -1,5 +1,6 @@
 import { Scope } from '../scope'
 import { K8sApiResourceStatusLoader, NodeKind } from '@kubevious/entity-meta'
+import { KeyValueDict } from '../types';
 
 export class K8sTargetBuilder
 {
@@ -12,10 +13,15 @@ export class K8sTargetBuilder
         apiOrNone?: string,
         version?: string,
         kind?: string,
-        name?: string,
         namespace?: string,
+
+        nameFilters: string[],
+        labelFilters: KeyValueDict[],
+
     } = {
-        isApiVersion: true
+        isApiVersion: true,
+        nameFilters: [],
+        labelFilters: [],
     }
 
     constructor(scope : Scope, k8sApiResources: K8sApiResourceStatusLoader)
@@ -60,8 +66,19 @@ export class K8sTargetBuilder
 
     name(value: string)
     {
-        this._data.name = value;
+        this._data.nameFilters.push(value);
         return this;
+    }
+
+    label(key: string, value: string) {
+        let filter: KeyValueDict = {};
+        filter[key] = value;
+        return this.labels(filter)
+    }
+
+    labels(value: KeyValueDict) {
+        this._data.labelFilters.push(value)
+        return this
     }
 
     private _finalize()
@@ -117,9 +134,14 @@ export class K8sTargetBuilder
         currentScope = currentScope.child(NodeKind.kind)
         currentScope = currentScope.name(apiResource.kindName);
 
-        currentScope = currentScope.child(NodeKind.resource)
-        if (this._data.name) {
-            currentScope = currentScope.name(this._data.name);
+        currentScope = currentScope.child(NodeKind.resource);
+        for(const name of this._data.nameFilters)
+        {
+            currentScope = currentScope.name(name);
+        }
+        for(const labels of this._data.labelFilters)
+        {
+            currentScope = currentScope.labels(labels);
         }
     }
 

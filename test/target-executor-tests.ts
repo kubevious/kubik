@@ -26,7 +26,7 @@ describe("target-executor-tests", function () {
   it("target-executor-validate_api-version-kind-name-01", function () {
     return processTargetValidatorTest("api-version-kind-name-01")
         .then(result => {
-            should(result.length).be.equal(1);
+            should(result.length).be.equal(2);
         })
   });
 
@@ -44,6 +44,14 @@ describe("target-executor-tests", function () {
         })
   });
 
+  it("target-executor-validate_api-version-kind-label-filter-01", function () {
+    return processTargetValidatorTest("api-version-kind-label-filter-01")
+        .then(result => {
+            should(result.length).be.equal(3);
+        })    
+  });
+
+  /*****/
 
   function processTargetValidatorTest(name: string)
   {

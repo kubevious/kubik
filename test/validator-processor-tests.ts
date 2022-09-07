@@ -92,6 +92,11 @@ describe('validator-processor-tests', function() {
     (_.keys(result.validation!.marks)!.length).should.be.equal(2);
   });
 
+  setupTest('inner-query', 'item-01', function(result) {
+    // should(result.validation!.hasErrors).be.equal(true);
+    // should(result.validation!.hasWarnings).be.equal(false);
+  });  
+
   /*****/
   function setupTest(caseName: string, itemName: string, validateCb: (cb: Result) => void)
   {
