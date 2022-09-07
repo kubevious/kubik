@@ -3,6 +3,7 @@ import _ from 'the-lodash';
 
 import { TargetProcessor } from '../src/processors/target/processor';
 import { readFileContents } from './utils/file-utils';
+import { loadK8sApiResources } from './utils/k8s-utils';
 
 
 describe('target-compiler-negative-tests', function() {
@@ -14,7 +15,9 @@ describe('target-compiler-negative-tests', function() {
 
     it('sample-' + testCase.name, function() {
 
-      var processor = new TargetProcessor(testCase.src);
+      const k8sApiResources = loadK8sApiResources();
+
+      const processor = new TargetProcessor(testCase.src, k8sApiResources);
       return processor.prepare()
         .then((result: Record<string, string[] | boolean>) => {
           (result).should.be.an.Object();

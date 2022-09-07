@@ -3,9 +3,12 @@ import { LogicLocationType } from './types'
 
 export type KindType = string;
 
+export type ScopeFinalizer = () => void;
+
 export class Scope {
     public _chain: (LogicItem)[]
     private _owner: any
+    private _finalizers: ScopeFinalizer[] = [];
 
     constructor(owner: any) {
         this._owner = owner
@@ -30,6 +33,18 @@ export class Scope {
 
     link(linkOrNone?: string) {
         return this._add(new LogicItem(LogicLocationType.link, { link: linkOrNone }))
+    }
+
+    registerFinalizer(finalizer: ScopeFinalizer)
+    {
+        this._finalizers.push(finalizer);
+    }
+
+    finalize() {
+        for(const finalizer of this._finalizers)
+        {
+            finalizer();
+        }
     }
 
     private _add(value: LogicItem) {

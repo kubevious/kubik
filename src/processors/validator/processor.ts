@@ -99,6 +99,7 @@ export class ValidationProcessor {
 
                 let valueMap = {
                     item: item,
+                    config: item.config,
                     error: (msg: string) => {
                         result.validation!.hasErrors = true
                         if (msg) {

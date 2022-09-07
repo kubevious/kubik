@@ -2,7 +2,7 @@ import should from 'should';
 import _ from 'the-lodash';
 
 import { Result, ValidationProcessor } from '../src/processors/validator/processor';
-import { readRegistryState, readFileContents, readModule, readJsonData, listDirectories} from './utils/file-utils';
+import { readRegistryState, readFileContents, readModule, listDirectories} from './utils/file-utils';
 
 describe('validator-compiler-negative-tests', function() {
 

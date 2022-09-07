@@ -25,11 +25,11 @@
   },
   "homepage": "https://github.com/kubevious/kubik#readme",
   "dependencies": {
-    "@kubevious/entity-meta": "^1.0.55",
+    "@kubevious/entity-meta": "^1.0.74",
     "@kubevious/state-registry": "^1.0.13",
     "the-lodash": "^2.0.9",
     "the-logger": "^2.0.14",
-    "the-promise": "^2.0.13"
+    "the-promise": "^2.0.15"
   },
   "devDependencies": {
     "@types/mocha": "^8.2.0",
@@ -47,8 +47,8 @@
   "resolutions": {
     "the-lodash": "^2.0.9",
     "the-logger": "^2.0.14",
-    "the-promise": "^2.0.13",
+    "the-promise": "^2.0.15",
     "@kubevious/state-registry": "^1.0.13",
-    "@kubevious/entity-meta": "^1.0.55"
+    "@kubevious/entity-meta": "^1.0.74"
   }
 }

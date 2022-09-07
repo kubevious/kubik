@@ -3,7 +3,7 @@ select('Namespace')
     .name('book')
 .child('Application')
 .descendant('Pod')
-    .labels(({ prev }) => 
-        prev.child('Launcher')
-            .config.spec.template.metadata.labels
-    )
+    // .labels(({ prev }) => 
+    //     prev.child('Deployment')
+    //         .config.spec.template.metadata.labels
+    // )

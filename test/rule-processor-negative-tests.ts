@@ -2,8 +2,8 @@ import should from 'should'
 import _ from 'the-lodash'
 import 'mocha'
 
-import { readRegistryState, readJsonData, readFile } from './utils/file-utils'
-import { ExecuteResult, RuleProcessor } from '../src';
+import { readRegistryState, readFile } from './utils/file-utils'
+import { RuleProcessor } from '../src';
 
 describe('rule-processor-negative-tests', function () {
     setupTest(

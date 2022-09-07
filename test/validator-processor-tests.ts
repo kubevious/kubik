@@ -3,7 +3,7 @@ import should from 'should';
 import _ from 'the-lodash';
 
 import { ValidationProcessor, Result } from '../src/processors/validator/processor';
-import { readRegistryState, readFile, readJsonData, readModule} from './utils/file-utils';
+import { readRegistryState, readFile, readModule} from './utils/file-utils';
 
 describe('validator-processor-tests', function() {
 

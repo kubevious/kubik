@@ -5,14 +5,15 @@ import { Scope } from '../../spec/target/scope'
 import { Evaluator } from './evaluator'
 import { ScriptItem } from '../script-item'
 import { LogicItem } from '../../spec/target/logic-item'
-import { RegistryState, RegistryStateNode } from '@kubevious/state-registry'
+import { RegistryState } from '@kubevious/state-registry'
 import { KeyValueDict, LogicLocationType } from '../../spec/target/types'
 import { makeRootScope } from '../../spec/target/root'
-import { parentDn } from '@kubevious/entity-meta'
+import { K8sApiResourceStatusLoader } from '@kubevious/entity-meta'
 import { mapLogicItemName } from '../name-helpers'
 
 export interface FinalItems {
-    [prop: string]: string
+    dn: string
+    kind: string
 }
 
 export interface TargetResult {
@@ -33,14 +34,13 @@ export class TargetProcessor {
     private _executorNodes: ExecutorNode[]
     private _scope: Scope
     private _finalItems?: {
-        [key: string]: {
-            dn: string
-            kind: string
-        }
+        [dn: string]: FinalItems
     }
+    private _k8sApiResources: K8sApiResourceStatusLoader;
 
-    constructor(src: string) {
+    constructor(src: string, k8sApiResources: K8sApiResourceStatusLoader) {
         this._src = src
+        this._k8sApiResources = k8sApiResources;
         this._scope = new Scope(null)
         this._errorMessages = []
         this._executorNodes = []
@@ -49,6 +49,10 @@ export class TargetProcessor {
 
     get scope() {
         return this._scope
+    }
+
+    get k8sApiResources() {
+        return this._k8sApiResources;
     }
 
     prepare() {
@@ -61,6 +65,9 @@ export class TargetProcessor {
         return this._loadModule()
             .then((runnable) => runnable.run())
             .then(() => {
+                this._scope.finalize();
+            })
+            .then(() => {
                 this._validate()
                 result.success = result.messages.length == 0
             })
@@ -71,7 +78,7 @@ export class TargetProcessor {
             .then(() => result)
     }
 
-    execute(state: RegistryState): Promise<any> {
+    execute(state: RegistryState): Promise<TargetResult> {
         this._errorMessages = []
         let result: TargetResult = {
             success: false,
@@ -94,6 +101,7 @@ export class TargetProcessor {
             .catch((reason) => {
                 result.success = false
                 this._addError(reason.message)
+                return result;
             })
     }
 
@@ -383,7 +391,7 @@ export class TargetProcessor {
 
     private _loadModule() {
         return Promise.resolve().then(() => {
-            let rootScope = makeRootScope(this._scope);
+            const rootScope = makeRootScope(this._scope, this._k8sApiResources);
 
             let compiler = new Compiler(
                 this._src,
