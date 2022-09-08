@@ -12,12 +12,12 @@ export function makeRootScope(scope: Scope, executionState: ExecutionState)
     for(const x of _.keys(TopLevelQuery))
     {
         roots[x] = () => {
-            return scope.descendant(TOP_LEVEL_GRAPH_ROOTS[x]);
+            return scope.child(TOP_LEVEL_GRAPH_ROOTS[x]);
         };
     }
 
     roots[TopLevelQuery.select] = (kind: string) => {
-        return scope.descendant(NodeKind.logic)
+        return scope.child(NodeKind.logic)
                     .descendant(kind)
     };
 

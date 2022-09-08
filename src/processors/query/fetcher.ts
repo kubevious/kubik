@@ -6,6 +6,7 @@ import { KeyValueDict, LogicLocationType } from '../../spec/target/types';
 import { Evaluator } from './evaluator'
 import { mapLogicItemName } from '../name-helpers'
 import { ExecutionState } from '../execution-state';
+import { NodeKind } from '@kubevious/entity-meta/dist';
 
 export interface QueryResult {
     success: boolean
@@ -48,7 +49,7 @@ export class QueryFetcher
       
         try
         {
-            this._acceptChainItems([null], this._scope)
+            this._acceptChainItems([new ScriptItem(NodeKind.root, this._executionState.state)], this._scope);
 
             this._executorNodeR();
             
@@ -65,12 +66,12 @@ export class QueryFetcher
         return this._result
     }
 
-    private _acceptChainItems(items: (ScriptItem | null)[], scope: Scope) {
+    private _acceptChainItems(items: ScriptItem[], scope: Scope) {
         // console.log("[_acceptChainItems] :: count: " + items.length);
 
         for (let x of scope._chain) {
             this._executorNodes.push({
-                prevs: items as ScriptItem[],
+                prevs: items,
                 targetSelector: x as LogicItem,
             })
         }
@@ -145,7 +146,7 @@ export class QueryFetcher
                 targetSelector.constructor.name == 'QueryableLogicItem');
     }
 
-    private _executeLogicItem(targetSelector: LogicItem, prev: ScriptItem) : string[] | undefined
+    private _executeLogicItem(targetSelector: LogicItem, prev: ScriptItem) : string[]
     {
         // console.log("[_executeLogicItem] :: " + targetSelector._params.kind + " :: " + targetSelector._location);
 
@@ -153,40 +154,30 @@ export class QueryFetcher
         {
             case LogicLocationType.descendant:
                 {
-                    if (prev) {
-                        const results = prev.descendants(targetSelector._params.kind!);
-                        return results.map(x => x._dn);
-                    } else {
-                        const kindType = mapLogicItemName(targetSelector._params.kind!);
-                        const results = this._executionState.state.findByKind(kindType);
-                        return _.keys(results);
-                    }
+                    const results = prev.descendants(targetSelector._params.kind!);
+                    return results.map(x => x._dn);
                 }
                 break;
 
             case LogicLocationType.child:
                 {
-                    if (prev) {
-                        const results = prev.children(targetSelector._params.kind!);
-                        return results.map(x => x._dn);
-                    }
+                    const results = prev.children(targetSelector._params.kind!);
+                    return results.map(x => x._dn);
                 }
                 break;
 
             case LogicLocationType.parent:
                 {
-                    if (prev) {
-                        const parent = prev.parent;
-                        if (parent) {
-                            if (targetSelector._params.kind) {
-                                const kindType = mapLogicItemName(targetSelector._params.kind!);
-                                if (parent.kind !== kindType) {
-                                    return [];
-                                }
+                    const parent = prev.parent;
+                    if (parent) {
+                        if (targetSelector._params.kind) {
+                            const kindType = mapLogicItemName(targetSelector._params.kind!);
+                            if (parent.kind !== kindType) {
+                                return [];
                             }
-
-                            return [parent._dn];
                         }
+
+                        return [parent._dn];
                     }
                 }
                 break;
@@ -194,25 +185,22 @@ export class QueryFetcher
 
             case LogicLocationType.ancestor:
                 {
-                    if (prev) {
-                        if (targetSelector._params.kind) {
-                            const ancestors = prev.ancestors(targetSelector._params.kind);
-                            return ancestors.map(x => x._dn);
-                        }
-                        return [];
+                    if (targetSelector._params.kind) {
+                        const ancestors = prev.ancestors(targetSelector._params.kind);
+                        return ancestors.map(x => x._dn);
                     }
                 }
                 break;
 
             case LogicLocationType.link:
                 {
-                    if (prev) {
-                        const results = prev.links(targetSelector._params.link);
-                        return results.map(x => x._dn);
-                    }
+                    const results = prev.links(targetSelector._params.link);
+                    return results.map(x => x._dn);
                 }
                 break;
         }
+
+        return [];
     }
 
 

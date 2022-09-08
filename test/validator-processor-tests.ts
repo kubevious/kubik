@@ -116,6 +116,13 @@ describe('validator-processor-tests', function() {
     should(result.validation!.hasWarnings).be.equal(false);
   });
 
+  setupTest('inner-query-count-k8s-api-01', 'item-01', function(result) {
+    should(result.validation!.hasErrors).be.equal(false);
+    should(result.validation!.hasWarnings).be.equal(true);
+    (_.keys(result.validation!.warnMsgs)[0]).should.be.equal("GitLab has 3 Deployments");
+  }); 
+  
+
   /*****/
   function setupTest(caseName: string, itemName: string, validateCb: (cb: Result) => void)
   {

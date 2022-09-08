@@ -5,8 +5,8 @@ import { ExecutionState } from '../../../processors/execution-state';
 
 export class K8sTargetBuilder
 {
-    private _scope : Scope;
-    private _executionState: ExecutionState;
+    protected _scope : Scope;
+    protected _executionState: ExecutionState;
 
     private _data : {
         isApiVersion: boolean,
@@ -107,8 +107,7 @@ export class K8sTargetBuilder
             return;
         }
 
-        let currentScope = this._scope.descendant(NodeKind.root);
-        currentScope = currentScope.child(NodeKind.k8s);
+        let currentScope = this._scope.child(NodeKind.k8s); 
 
         if (apiResource.isNamespaced)
         {
@@ -150,8 +149,8 @@ export class K8sTargetBuilder
 
 export class K8sTarget
 {
-    private _scope : Scope;
-    private _executionState: ExecutionState;
+    protected _scope : Scope;
+    protected _executionState: ExecutionState;
     
     constructor(scope: Scope, executionState: ExecutionState)
     {
@@ -161,16 +160,21 @@ export class K8sTarget
 
     ApiVersion(apiVersion: string)
     {
-        const builder = new K8sTargetBuilder(this._scope, this._executionState);
+        const builder = this._makeTargetBuilder();
         builder.ApiVersion(apiVersion);
         return builder;
     }
 
     Api(apiOrNone?: string)
     {
-        const builder = new K8sTargetBuilder(this._scope, this._executionState);
+        const builder = this._makeTargetBuilder();
         builder.Api(apiOrNone);
         return builder;
+    }
+
+    protected _makeTargetBuilder()
+    {
+        return new K8sTargetBuilder(this._scope, this._executionState);;
     }
 
 }

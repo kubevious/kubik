@@ -1,6 +1,5 @@
 import _ from 'the-lodash'
 import { Promise, Resolvable } from 'the-promise'
-import { NodeKind } from '@kubevious/entity-meta'
 import { RegistryState } from '@kubevious/state-registry'
 import { Compiler, CompilerScopeDict } from '../compiler'
 import { ScriptItem } from '../script-item'
@@ -8,6 +7,8 @@ import { FinalItems } from '../query/fetcher'
 import { TopLevelQuery, TOP_LEVEL_GRAPH_ROOTS } from '../../spec/target/root/types'
 import { QueryableScope } from './query/scope'
 import { ExecutionState } from '../execution-state'
+import { executeScopeQueryCount, executeScopeQueryMany, executeScopeQuerySingle } from './query/scope-executor'
+import { QueryableK8sTarget } from './query/k8s-target'
 
 export interface Result {
     success?: boolean
@@ -147,28 +148,27 @@ export class ValidationProcessor {
         {
             valueMap[x] = () => {
                 const scope = new QueryableScope(this._executionState);
-                return scope.descendant(TOP_LEVEL_GRAPH_ROOTS[x]);
+                return scope.child(TOP_LEVEL_GRAPH_ROOTS[x]);
             };
         }
 
-        // valueMap[TopLevelQuery.ApiVersion] = (apiVersion: string) => {
-        //     const scope = new Scope();
+        valueMap[TopLevelQuery.ApiVersion] = (apiVersion: string) => {
+            const scope = new QueryableScope(this._executionState);
 
-        //     const target = new K8sTarget(scope, this._k8sApiResources);
-        //     const builder = target.ApiVersion(apiVersion);
+            const target = new QueryableK8sTarget(scope, this._executionState);
+            const builder = target.ApiVersion(apiVersion);
 
-        //     (builder as any)['many'] = () => {
-             
-        //         scope.finalize();
-        //         // scope.validate(); // TODO:: 
+            return builder;
+        };
 
-        //         if (scope._chain.length == 0) {
-        //             return [];
-        //         }
+        valueMap[TopLevelQuery.Api] = (apiOrNone?: string) => {
+            const scope = new QueryableScope(this._executionState);
 
-        //     }
+            const target = new QueryableK8sTarget(scope, this._executionState);
+            const builder = target.Api(apiOrNone);
 
-        // };
+            return builder;
+        };
 
     }
 
