@@ -18,11 +18,10 @@ describe('rule-processor-tests', function() {
             for(var x of _.values(result.ruleItems))
             {
                 should(x.errors).be.ok();
-                should(x.errors.present).be.true();
-                should(x.errors.messages.length).be.equal(0);
+                should(x.errors?.present).be.true();
+                should(x.errors?.messages.length).be.equal(0);
                 should(x.warnings).not.be.ok();
-                (x.marks).should.be.Object();
-                (_.keys(x.marks).length).should.be.equal(0);
+                should(x.marks).be.not.ok();
             }
 
         });
@@ -39,11 +38,10 @@ describe('rule-processor-tests', function() {
             for(var x of _.values(result.ruleItems))
             {
                 should(x.errors).be.ok();
-                should(x.errors.present).be.true();
-                should(x.errors.messages.length).be.equal(0);
+                should(x.errors?.present).be.true();
+                should(x.errors?.messages.length).be.equal(0);
                 should(x.warnings).not.be.ok();
-                (x.marks).should.be.Object();
-                (_.keys(x.marks).length).should.be.equal(0);
+                should(x.marks).be.not.ok();
             }
 
         });
@@ -59,10 +57,9 @@ describe('rule-processor-tests', function() {
             {
                 should(x.errors).not.be.ok();
                 should(x.warnings).be.ok();
-                should(x.warnings.present).be.true();
-                should(x.warnings.messages.length).be.equal(0);
-                (x.marks).should.be.Object();
-                (_.keys(x.marks).length).should.be.equal(0);
+                should(x.warnings?.present).be.true();
+                should(x.warnings?.messages.length).be.equal(0);
+                should(x.marks).be.not.ok();
             }
         });
 
@@ -76,14 +73,13 @@ describe('rule-processor-tests', function() {
             for(var x of _.values(result.ruleItems))
             {
                 should(x.errors).be.ok();
-                should(x.errors.present).be.true();
-                should(x.errors.messages.length).be.equal(1);
-                should(x.errors.messages[0]).be.equal("My Custom Warning");
+                should(x.errors?.present).be.true();
+                should(x.errors?.messages.length).be.equal(1);
+                should(x.errors?.messages[0]).be.equal("My Custom Warning");
 
                 should(x.warnings).not.be.ok();
 
-                (x.marks).should.be.Object();
-                (_.keys(x.marks).length).should.be.equal(0);
+                should(x.marks).be.not.ok();
             }
         });
 
@@ -99,12 +95,11 @@ describe('rule-processor-tests', function() {
                 should(x.errors).not.be.ok();
 
                 should(x.warnings).be.ok();
-                should(x.warnings.present).be.true();
-                should(x.warnings.messages.length).be.equal(1);
-                should(x.warnings.messages[0]).be.equal("this is My custom Warning");
+                should(x.warnings?.present).be.true();
+                should(x.warnings?.messages.length).be.equal(1);
+                should(x.warnings?.messages[0]).be.equal("this is My custom Warning");
 
-                (x.marks).should.be.Object();
-                (_.keys(x.marks).length).should.be.equal(0);
+                should(x.marks).be.not.ok();
             }
         });
 
@@ -120,8 +115,8 @@ describe('rule-processor-tests', function() {
                 should(x.errors).not.be.ok();
                 should(x.warnings).not.be.ok();
 
-                (x.marks).should.be.Object();
-                (x.marks['cool']).should.be.true();
+                should(x.marks).be.an.Array();
+                should(x.marks).be.eql(['cool']);
                 (_.keys(x.marks).length).should.be.equal(1);
             }
         });
@@ -138,9 +133,9 @@ describe('rule-processor-tests', function() {
                 should(x.errors).not.be.ok();
                 should(x.warnings).not.be.ok();
 
-                (x.marks).should.be.Object();
-                (x.marks['cool']).should.be.true();
-                (x.marks['new']).should.be.true();
+                should(x.marks).be.an.Array();
+                should(x.marks).be.an.Array().and.containEql('cool');
+                should(x.marks).be.an.Array().and.containEql('new');
                 (_.keys(x.marks).length).should.be.equal(2);
             }
         });

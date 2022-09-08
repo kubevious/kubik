@@ -21,10 +21,21 @@ export interface ExecuteResult {
     success: boolean
     targetItems: FinalItems[]
     messages: MessageInfo[]
-    ruleItems: {
-        [name: string]: any
+    ruleItems: { [dn: string] : 
+        {
+            errors?: {
+                present: boolean,
+                messages: string[],
+            },
+            warnings?: {
+                present: boolean,
+                messages: string[],
+            },
+            marks?: string[],
+        }
     }
 }
+
 
 export class RuleProcessor {
     private _state: RegistryState
@@ -146,10 +157,9 @@ export class RuleProcessor {
                     }
 
                     if (result.validation!.marks) {
-                        if (_.keys(result.validation!.marks).length > 0) {
-                            this._getRuleItem(
-                                item.dn
-                            ).marks = result.validation!.marks
+                        const marksList = _.keys(result.validation!.marks);
+                        if (marksList.length > 0) {
+                            this._getRuleItem(item.dn).marks = marksList
                         }
                     }
                 }
@@ -159,11 +169,7 @@ export class RuleProcessor {
 
     private _getRuleItem(dn: string) {
         if (!this._executeResult!.ruleItems[dn]) {
-            this._executeResult!.ruleItems[dn] = {
-                errors: null,
-                warnings: null,
-                marks: {},
-            }
+            this._executeResult!.ruleItems[dn] = { }
         }
         return this._executeResult!.ruleItems[dn]
     }
