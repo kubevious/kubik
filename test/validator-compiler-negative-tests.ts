@@ -3,6 +3,7 @@ import _ from 'the-lodash';
 
 import { Result, ValidationProcessor } from '../src/processors/validator/processor';
 import { readRegistryState, readFileContents, readModule, listDirectories} from './utils/file-utils';
+import { loadExecutionState } from './utils/k8s-utils';
 
 describe('validator-compiler-negative-tests', function() {
 
@@ -22,12 +23,13 @@ describe('validator-compiler-negative-tests', function() {
 
       itemNames.forEach(function(itemName) {
 
-        it('sample-' + dirEntry.name + '-' + itemName, function() {
+        it('validator-compiler-negative-test-sample-' + dirEntry.name + '-' + itemName, function() {
           var state = readRegistryState('snapshot-items.json');
 
           var itemDn = readModule(dirPath, itemName);
 
-          var processor = new ValidationProcessor(validatorScript);
+          const executionState = loadExecutionState();
+          var processor = new ValidationProcessor(validatorScript, executionState);
           return processor.prepare()
             .then((result: Result) => {
               (result)!.should.be.an.Object();

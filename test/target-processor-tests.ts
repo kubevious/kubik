@@ -3,12 +3,13 @@ import should = require('should');
 import _ from 'the-lodash';
 
 
-import { FinalItems, TargetProcessor } from '../src/processors/target/processor';
+import { FinalItems } from "../src/processors/query/fetcher";
+import { TargetProcessor } from '../src/processors/target/processor';
 
 import { readRegistryState, readFile } from './utils/file-utils';
 
 import * as DnUtils from './utils/dn-utils';
-import { loadK8sApiResources } from './utils/k8s-utils';
+import { loadExecutionState } from './utils/k8s-utils';
 
 describe('target-processor-tests', function() {
 
@@ -275,9 +276,9 @@ describe('target-processor-tests', function() {
 
       const targetScript = readFile('target/' + targetFileName + '.js');
 
-      const k8sApiResources = loadK8sApiResources();
+      const executionState = loadExecutionState();
 
-      const processor = new TargetProcessor(targetScript, k8sApiResources);
+      const processor = new TargetProcessor(targetScript, executionState);
       return processor.prepare()
         .then(result => {
           if (debugOutputObjects)

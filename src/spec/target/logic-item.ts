@@ -7,7 +7,7 @@ export class LogicItem {
     public _location: LogicLocationType
     public _params: LogicItemParams;
 
-    public _scope: Scope;
+    public _scope: Scope = new Scope();
 
     public _nameFilters: GenericFilter<string>[] = [];
     public _labelFilters: GenericFilter<KeyValueDict>[] = [];
@@ -17,8 +17,6 @@ export class LogicItem {
     constructor(location: LogicLocationType, params: LogicItemParams) {
         this._location = location;
         this._params = params;
-
-        this._scope = new Scope(this);
     }
 
     name(value: string) {
@@ -103,6 +101,7 @@ export class LogicItem {
 
         this._scope.debugOutput(indent + 1)
     }
+
 }
 
 export interface LogicItemParams

@@ -1,11 +1,12 @@
 import { Scope } from '../scope'
-import { K8sApiResourceStatusLoader, NodeKind } from '@kubevious/entity-meta'
+import { NodeKind } from '@kubevious/entity-meta'
 import { KeyValueDict } from '../types';
+import { ExecutionState } from '../../../processors/execution-state';
 
 export class K8sTargetBuilder
 {
     private _scope : Scope;
-    private _k8sApiResources: K8sApiResourceStatusLoader;
+    private _executionState: ExecutionState;
 
     private _data : {
         isApiVersion: boolean,
@@ -24,10 +25,10 @@ export class K8sTargetBuilder
         labelFilters: [],
     }
 
-    constructor(scope : Scope, k8sApiResources: K8sApiResourceStatusLoader)
+    constructor(scope : Scope, executionState: ExecutionState)
     {
         this._scope = scope;
-        this._k8sApiResources = k8sApiResources;
+        this._executionState = executionState;
 
         scope.registerFinalizer(this._finalize.bind(this));
     }
@@ -85,7 +86,7 @@ export class K8sTargetBuilder
     {
         // console.log("_finalize:", this._data);
 
-        if (!this._k8sApiResources) {
+        if (!this._executionState) {
             return;
         }
 
@@ -100,7 +101,7 @@ export class K8sTargetBuilder
             return;
         }
 
-        const apiResource = this._k8sApiResources.getByApiVersionAndKind(apiVersion, this._data.kind);
+        const apiResource = this._executionState.k8sApiResources.getByApiVersionAndKind(apiVersion, this._data.kind);
         if (!apiResource) {
             console.log("No ApiResource");
             return;
@@ -150,24 +151,24 @@ export class K8sTargetBuilder
 export class K8sTarget
 {
     private _scope : Scope;
-    private _k8sApiResources: K8sApiResourceStatusLoader;
+    private _executionState: ExecutionState;
     
-    constructor(scope: Scope, k8sApiResources: K8sApiResourceStatusLoader)
+    constructor(scope: Scope, executionState: ExecutionState)
     {
         this._scope = scope;
-        this._k8sApiResources = k8sApiResources;
+        this._executionState = executionState;
     }
 
     ApiVersion(apiVersion: string)
     {
-        const builder = new K8sTargetBuilder(this._scope, this._k8sApiResources);
+        const builder = new K8sTargetBuilder(this._scope, this._executionState);
         builder.ApiVersion(apiVersion);
         return builder;
     }
 
     Api(apiOrNone?: string)
     {
-        const builder = new K8sTargetBuilder(this._scope, this._k8sApiResources);
+        const builder = new K8sTargetBuilder(this._scope, this._executionState);
         builder.Api(apiOrNone);
         return builder;
     }

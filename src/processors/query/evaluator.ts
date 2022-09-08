@@ -1,6 +1,5 @@
 import { RegistryState } from '@kubevious/state-registry'
 import _ from 'the-lodash'
-import { Promise } from 'the-promise'
 import { LogicItem } from '../../spec/target/logic-item'
 import { ScriptItem } from '../script-item'
 
@@ -25,30 +24,27 @@ export class Evaluator<T> {
         this._matchers = matchers
     }
 
-    doesAnyMatch(valueCb: (value: T) => boolean) : Promise<boolean> {
+    doesAnyMatch(valueCb: (value: T) => boolean) : boolean {
         if (this._matchers.length == 0) {
-            return Promise.resolve(true);
+            return true;
         }
-        return this._resolveValues().then((values) => {
-            for(let value of values) {
-                const isMatch = valueCb(value);
-                if (isMatch) {
-                    return true;
-                }
+
+        const values = this._resolveValues();
+        for(let value of values) {
+            const isMatch = valueCb(value);
+            if (isMatch) {
+                return true;
             }
-            return false;
-        })
+        }
+        return false;
     }
 
-    private _resolveValues() : Promise<T[]> {
+    private _resolveValues() : T[] {
         let funcMatchers = <MatcherFunc<T>[]>this._matchers.filter((x) => _.isFunction(x))
         let matcherValues = <T[]> this._matchers.filter((x) => !_.isFunction(x))
 
-        return Promise.serial(funcMatchers, (x) => {
-            return this._resolveMatcherValue(x)
-        }).then((funcValues) => {
-            return _.concat(matcherValues, funcValues)
-        })
+        const funcValues = funcMatchers.map(x => this._resolveMatcherValue(x));
+        return _.concat(matcherValues, funcValues);
     }
 
     private _resolveMatcherValue(funcMatcher: MatcherFunc<T>) {
@@ -56,7 +52,7 @@ export class Evaluator<T> {
             prev: this._prev,
             item: this._item,
         }
-        return Promise.resolve(funcMatcher(params))
+        return funcMatcher(params);
     }
 }
 

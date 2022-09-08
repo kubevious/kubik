@@ -4,6 +4,7 @@ import _ from 'the-lodash';
 
 import { ValidationProcessor, Result } from '../src/processors/validator/processor';
 import { readRegistryState, readFile, readModule} from './utils/file-utils';
+import { loadExecutionState } from './utils/k8s-utils';
 
 describe('validator-processor-tests', function() {
 
@@ -110,7 +111,8 @@ describe('validator-processor-tests', function() {
 
       let itemDn = readModule(dirPath, itemName);
 
-      let processor = new ValidationProcessor(validatorScript);
+      const executionState = loadExecutionState();
+      let processor = new ValidationProcessor(validatorScript, executionState);
       return processor.prepare()
         .then((result: Result) => {
           (result).should.be.an.Object();

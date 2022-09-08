@@ -94,7 +94,7 @@ class RunnableScript {
         this._values = values
     }
 
-    run(valuesMap: { [key: string]: string }) {
+    run(valuesMap: { [key: string]: any }) {
         valuesMap = valuesMap || {}
         return Promise.construct((resolve, reject) => {
             try {

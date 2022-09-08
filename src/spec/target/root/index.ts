@@ -1,50 +1,52 @@
-import { K8sApiResourceStatusLoader, NodeKind } from '@kubevious/entity-meta'
+import { NodeKind } from '@kubevious/entity-meta'
+import { ExecutionState } from '../../../processors/execution-state';
 import { Scope } from '../scope'
 import { K8sTarget } from './k8s-target';
+import { TopLevelQuery } from './types';
 
-export function makeRootScope(scope: Scope, k8sApiResources: K8sApiResourceStatusLoader)
+export function makeRootScope(scope: Scope, executionState: ExecutionState)
 {
     return {
 
-        Logic: () => {
+        [TopLevelQuery.Logic]: () => {
             return scope.descendant(NodeKind.logic);
         },
 
-        Images: () => {
+        [TopLevelQuery.Images]: () => {
             return scope.descendant(NodeKind.images);
         },
 
-        Gateway: () => {
+        [TopLevelQuery.Gateway]: () => {
             return scope.descendant(NodeKind.gateway);
         },
 
-        Package: () => {
+        [TopLevelQuery.Package]: () => {
             return scope.descendant(NodeKind.pack);
         },
 
-        K8s: () => {
+        [TopLevelQuery.K8s]: () => {
             return scope.descendant(NodeKind.k8s);
         },
 
-        Infra: () => {
+        [TopLevelQuery.Infra]: () => {
             return scope.descendant(NodeKind.infra);
         },
 
-        RBAC: () => {
+        [TopLevelQuery.RBAC]: () => {
             return scope.descendant(NodeKind.rbac);
         },
 
-        ApiVersion: (apiVersion: string) => {
-            const target = new K8sTarget(scope, k8sApiResources);
+        [TopLevelQuery.ApiVersion]: (apiVersion: string) => {
+            const target = new K8sTarget(scope, executionState);
             return target.ApiVersion(apiVersion);
         },
 
-        Api: (apiOrNone?: string) => {
-            const target = new K8sTarget(scope, k8sApiResources);
+        [TopLevelQuery.Api]: (apiOrNone?: string) => {
+            const target = new K8sTarget(scope, executionState);
             return target.Api(apiOrNone);
         },
 
-        select: (kind: string) => {
+        [TopLevelQuery.select]: (kind: string) => {
             return scope.descendant(NodeKind.logic)
                         .descendant(kind)
         },

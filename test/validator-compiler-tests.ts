@@ -5,6 +5,7 @@ import { Result } from '../src/processors/validator/processor';
 import { ValidationProcessor } from '../src/processors/validator/processor';
 
 import { readRegistryState, listDirectories, readFileContents, readModule } from './utils/file-utils';
+import { loadExecutionState } from './utils/k8s-utils';
 
 describe('validator-compiler-tests', function() {
 
@@ -30,7 +31,8 @@ describe('validator-compiler-tests', function() {
 
           let itemDn = readModule(dirPath, itemName);
 
-          let processor = new ValidationProcessor(validatorScript);
+          const executionState = loadExecutionState();
+          let processor = new ValidationProcessor(validatorScript, executionState);
           return processor.prepare()
             .then((result: Result) => {
               (result).should.be.an.Object();

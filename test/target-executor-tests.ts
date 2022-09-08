@@ -2,9 +2,10 @@ import "mocha";
 import should = require("should");
 import _ from "the-lodash";
 
-import { FinalItems, TargetProcessor } from "../src/processors/target/processor";
+import { FinalItems } from "../src/processors/query/fetcher";
+import { TargetProcessor } from "../src/processors/target/processor";
 import { readFileContents, readRegistryState } from "./utils/file-utils";
-import { loadK8sApiResources } from "./utils/k8s-utils";
+import { loadExecutionState } from './utils/k8s-utils';
 
 describe("target-executor-tests", function () {
   var files = readFileContents("target");
@@ -65,8 +66,8 @@ function processTargetValidatorTestFromSrc(src: string) : Promise<FinalItems[]>
 {
     const state = readRegistryState("snapshot-items.json");
 
-    const k8sApiResources = loadK8sApiResources();
-    const processor = new TargetProcessor(src, k8sApiResources);
+    const executionState = loadExecutionState();
+    const processor = new TargetProcessor(src, executionState);
     return processor.prepare().then((result) => {
       should(result).be.an.Object();
       if (!result.success) {

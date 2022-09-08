@@ -1,10 +1,11 @@
 import _ from 'the-lodash'
 import { Promise } from 'the-promise'
 import { calculateObjectHashStr } from '../../utils/hash-utils'
-import { FinalItems, TargetProcessor } from '../target/processor'
+import { FinalItems } from '../query/fetcher'
+import { TargetProcessor } from '../target/processor'
 import { Result, ValidationProcessor } from '../validator/processor'
 import { RegistryState } from '@kubevious/state-registry'
-import { K8sApiResourceStatusConfig, K8sApiResourceStatusLoader, NodeKind, PropsId } from '@kubevious/entity-meta'
+import { ExecutionState } from '../execution-state';
 
 export interface RuleObj {
     target: string
@@ -33,9 +34,10 @@ export class RuleProcessor {
     private _messageHashes: {
         [name: string]: boolean
     } | null = null;
-    private _k8sApiResources: K8sApiResourceStatusLoader = new K8sApiResourceStatusLoader();
     private _targetProcessor?: TargetProcessor;
     private _validationProcessor?: ValidationProcessor;
+
+    private _executionState : ExecutionState;
 
     constructor(state: RegistryState, rule: RuleObj) {
         this._state = state
@@ -43,6 +45,8 @@ export class RuleProcessor {
         this._ruleScriptSrc = rule.script
         this._executeResult = null
         this._messageHashes = null;
+
+        this._executionState = new ExecutionState(state);
     }
 
     process(): Promise<ExecuteResult> {
@@ -76,7 +80,6 @@ export class RuleProcessor {
 
     private _prepare() {
         return Promise.resolve()
-            .then(() => this._prepareRegistryState())
             .then(() => this._prepareTargets())
             .then(() => this._prepareScript())
     }
@@ -91,39 +94,18 @@ export class RuleProcessor {
         })
     }
 
-    private _prepareRegistryState()
-    {
-        {
-            const k8sInfraDn = `${NodeKind.root}/${NodeKind.infra}/${NodeKind.k8s}`;
-            const k8sInfraNode = this._state.findByDn(k8sInfraDn);
-            if (!k8sInfraNode) {
-                console.error('[RuleProcessor] Node Not Present: ', k8sInfraDn);
-                return;
-            }
-
-            const k8sApiResourceStatusConfig = k8sInfraNode.getPropertiesConfig(PropsId.config) as K8sApiResourceStatusConfig;
-
-            try
-            {
-                this._k8sApiResources.load(k8sApiResourceStatusConfig);
-            }
-            catch(reason)
-            {
-                console.error('[RuleProcessor] ERROR: ', reason);
-            }
-        }
-    }
-
     private _prepareTargets() {
-        this._targetProcessor = new TargetProcessor(this._ruleTargetSrc, this._k8sApiResources)
-        return this._targetProcessor.prepare().then((result: Result) => {
+        this._targetProcessor = new TargetProcessor(this._ruleTargetSrc, this._executionState)
+        return this._targetProcessor.prepare().then((result) => {
+            // console.log("[RULE-PROCESSOR] TARGETS PREPARE RESULT: ", result)
             this._acceptScriptErrors('target', result)
         })
     }
 
     private _prepareScript() {
-        this._validationProcessor = new ValidationProcessor(this._ruleScriptSrc)
-        return this._validationProcessor.prepare().then((result: Result) => {
+        this._validationProcessor = new ValidationProcessor(this._ruleScriptSrc, this._executionState)
+        return this._validationProcessor.prepare().then((result) => {
+            // console.log("[RULE-PROCESSOR] SCRIPT PREPARE RESULT: ", result)
             this._acceptScriptErrors('script', result)
         })
     }
@@ -132,7 +114,7 @@ export class RuleProcessor {
         return this._targetProcessor!.execute(this._state).then((result) => {
             this._acceptScriptErrors('target', result)
             if (result.success) {
-                this._executeResult!.targetItems = result.items as FinalItems[]
+                this._executeResult!.targetItems = result.items
             }
         })
     }
