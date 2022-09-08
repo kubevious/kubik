@@ -136,7 +136,9 @@ export class RuleProcessor {
                             present: true,
                             messages: _.keys(result.validation!.errorMsgs),
                         }
-                    } else if (result.validation!.hasWarnings) {
+                    } 
+                    
+                    if (result.validation!.hasWarnings) {
                         this._getRuleItem(item.dn).warnings = {
                             present: true,
                             messages: _.keys(result.validation!.warnMsgs),

@@ -7,7 +7,6 @@ import { FinalItems } from '../query/fetcher'
 import { TopLevelQuery, TOP_LEVEL_GRAPH_ROOTS } from '../../spec/target/root/types'
 import { QueryableScope } from './query/scope'
 import { ExecutionState } from '../execution-state'
-import { executeScopeQueryCount, executeScopeQueryMany, executeScopeQuerySingle } from './query/scope-executor'
 import { QueryableK8sTarget } from './query/k8s-target'
 
 export interface Result {
@@ -66,6 +65,7 @@ export class ValidationProcessor {
         return Promise.resolve().then(() => {
             let compilerValues: CompilerScopeDict = {
                 item: null,
+                config: null,
                 error: null,
                 warning: null,
                 mark: null,
