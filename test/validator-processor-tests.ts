@@ -93,15 +93,33 @@ describe('validator-processor-tests', function() {
     (_.keys(result.validation!.marks)!.length).should.be.equal(2);
   });
 
-  setupTest('inner-query', 'item-01', function(result) {
-    // should(result.validation!.hasErrors).be.equal(true);
-    // should(result.validation!.hasWarnings).be.equal(false);
+  setupTest('inner-query-many-logic-01', 'item-01', function(result) {
+    should(result.validation!.hasErrors).be.equal(true);
+    (_.keys(result.validation!.errorMsgs)[0]).should.be.equal("Found calico-node DaemonSet app");
+    should(result.validation!.hasWarnings).be.equal(false);
   });  
+
+  setupTest('inner-query-count-logic-01', 'item-01', function(result) {
+    should(result.validation!.hasErrors).be.equal(false);
+    should(result.validation!.hasWarnings).be.equal(true);
+    (_.keys(result.validation!.warnMsgs)[0]).should.be.equal("Found 5 DaemonSet Apps in kube-system");
+  });  
+
+  setupTest('inner-query-many-images-01', 'item-01', function(result) {
+    should(result.validation!.hasErrors).be.equal(true);
+    (_.keys(result.validation!.errorMsgs)[0]).should.be.equal("Found Quay");
+    should(result.validation!.hasWarnings).be.equal(false);
+  });  
+
+  setupTest('inner-query-single-images-01', 'item-01', function(result) {
+    should(result.validation!.hasErrors).be.equal(false);
+    should(result.validation!.hasWarnings).be.equal(false);
+  });
 
   /*****/
   function setupTest(caseName: string, itemName: string, validateCb: (cb: Result) => void)
   {
-    it(caseName + '_' + itemName, function() {
+    it('validator-processor' + '_' + caseName + '_' + itemName, function() {
 
       let state = readRegistryState('snapshot-items.json');
 

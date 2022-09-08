@@ -9,9 +9,9 @@ export interface KeyValueDict {
 
 export enum LogicLocationType
 {
-    child,
-    descendant,
-    parent,
-    ancestor,
-    link,
+    child = 'child',
+    descendant = 'descendant',
+    parent = 'parent',
+    ancestor = 'ancestor',
+    link = 'link',
 }

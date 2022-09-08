@@ -1,0 +1,6 @@
+Logic()
+  .child('Namespace')
+      .name('kube-system')
+  .child('Application')
+  .child('Launcher')
+      .name('DaemonSet')

@@ -24,7 +24,8 @@ export class QueryableScope extends Scope {
     }
 
     protected _add(location: LogicLocationType, params: LogicItemParams) {
-        const item = new QueryableLogicItem(location, params, this._executionState, this._rootScope);
+        // console.log("QueryableScope:: ADD >>>> ")
+        const item = new QueryableLogicItem(location, params, this._executionState, this.rootScope);
         return this._addToChain(item);
     }
 

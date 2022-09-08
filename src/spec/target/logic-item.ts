@@ -77,7 +77,7 @@ export class LogicItem {
         }
         let header = '  '.repeat(indent)
 
-        console.log(header + '* LogicItem :: ' + this._location + ', Params: '  + this._params)
+        console.log(header + '* LogicItem :: ' + this._location + ', Params: ', this._params)
         if (this._nameFilters.length > 0) {
             for (let filter of this._nameFilters) {
                 console.log(header + '    - Name: ' + stringify(filter))

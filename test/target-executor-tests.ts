@@ -52,6 +52,22 @@ describe("target-executor-tests", function () {
         })    
   });
 
+  it("target-executor-validate_logic-item-02", function () {
+    return processTargetValidatorTest("logic-item-02")
+        .then(result => {
+            should(result.length).be.equal(5);
+            // console.log(result);
+        })    
+  });
+
+  it("target-executor-validate_logic-item-03", function () {
+    return processTargetValidatorTest("logic-item-03")
+        .then(result => {
+            should(result.length).be.equal(16);
+            // console.log(result);
+        })    
+  });
+
   /*****/
 
   function processTargetValidatorTest(name: string)

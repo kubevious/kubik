@@ -92,6 +92,9 @@ export class QueryFetcher
 
     private _executorNode(executorNode: ExecutorNode)
     {
+        // console.log("[_executorNode] LOGIC ITEM: ");
+        // executorNode.targetSelector.debugOutput();
+
         const targetSelector = executorNode.targetSelector;
         for(const x of executorNode.prevs)
         {

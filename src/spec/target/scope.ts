@@ -50,6 +50,8 @@ export class Scope {
     }
 
     protected _addToChain(item: LogicItem) {
+        // console.log(">>>>> ADD TO CHAIN:");
+        // item.debugOutput(2);
         this._chain.push(item);
         return item
     }

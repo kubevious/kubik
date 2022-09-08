@@ -5,7 +5,7 @@ import { RegistryState } from '@kubevious/state-registry'
 import { Compiler, CompilerScopeDict } from '../compiler'
 import { ScriptItem } from '../script-item'
 import { FinalItems } from '../query/fetcher'
-import { TopLevelQuery } from '../../spec/target/root/types'
+import { TopLevelQuery, TOP_LEVEL_GRAPH_ROOTS } from '../../spec/target/root/types'
 import { QueryableScope } from './query/scope'
 import { ExecutionState } from '../execution-state'
 
@@ -143,12 +143,13 @@ export class ValidationProcessor {
 
     private _setupQueryBuilders(valueMap: Record<string, any>)
     {
-        // const rootScope = makeRootScope(this._scope, this._k8sApiResources);
-
-        valueMap[TopLevelQuery.Logic] = () => {
-            const scope = new QueryableScope(this._executionState);
-            return scope.descendant(NodeKind.logic);
-        };
+        for(const x of _.keys(TopLevelQuery))
+        {
+            valueMap[x] = () => {
+                const scope = new QueryableScope(this._executionState);
+                return scope.descendant(TOP_LEVEL_GRAPH_ROOTS[x]);
+            };
+        }
 
         // valueMap[TopLevelQuery.ApiVersion] = (apiVersion: string) => {
         //     const scope = new Scope();
