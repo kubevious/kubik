@@ -7,5 +7,5 @@ if (ApiVersion('apps/v1')
 }
 else
 {
-    error('GitLab should have 3 Deployments')
+    error(`GitLab should have 3 Deployments`)
 }

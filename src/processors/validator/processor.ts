@@ -126,7 +126,7 @@ export class ValidationProcessor {
                     },
                 }
                 
-                this._setupQueryBuilders(valueMap);
+                this._setupQueryBuilders(valueMap, item);
 
                 // console.log("HEADERS: ", _.keys(valueMap))
 
@@ -142,7 +142,7 @@ export class ValidationProcessor {
             .then(() => result)
     }
 
-    private _setupQueryBuilders(valueMap: Record<string, any>)
+    private _setupQueryBuilders(valueMap: Record<string, any>, item: ScriptItem)
     {
         for(const x of _.keys(TopLevelQuery))
         {
@@ -155,7 +155,7 @@ export class ValidationProcessor {
         valueMap[TopLevelQuery.ApiVersion] = (apiVersion: string) => {
             const scope = new QueryableScope(this._executionState);
 
-            const target = new QueryableK8sTarget(scope, this._executionState);
+            const target = new QueryableK8sTarget(scope, this._executionState, item);
             const builder = target.ApiVersion(apiVersion);
 
             return builder;
@@ -164,7 +164,7 @@ export class ValidationProcessor {
         valueMap[TopLevelQuery.Api] = (apiOrNone?: string) => {
             const scope = new QueryableScope(this._executionState);
 
-            const target = new QueryableK8sTarget(scope, this._executionState);
+            const target = new QueryableK8sTarget(scope, this._executionState, item);
             const builder = target.Api(apiOrNone);
 
             return builder;

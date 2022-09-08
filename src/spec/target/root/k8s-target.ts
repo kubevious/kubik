@@ -3,10 +3,16 @@ import { NodeKind } from '@kubevious/entity-meta'
 import { KeyValueDict } from '../types';
 import { ExecutionState } from '../../../processors/execution-state';
 
+export interface K8sTargetBuilderContext
+{
+    namespace? : string;
+}
+
 export class K8sTargetBuilder
 {
     protected _scope : Scope;
     protected _executionState: ExecutionState;
+    private _builderContext : K8sTargetBuilderContext;
 
     private _data : {
         isApiVersion: boolean,
@@ -15,6 +21,7 @@ export class K8sTargetBuilder
         version?: string,
         kind?: string,
         namespace?: string,
+        isAllNamespaces?: boolean,
 
         nameFilters: string[],
         labelFilters: KeyValueDict[],
@@ -25,10 +32,11 @@ export class K8sTargetBuilder
         labelFilters: [],
     }
 
-    constructor(scope : Scope, executionState: ExecutionState)
+    constructor(scope : Scope, executionState: ExecutionState, builderContext: K8sTargetBuilderContext)
     {
         this._scope = scope;
         this._executionState = executionState;
+        this._builderContext = builderContext;
 
         scope.registerFinalizer(this._finalize.bind(this));
     }
@@ -62,6 +70,12 @@ export class K8sTargetBuilder
     namespace(value: string)
     {
         this._data.namespace = value;
+        return this;
+    }
+
+    allNamespaces()
+    {
+        this._data.isAllNamespaces = true;
         return this;
     }
 
@@ -112,9 +126,14 @@ export class K8sTargetBuilder
         if (apiResource.isNamespaced)
         {
             currentScope = currentScope.child(NodeKind.ns);
-            if (this._data.namespace)
+
+            if (!this._data.isAllNamespaces)
             {
-                currentScope = currentScope.name(this._data.namespace);
+                const namespace = this._data.namespace ?? this._builderContext?.namespace;
+                if (namespace)
+                {
+                    currentScope = currentScope.name(namespace);
+                }
             }
         }
         else
@@ -174,7 +193,7 @@ export class K8sTarget
 
     protected _makeTargetBuilder()
     {
-        return new K8sTargetBuilder(this._scope, this._executionState);;
+        return new K8sTargetBuilder(this._scope, this._executionState, {});
     }
 
 }
