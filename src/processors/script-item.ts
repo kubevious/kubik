@@ -1,14 +1,14 @@
 import _ from 'the-lodash'
 import { NodeKind, parentDn as utilsParentDn, parseDn, PropsId } from '@kubevious/entity-meta'
-import { RegistryState } from '@kubevious/state-registry'
+import { RegistryAccessor } from '@kubevious/state-registry'
 import { mapLogicItemName } from './name-helpers'
 
 export class ScriptItem {
     public _dn: string;
     private _kind : NodeKind | null;
-    public _state: RegistryState;
+    public _state: RegistryAccessor;
 
-    constructor(dn: string, state: RegistryState) {
+    constructor(dn: string, state: RegistryAccessor) {
         this._dn = dn
         this._state = state
 
@@ -16,7 +16,7 @@ export class ScriptItem {
             throw new Error('Missing DN')
         }
         if (!this._state) {
-            throw new Error('Missing RegistryState')
+            throw new Error('Missing RegistryAccessor')
         }
 
         const dnParts = parseDn(dn);
@@ -49,7 +49,7 @@ export class ScriptItem {
         return node;
     }
 
-    get name(){
+    get name() {
         let node = this.node
         if (!node) {
             return null;
@@ -58,26 +58,25 @@ export class ScriptItem {
     }
 
     get props() {
-        return this.getProperties('properties')
+        return this.getProperties(PropsId.properties)
     }
 
     get config() {
-        return this.getProperties('config')
+        return this.getProperties(PropsId.config)
     }
 
     get labels() {
-        return this.getProperties('labels')
+        return this.getProperties(PropsId.labels)
     }
 
     get annotations() {
-        return this.getProperties('annotations')
+        return this.getProperties(PropsId.annotations)
     }
 
     children(kind: string) : ScriptItem[] {
         const kindType = mapLogicItemName(kind);
-        const children = this._state.childrenByKind(this._dn, kindType)
-        const childrenDns = _.keys(children);
-        return childrenDns.map((x: string) => new ScriptItem(x, this._state))
+        const childrenDns = this._state.childrenByKind(this._dn, kindType)
+        return childrenDns.map(x => new ScriptItem(x, this._state))
     }
 
     hasChildren(kind: string) : boolean {
@@ -87,9 +86,8 @@ export class ScriptItem {
 
     descendants(kind: string) : ScriptItem[] {
         const kindType = mapLogicItemName(kind);
-        const descendants = this._state.scopeByKind(this._dn, kindType)
-        const descendantDns = _.keys(descendants);
-        return descendantDns.map((x: string) => new ScriptItem(x, this._state))
+        const descendantDns = this._state.scopeByKind(this._dn, kindType)
+        return descendantDns.map(x => new ScriptItem(x, this._state))
     }
 
     hasDescendants(kind: string) : boolean {
@@ -144,15 +142,8 @@ export class ScriptItem {
         return (items.length > 0);
     }
 
-    getProperties(name: string) : any {
-        const propsGroup = this._state.getProperties(this._dn)
-        if (!propsGroup) {
-            return {}
-        }
-        const props = propsGroup[name]
-        if (!props) {
-            return {}
-        }
+    getProperties(id: PropsId) : any {
+        const props = this._state.getProperties(this._dn, id);
         if (!props.config) {
             return {}
         }

@@ -1,24 +1,25 @@
 import _ from 'the-lodash'
-import { RegistryState } from '@kubevious/state-registry'
+import { RegistryAccessor } from '@kubevious/state-registry'
 import { K8sApiResourceStatusConfig, K8sApiResourceStatusLoader, NodeKind, PropsId } from '@kubevious/entity-meta'
 
 export class ExecutionState {
 
-    private _state: RegistryState;
+    private _state: RegistryAccessor;
     private _k8sApiResources: K8sApiResourceStatusLoader;
 
-    constructor(state: RegistryState) {
+    constructor(state: RegistryAccessor) {
         this._state = state;
         this._k8sApiResources = new K8sApiResourceStatusLoader();
 
         const k8sInfraDn = `${NodeKind.root}/${NodeKind.infra}/${NodeKind.k8s}`;
-        const k8sInfraNode = this._state.findByDn(k8sInfraDn);
+        const k8sInfraNode = this._state.getNode(k8sInfraDn);
         if (!k8sInfraNode) {
             console.error('[ExecutionState] Node Not Present: ', k8sInfraDn);
             return;
         }
 
-        const k8sApiResourceStatusConfig = k8sInfraNode.getPropertiesConfig(PropsId.config) as K8sApiResourceStatusConfig;
+        const propsConfig = this._state.getProperties(k8sInfraDn, PropsId.config);        
+        const k8sApiResourceStatusConfig = (propsConfig ?? {}).config as K8sApiResourceStatusConfig;
 
         try
         {

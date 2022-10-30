@@ -52,22 +52,22 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
   integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
 
-"@kubevious/entity-meta@^1.0.45", "@kubevious/entity-meta@^1.0.74":
-  version "1.0.74"
-  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.74.tgz#25705c215408338f648e34d1abd5ddcc6bfcaea9"
-  integrity sha512-T1K9kqlg+0mgXzg9F0pz/odmairWmYreH52a1I6JRSZTC8oppRW6c3XdtIqgq0S7NfoK1oytPETnpRBxDhTtbg==
+"@kubevious/entity-meta@^1.0.78":
+  version "1.0.78"
+  resolved "https://registry.yarnpkg.com/@kubevious/entity-meta/-/entity-meta-1.0.78.tgz#a3ed3de565007e59d03e80f3e5cc4c2897f16188"
+  integrity sha512-s6puvNPmn2zFEE2ws+fwdd2hhM3k/SvJrtAJ77sNcQ0WLihOkaisOOhXG3vYBr0QyGKA3bLCd21AUUiZBaO8rw==
   dependencies:
     the-lodash "^2.0.9"
 
-"@kubevious/state-registry@^1.0.13":
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/@kubevious/state-registry/-/state-registry-1.0.13.tgz#4f3be47aa34410cb5c0a2fcbe1baccfe01e466d1"
-  integrity sha512-j+A9Qb1PQ8NIBYnBW0TclPbvbf6g3rsbaFA8ZmT2bcfZQEqEFUpzbV2cr59nBiexHJ8kCkAoRVCxf/gzj4fJfg==
+"@kubevious/state-registry@^1.0.16":
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/@kubevious/state-registry/-/state-registry-1.0.16.tgz#6c73bd0e6c4d48131ed176fb57d0c33c1601821f"
+  integrity sha512-md+frSV43sQmQiQOQ6E/vhkMhqxNdfml9tdy/8QR/ZLBGifc9+ZjFeYUCP2Tce7DV8bSCFoxdA5gT8xnUjDAkQ==
   dependencies:
-    "@kubevious/entity-meta" "^1.0.45"
+    "@kubevious/entity-meta" "^1.0.78"
     the-lodash "^2.0.9"
     the-logger "^2.0.14"
-    the-promise "^2.0.13"
+    the-promise "^2.0.15"
 
 "@types/bluebird@3.5.36":
   version "3.5.36"

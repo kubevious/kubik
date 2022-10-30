@@ -4,7 +4,7 @@ import { calculateObjectHashStr } from '../../utils/hash-utils'
 import { FinalItems } from '../query/fetcher'
 import { TargetProcessor } from '../target/processor'
 import { Result, ValidationProcessor } from '../validator/processor'
-import { RegistryState } from '@kubevious/state-registry'
+import { RegistryAccessor } from '@kubevious/state-registry'
 import { ExecutionState } from '../execution-state';
 
 export interface RuleObj {
@@ -38,7 +38,7 @@ export interface ExecuteResult {
 
 
 export class RuleProcessor {
-    private _state: RegistryState
+    private _state: RegistryAccessor
     private _ruleTargetSrc: string
     private _ruleScriptSrc: string
     private _executeResult: ExecuteResult | null
@@ -50,7 +50,7 @@ export class RuleProcessor {
 
     private _executionState : ExecutionState;
 
-    constructor(state: RegistryState, rule: RuleObj) {
+    constructor(state: RegistryAccessor, rule: RuleObj) {
         this._state = state
         this._ruleTargetSrc = rule.target
         this._ruleScriptSrc = rule.script
@@ -122,7 +122,7 @@ export class RuleProcessor {
     }
 
     private _executeTarget() {
-        return this._targetProcessor!.execute(this._state).then((result) => {
+        return this._targetProcessor!.execute().then((result) => {
             this._acceptScriptErrors('target', result)
             if (result.success) {
                 this._executeResult!.targetItems = result.items

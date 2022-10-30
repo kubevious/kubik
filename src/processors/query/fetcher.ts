@@ -252,7 +252,6 @@ export class QueryFetcher
         item: ScriptItem
     ) : boolean {
         let evaluator = new Evaluator<string>(
-            this._executionState.state,
             targetSelector,
             prev,
             item,
@@ -272,7 +271,6 @@ export class QueryFetcher
         item: ScriptItem
     ) : boolean {
         let evaluator = new Evaluator<KeyValueDict>(
-            this._executionState.state,
             targetSelector,
             prev,
             item,
@@ -294,7 +292,6 @@ export class QueryFetcher
         item: ScriptItem
     ) : boolean {
         let evaluator = new Evaluator<KeyValueDict>(
-            this._executionState.state,
             targetSelector,
             prev,
             item,
@@ -316,7 +313,6 @@ export class QueryFetcher
         item: ScriptItem
     ) : boolean {
         let evaluator = new Evaluator<boolean>(
-            this._executionState.state,
             targetSelector,
             prev,
             item,

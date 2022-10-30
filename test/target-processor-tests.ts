@@ -272,8 +272,6 @@ describe('target-processor-tests', function() {
   {
     it(name + '::' + targetFileName, function() {
 
-      const state = readRegistryState('snapshot-items.json');
-
       const targetScript = readFile('target/' + targetFileName + '.js');
 
       const executionState = loadExecutionState();
@@ -293,7 +291,7 @@ describe('target-processor-tests', function() {
           (result.success).should.be.true();
           (result.messages).should.be.empty();
 
-          return processor.execute(state);
+          return processor.execute();
         })
         .then(result => {
 

@@ -80,8 +80,6 @@ describe("target-executor-tests", function () {
 
 function processTargetValidatorTestFromSrc(src: string) : Promise<FinalItems[]>
 {
-    const state = readRegistryState("snapshot-items.json");
-
     const executionState = loadExecutionState();
     const processor = new TargetProcessor(src, executionState);
     return processor.prepare().then((result) => {
@@ -94,7 +92,7 @@ function processTargetValidatorTestFromSrc(src: string) : Promise<FinalItems[]>
       result.messages.should.be.empty();
 
       if (result.success) {
-        return processor.execute(state).then((execResult) => {
+        return processor.execute().then((execResult) => {
           if (!execResult.success) {
             console.log("EXECUTOR FAILED.");
             console.log("******************************** EXECUTE FAILED:");

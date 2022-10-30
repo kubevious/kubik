@@ -1,6 +1,6 @@
 import _ from 'the-lodash'
 import { Promise, Resolvable } from 'the-promise'
-import { RegistryState } from '@kubevious/state-registry'
+import { RegistryAccessor } from '@kubevious/state-registry'
 import { Compiler, CompilerScopeDict } from '../compiler'
 import { ScriptItem } from '../script-item'
 import { FinalItems } from '../query/fetcher'
@@ -87,7 +87,7 @@ export class ValidationProcessor {
 
     private _validate() {}
 
-    execute(dn: string, state: RegistryState) : Promise<Result> {
+    execute(dn: string, state: RegistryAccessor) : Promise<Result> {
         let result: Result = {
             success: false,
             messages: [],

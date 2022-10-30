@@ -3,7 +3,6 @@ import { Promise } from 'the-promise'
 import { Compiler } from '../compiler'
 import { Scope } from '../../spec/target/scope'
 import { LogicItem } from '../../spec/target/logic-item'
-import { RegistryState } from '@kubevious/state-registry'
 import { makeRootScope } from '../../spec/target/root'
 import { QueryFetcher, QueryResult } from '../query/fetcher';
 import { ExecutionState } from '../execution-state'
@@ -52,7 +51,7 @@ export class TargetProcessor {
             .then(() => result)
     }
 
-    execute(state: RegistryState): Promise<QueryResult> {
+    execute(): Promise<QueryResult> {
        
         return Promise.resolve()
             .then(() => {
