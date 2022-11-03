@@ -2,7 +2,7 @@ import 'mocha';
 import should from 'should';
 import _ from 'the-lodash';
 
-import { ValidationProcessor, Result } from '../src/processors/validator/processor';
+import { ValidationProcessor, ValidationProcessorResult } from '../src/processors/validator/processor';
 import { readRegistryState, readFile, readModule} from './utils/file-utils';
 import { loadExecutionState } from './utils/k8s-utils';
 
@@ -124,7 +124,7 @@ describe('validator-processor-tests', function() {
   
 
   /*****/
-  function setupTest(caseName: string, itemName: string, validateCb: (cb: Result) => void)
+  function setupTest(caseName: string, itemName: string, validateCb: (cb: ValidationProcessorResult) => void)
   {
     it('validator-processor' + '_' + caseName + '_' + itemName, function() {
 
@@ -139,7 +139,7 @@ describe('validator-processor-tests', function() {
       const executionState = loadExecutionState();
       let processor = new ValidationProcessor(validatorScript, executionState);
       return processor.prepare()
-        .then((result: Result) => {
+        .then((result) => {
           (result).should.be.an.Object();
           if (!result.success) {
             console.log(result);
@@ -148,7 +148,7 @@ describe('validator-processor-tests', function() {
           (result.messages)!.should.be.empty();
         })
         .then(() => processor.execute(itemDn, state))
-        .then((result: Result) => {
+        .then((result) => {
           (result).should.be.an.Object();
           if (!result.success) {
             console.log(result);

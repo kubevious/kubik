@@ -3,21 +3,24 @@ import { Promise } from 'the-promise'
 import { Compiler } from '../compiler'
 import { Scope } from '../../spec/target/scope'
 import { LogicItem } from '../../spec/target/logic-item'
-import { makeRootScope } from '../../spec/target/root'
+import { makeTargetRootScope } from './scope-builder'
 import { QueryFetcher, QueryResult } from '../query/fetcher';
 import { ExecutionState } from '../execution-state'
+import { RootScopeBuilder, TargetScopeBuilderExecutor } from '../scope-builders'
 
 export class TargetProcessor {
     private _src: string
     private _errorMessages: string[]
     private _scope: Scope
     private _executionState : ExecutionState;
+    private _scopeBuilderExecutor : TargetScopeBuilderExecutor;
 
-    constructor(src: string, executionState : ExecutionState) {
+    constructor(src: string, executionState : ExecutionState, scopeBuilderExecutor? : TargetScopeBuilderExecutor) {
         this._src = src
         this._executionState = executionState;
         this._scope = new Scope();
-        this._errorMessages = []
+        this._errorMessages = [];
+        this._scopeBuilderExecutor = scopeBuilderExecutor ?? makeTargetRootScope;
     }
 
     get scope() {
@@ -59,12 +62,20 @@ export class TargetProcessor {
                 const result = fetcher.execute();
                 return result;
             })
-
     }
 
     private _loadModule() {
+
+        const rootScope : Record<string, any> = {};
+
+        const rootScopeBuilder : RootScopeBuilder = {
+            setup: (name: string, func: any) => {
+                rootScope[name] = func;
+            }
+        }
+
         return Promise.resolve().then(() => {
-            const rootScope = makeRootScope(this._scope, this._executionState);
+            this._scopeBuilderExecutor(rootScopeBuilder, this._scope, this._executionState);
 
             let compiler = new Compiler(
                 this._src,

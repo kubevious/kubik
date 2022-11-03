@@ -1,6 +1,5 @@
 import should from 'should';
 import _ from 'the-lodash';
-import { Result } from '../src/processors/validator/processor';
 
 import { ValidationProcessor } from '../src/processors/validator/processor';
 
@@ -34,7 +33,7 @@ describe('validator-compiler-tests', function() {
           const executionState = loadExecutionState();
           let processor = new ValidationProcessor(validatorScript, executionState);
           return processor.prepare()
-            .then((result: Result) => {
+            .then((result) => {
               (result).should.be.an.Object();
               if (!result.success) {
                 console.log(result);
@@ -43,7 +42,7 @@ describe('validator-compiler-tests', function() {
               (result.messages)!.should.be.empty();
             })
             .then(() => processor.execute(itemDn, state))
-            .then((result: Result) => {
+            .then((result) => {
               (result).should.be.an.Object();
               if (!result.success) {
                 console.log(result);

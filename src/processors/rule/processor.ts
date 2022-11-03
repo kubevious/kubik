@@ -3,7 +3,7 @@ import { Promise } from 'the-promise'
 import { calculateObjectHashStr } from '../../utils/hash-utils'
 import { FinalItems } from '../query/fetcher'
 import { TargetProcessor } from '../target/processor'
-import { Result, ValidationProcessor } from '../validator/processor'
+import { ValidationProcessor, ValidationProcessorResult } from '../validator/processor'
 import { RegistryAccessor } from '@kubevious/state-registry'
 import { ExecutionState } from '../execution-state';
 
@@ -138,7 +138,7 @@ export class RuleProcessor {
 
     private _executeValidator(item: FinalItems): Promise<any> {
         return this._validationProcessor!.execute(item.dn, this._state).then(
-            (result: Result) => {
+            (result) => {
                 this._acceptScriptErrors('script', result)
 
                 if (result.success) {
@@ -178,7 +178,7 @@ export class RuleProcessor {
         return this._executeResult!.success
     }
 
-    private _acceptScriptErrors(source: string, result: Result) {
+    private _acceptScriptErrors(source: string, result: ValidationProcessorResult) {
         if (!result.success) {
             this._executeResult!.success = false
             for (let msg of result.messages!) {
