@@ -3,7 +3,6 @@ import { Promise, Resolvable } from 'the-promise'
 import { RegistryAccessor } from '@kubevious/state-registry'
 import { Compiler, CompilerScopeDict } from '../compiler'
 import { ScriptItem } from '../script-item'
-import { FinalItems } from '../query/fetcher'
 import { TopLevelQuery } from '../../spec/target/root/types'
 import { ExecutionState } from '../execution-state'
 import { makeValidatorRootScope } from './scope-builder'
@@ -26,7 +25,6 @@ export interface ValidationProcessorResult {
             [name: string]: boolean
         }
     }
-    items?: (string | FinalItems)[]
 }
 
 
