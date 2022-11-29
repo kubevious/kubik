@@ -21,24 +21,24 @@ Kubik rule consists of two primary parts: **target** and **rule** scripts. The *
 
 ```js
 Api('apps')
-	.Kind('Deployment')
+  .Kind('Deployment')
 ```
 **Rule:**
 
 ```js
 for(const container of config.spec?.template?.spec?.containers ?? [])
 {
-		for(const envFrom of container.envFrom ?? [])
+    for(const envFrom of container.envFrom ?? [])
     {
-    		if (envFrom.configMapRef)
+        if (envFrom.configMapRef)
         {
             const configMap = ApiVersion('v1')
-            										.Kind('ConfigMap')
-            										.name(envFrom.configMapRef.name)
-                   						  .single()
-           	if (!configMap)
+                                .Kind('ConfigMap')
+                                .name(envFrom.configMapRef.name)
+                                 .single()
+            if (!configMap)
             {
-								error(`Could not find ConfigMap ${envFrom.configMapRef.name}`)
+                error(`Could not find ConfigMap ${envFrom.configMapRef.name}`)
             }
         }
     }
@@ -53,14 +53,14 @@ Query Kubernetes objects by ApiVersion and Kind:
 
 ```js
 ApiVersion('apps/v1')
-	.Kind('Deployment')
+  .Kind('Deployment')
 ```
 
 Query Kubernetes object by ApiGroup and Kind:
 
 ```js
 Api('autoscaling')
-	.Kind('HorizontalPodAutoscaler')
+  .Kind('HorizontalPodAutoscaler')
 ```
 
 Query Clustered objects:
@@ -113,7 +113,7 @@ Union(
     .Kind("ClusterRoleBinding")
     .isClusterScope(true),
   Api('rbac.authorization.k8s.io')
-  	.Kind("RoleBinding")
+    .Kind("RoleBinding")
 )
 ```
 
@@ -134,7 +134,7 @@ Queries can be filtered:
 ```js
 Filter(
   Api('batch')
-  	.Kind("Job")
+    .Kind("Job")
 ).Criteria(item => {
   if (item.config.metadata?.ownerReferences) {
     return false;
@@ -150,7 +150,7 @@ Query results can be transformed into another object:
 ```js
 Transform(
   Api('batch')
-  	.Kind("CronJob")
+    .Kind("CronJob")
 ).To(item => ({
   synthetic: true,
   apiVersion: 'v1',
