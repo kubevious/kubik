@@ -72,7 +72,7 @@ steps:
       condition: 
         all: 
           noCiCdAuthor: 'includes("${{CF_COMMIT_MESSAGE}}", "Version Release") == false' 
-          masterBranch: '"${{CF_BRANCH}}" == "master"'
+          masterBranch: '"${{CF_BRANCH}}" == "main"'
     commands:
       - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > ~/.npmrc
       - git config --global user.email "cicd@kubevious.io"
