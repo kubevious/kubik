@@ -1,6 +1,6 @@
 {
   "name": "@kubevious/kubik",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "description": "Kubik - domain specific validation language",
   "main": "dist/index.js",
   "types": "dist",
