@@ -260,7 +260,7 @@ const gatewayItem = Api('gateway.networking.k8s.io')
                       .single();
 ```
 
-When querying Clustered objects the `.isClustered(true)` filter should always be set:
+When querying Clustered objects the `.isClusterScope(true)` filter should always be set:
 ```js
 Api('rbac.authorization.k8s.io')
   .Kind('ClusterRole')
