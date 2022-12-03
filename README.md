@@ -108,13 +108,13 @@ ApiVersion('v1')
 Queries can be combined:
 
 ```js
-Union(
+Union([
   Api('rbac.authorization.k8s.io')
     .Kind("ClusterRoleBinding")
     .isClusterScope(true),
   Api('rbac.authorization.k8s.io')
     .Kind("RoleBinding")
-)
+])
 ```
 
 ### Shortcut
