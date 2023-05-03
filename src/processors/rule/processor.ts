@@ -1,5 +1,5 @@
 import _ from 'the-lodash'
-import { Promise } from 'the-promise'
+import { MyPromise } from 'the-promise'
 import { calculateObjectHashStr } from '../../utils/hash-utils'
 import { FinalItems } from '../query/fetcher'
 import { TargetProcessor } from '../target/processor'
@@ -131,7 +131,7 @@ export class RuleProcessor {
     }
 
     private _executeValidators() {
-        return Promise.serial(this._executeResult!.targetItems, (x) =>
+        return MyPromise.serial(this._executeResult!.targetItems, (x) =>
             this._executeValidator(x)
         )
     }

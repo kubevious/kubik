@@ -1,5 +1,5 @@
 import _ from 'the-lodash'
-import { Promise } from 'the-promise'
+import { MyPromise } from 'the-promise'
 import { UnitConverter } from './unit-converter'
 
 export interface ParamsToHide {
@@ -47,7 +47,7 @@ export class Compiler {
     }
 
     compile(): Promise<any> {
-        return Promise.construct<any>((resolve, reject) => {
+        return MyPromise.construct<any>((resolve, reject) => {
             try {
                 let allParamNames: string[] = []
                 allParamNames = _.concat(allParamNames, _.keys(PARAMS_TO_HIDE))
@@ -96,7 +96,7 @@ class RunnableScript {
 
     run(valuesMap: { [key: string]: any }) {
         valuesMap = valuesMap || {}
-        return Promise.construct((resolve, reject) => {
+        return MyPromise.construct((resolve, reject) => {
             try {
                 let result = null
                 let paramValues: (string | undefined)[] = []

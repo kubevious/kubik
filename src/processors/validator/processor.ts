@@ -1,5 +1,5 @@
 import _ from 'the-lodash'
-import { Promise, Resolvable } from 'the-promise'
+import { MyPromise, Resolvable } from 'the-promise'
 import { RegistryAccessor } from '@kubevious/state-registry'
 import { Compiler, CompilerScopeDict } from '../compiler'
 import { ScriptItem } from '../script-item'

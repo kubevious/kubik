@@ -1,5 +1,5 @@
 import _ from 'the-lodash'
-import { Promise } from 'the-promise'
+import { MyPromise } from 'the-promise'
 import { Compiler } from '../compiler'
 import { Scope } from '../../spec/target/scope'
 import { LogicItem } from '../../spec/target/logic-item'
